@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generator Dokumen PAI</title>
+  <style>
+    /* ========== RESET & VARIABEL ========== */
+    :root {
+      --primary: #2848A1;
+      --primary-dark: #1e3570;
+      --sidebar-bg: #2c3e50;
+      --sidebar-hover: #3e5770;
+      --accent: #1abc9c;
+      --text-light: #ecf0f1;
+      --danger: #e74c3c;
+      --info: #2980b9;
+      --bg: #f5f6fa;
+      --modal-overlay: rgba(0,0,0,0.5);
+      --box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      --border-radius: 8px;
+      --transition: 0.2s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: #333;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hidden { display: none !important; }
+    .spinner {
+      border: 3px solid rgba(0,0,0,0.1);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ========== LOGIN ========== */
+    #login-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .login-card {
+      background: white;
+      padding: 40px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      width: 380px;
+      text-align: center;
+    }
+    .login-card h1 { color: var(--primary); margin-bottom: 10px; }
+    .login-card p { margin-bottom: 20px; font-size: 14px; color: #666; }
+    .form-group { margin-bottom: 15px; text-align: left; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background var(--transition);
+      color: white;
+    }
+    .btn-primary { background: var(--primary); width: 100%; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-danger { background: var(--danger); }
+    .btn-info { background: var(--info); }
+    .btn-close { background: #95a5a6; }
+
+    /* ========== DASHBOARD ========== */
+    #dashboard-section {
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 280px;
+      background: var(--sidebar-bg);
+      color: white;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    .sidebar h2 {
+      padding: 20px;
+      text-align: center;
+      font-size: 18px;
+      border-bottom: 1px solid var(--sidebar-hover);
+    }
+    .user-info {
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--sidebar-hover);
+      margin-bottom: 10px;
+      background: rgba(255,255,255,0.05);
+    }
+    .user-info p { font-size: 13px; line-height: 1.5; }
+    .kelas-group { margin-bottom: 5px; }
+    .kelas-toggle {
+      width: 100%;
+      text-align: left;
+      padding: 12px 20px;
+      background: #34495e;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background var(--transition);
+    }
+    .kelas-toggle:hover { background: var(--sidebar-hover); }
+    .dokumen-list { list-style: none; }
+    .dokumen-list li a {
+      display: block;
+      padding: 10px 25px;
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 14px;
+      transition: background var(--transition);
+    }
+    .dokumen-list li a:hover { background: var(--accent); color: white; }
+
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .main-content h3 { margin-bottom: 10px; color: var(--primary); }
+    .placeholder-text { color: #777; }
+
+    /* ========== MODAL PREVIEW ========== */
+    #preview-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--modal-overlay);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-box {
+      background: white;
+      width: 90%;
+      max-width: 900px;
+      height: 90%;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .modal-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fafafa;
+    }
+    .modal-header h4 { margin: 0; font-size: 18px; color: var(--primary); }
+    .modal-body {
+      flex: 1;
+      padding: 0;
+      overflow: hidden;
+    }
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .modal-footer {
+      padding: 15px 20px;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #fafafa;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== SECTION LOGIN ========== -->
+  <section id="login-section">
+    <div class="login-card">
+      <h1>Login</h1>
+      <p>Masukkan ID dan PIN untuk mengakses dokumen</p>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-id">ID / NIP</label>
+          <input type="text" id="login-id" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="login-pin">PIN</label>
+          <input type="password" id="login-pin" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary">Masuk</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ========== SECTION DASHBOARD ========== -->
+  <section id="dashboard-section" class="hidden">
+    <aside class="sidebar">
+      <h2>Dokumen PAI</h2>
+      <div class="user-info">
+        <p id="user-name"></p>
+        <p id="user-school"></p>
+      </div>
+      <nav id="sidebar-nav"></nav>
+    </aside>
+    <main class="main-content">
+      <h3>Selamat datang</h3>
+      <p class="placeholder-text">Silakan pilih dokumen pada menu di samping untuk melihat pratinjau.</p>
+      <div id="loading-templates" class="spinner hidden"></div>
+    </main>
+  </section>
+
+  <!-- ========== MODAL PREVIEW ========== -->
+  <div id="preview-modal" class="hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h4 id="preview-title">Pratinjau</h4>
+        <button class="btn btn-close" onclick="closePreview()">✕</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="preview-frame" sandbox="allow-same-origin"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" onclick="downloadPDF()">Unduh PDF</button>
+        <button class="btn btn-info" onclick="downloadDOCX()">Unduh DOCX</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ================== KONFIGURASI ==================
+    const GAS_URL = 'URL_WEB_APP_DEPLOYMENT_ANDA'; // Ganti dengan URL Web App GAS
+    const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/USERNAME/REPO/main/templates/'; // Ganti dengan repo Anda
+
+    // ================== STATE ==================
+    let currentUser = null;
+    let currentTemplates = [];
+    let currentDocFile = '';      // file html yang sedang dipreview
+    let currentDocTitle = '';
+    let currentDocHtml = '';      // tidak dipakai untuk server-side, hanya untuk preview
+
+    // ================== INISIALISASI ==================
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedUser = sessionStorage.getItem('user');
+      if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        showDashboard();
+      } else {
+        showLogin();
+      }
+    });
+
+    function showLogin() {
+      document.getElementById('login-section').classList.remove('hidden');
+      document.getElementById('dashboard-section').classList.add('hidden');
+    }
+
+    function showDashboard() {
+      document.getElementById('login-section').classList.add('hidden');
+      document.getElementById('dashboard-section').classList.remove('hidden');
+      document.getElementById('user-name').textContent = currentUser.NAMA_GURU || 'Guru';
+      document.getElementById('user-school').textContent = currentUser.NAMA_SEKOLAH || 'Sekolah';
+      loadTemplates();
+    }
+
+    // ================== LOGIN ==================
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('login-id').value.trim();
+      const pin = document.getElementById('login-pin').value.trim();
+      if (!id || !pin) return alert('Isi ID dan PIN');
+
+      try {
+        const url = `${GAS_URL}?action=login&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.success) {
+          currentUser = data.user;
+          sessionStorage.setItem('user', JSON.stringify(currentUser));
+          showDashboard();
+        } else {
+          alert(data.error || 'Login gagal');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Terjadi kesalahan saat login');
+      }
+    });
+
+    // ================== LOAD TEMPLATE LIST (STALE-WHILE-REVALIDATE) ==================
+    async function loadTemplates() {
+      const cacheKey = 'template_list_cache';
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        currentTemplates = JSON.parse(cached);
+        renderSidebar(currentTemplates);
+      } else {
+        showLoadingTemplates(true);
+      }
+
+      try {
+        const url = `${GAS_URL}?action=getTemplateList`;
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.success) {
+          currentTemplates = data.templates;
+          localStorage.setItem(cacheKey, JSON.stringify(currentTemplates));
+          renderSidebar(currentTemplates);
+        } else {
+          throw new Error(data.error || 'Gagal memuat daftar template');
+        }
+      } catch (err) {
+        console.error(err);
+        if (!cached) alert('Gagal memuat daftar template');
+      } finally {
+        showLoadingTemplates(false);
+      }
+    }
+
+    function showLoadingTemplates(show) {
+      const spinner = document.getElementById('loading-templates');
+      spinner.classList.toggle('hidden', !show);
+    }
+
+    // ================== RENDER SIDEBAR ==================
+    function renderSidebar(templates) {
+      const nav = document.getElementById('sidebar-nav');
+      nav.innerHTML = '';
+
+      // Kelompokkan berdasarkan kelas
+      const groups = {};
+      templates.forEach(tpl => {
+        const kelas = tpl.KELAS || 'Lainnya';
+        if (!groups[kelas]) groups[kelas] = [];
+        groups[kelas].push(tpl);
+      });
+
+      Object.keys(groups).sort((a,b) => a.localeCompare(b, undefined, {numeric:true})).forEach(kelas => {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'kelas-group';
+
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'kelas-toggle';
+        toggleBtn.textContent = `Kelas ${kelas}`;
+        toggleBtn.onclick = () => {
+          const list = toggleBtn.nextElementSibling;
+          list.classList.toggle('hidden');
+        };
+
+        const list = document.createElement('ul');
+        list.className = 'dokumen-list hidden'; // sembunyikan default
+
+        groups[kelas].forEach(tpl => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = '#';
+          a.textContent = tpl.JUDUL || tpl.ID_TEMPLATE;
+          a.onclick = (e) => {
+            e.preventDefault();
+            openPreview(tpl);
+          };
+          li.appendChild(a);
+          list.appendChild(li);
+        });
+
+        groupDiv.appendChild(toggleBtn);
+        groupDiv.appendChild(list);
+        nav.appendChild(groupDiv);
+      });
+    }
+
+    // ================== PREVIEW ==================
+    async function openPreview(template) {
+      if (!currentUser) return;
+      try {
+        const filePath = template.FILE_HTML;
+        const url = `${GITHUB_RAW_BASE}${filePath}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Template tidak ditemukan');
+        let html = await res.text();
+
+        // Ganti placeholder dengan data user
+        for (const key in currentUser) {
+          const placeholder = `{{${key}}}`;
+          html = html.replaceAll(placeholder, currentUser[key] || '');
+        }
+
+        currentDocFile = filePath;
+        currentDocTitle = template.JUDUL || 'Dokumen';
+        currentDocHtml = html; // untuk preview
+
+        document.getElementById('preview-title').textContent = currentDocTitle;
+        document.getElementById('preview-frame').srcdoc = html;
+        document.getElementById('preview-modal').classList.remove('hidden');
+      } catch (err) {
+        console.error(err);
+        alert('Gagal memuat template');
+      }
+    }
+
+    function closePreview() {
+      document.getElementById('preview-modal').classList.add('hidden');
+      document.getElementById('preview-frame').srcdoc = '';
+      currentDocFile = '';
+      currentDocTitle = '';
+      currentDocHtml = '';
+    }
+
+    // ================== DOWNLOAD HELPERS (SERVER-SIDE GENERATION) ==================
+    async function downloadFromGAS(action) {
+      if (!currentUser || !currentDocFile) return;
+      const btn = event.target;
+      const originalText = btn.textContent;
+      btn.textContent = 'Memproses...';
+      btn.disabled = true;
+
+      try {
+        const url = `${GAS_URL}?action=${action}&id=${encodeURIComponent(currentUser.ID)}&file=${encodeURIComponent(currentDocFile)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error || 'Gagal memproses');
+
+        // Decode base64 ke blob
+        const byteString = atob(data.base64);
+        const arrayBuffer = new ArrayBuffer(byteString.length);
+        const uintArray = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < byteString.length; i++) {
+          uintArray[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([uintArray], { type: data.mimeType });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = data.fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+      } catch (err) {
+        console.error(err);
+        alert(err.message);
+      } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    function downloadPDF() {
+      downloadFromGAS('generatePdf');
+    }
+
+    function downloadDOCX() {
+      downloadFromGAS('generateDocx');
+    }
+  </script>
+</body>
+</html>
