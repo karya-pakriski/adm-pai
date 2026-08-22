@@ -82,6 +82,7 @@
     .btn-danger { background: var(--danger); }
     .btn-info { background: var(--info); }
     .btn-close { background: #95a5a6; }
+    .btn-light { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
 
     /* ========== DASHBOARD ========== */
     #dashboard-section {
@@ -106,10 +107,15 @@
       border-bottom: 1px solid var(--sidebar-hover);
       margin-bottom: 10px;
       background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background var(--transition);
     }
+    .user-info:hover { background: rgba(255,255,255,0.1); }
     .user-info p { font-size: 13px; line-height: 1.5; }
-    .kelas-group { margin-bottom: 5px; }
-    .kelas-toggle {
+
+    /* ========== SIDEBAR MULTI-LEVEL ========== */
+    .kelas-toggle,
+    .kategori-toggle {
       width: 100%;
       text-align: left;
       padding: 12px 20px;
@@ -119,19 +125,28 @@
       cursor: pointer;
       font-size: 15px;
       transition: background var(--transition);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    .kelas-toggle:hover { background: var(--sidebar-hover); }
+    .kelas-toggle:hover,
+    .kategori-toggle:hover { background: var(--sidebar-hover); }
+    .kategori-toggle {
+      padding-left: 35px; /* lebih menjorok */
+      background: #2c3e50;
+      font-size: 14px;
+    }
+    .kategori-container { background: #263544; }
     .dokumen-list { list-style: none; }
     .dokumen-list li a {
       display: block;
-      padding: 10px 25px;
+      padding: 10px 45px;
       color: var(--text-light);
       text-decoration: none;
-      font-size: 14px;
+      font-size: 13px;
       transition: background var(--transition);
     }
     .dokumen-list li a:hover { background: var(--accent); color: white; }
 
+    /* ========== MAIN CONTENT ========== */
     .main-content {
       flex: 1;
       padding: 30px;
@@ -139,6 +154,43 @@
     }
     .main-content h3 { margin-bottom: 10px; color: var(--primary); }
     .placeholder-text { color: #777; }
+
+    /* ========== DASHBOARD STATS ========== */
+    .total-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin: 20px 0;
+      max-width: 300px;
+    }
+    .total-icon { font-size: 48px; }
+    .total-info h2 { margin: 0; font-size: 36px; color: var(--primary); }
+    .total-info p { margin: 0; font-size: 14px; color: #666; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-3px); }
+    .stat-icon { font-size: 28px; }
+    .stat-info h4 { font-size: 24px; margin: 0; color: var(--primary); }
+    .stat-info p { margin: 0; font-size: 13px; color: #666; }
 
     /* ========== MODAL PREVIEW ========== */
     #preview-modal {
@@ -189,6 +241,21 @@
       gap: 10px;
       background: #fafafa;
     }
+
+    /* ========== MODAL PROFIL ========== */
+    .modal-sm { width: 450px; height: auto; }
+    .profile-body { padding: 20px; overflow-y: auto; }
+    .profile-table { width: 100%; border-collapse: collapse; }
+    .profile-table td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
+    .profile-table td:first-child {
+      font-weight: bold;
+      width: 40%;
+      color: #555;
+    }
   </style>
 </head>
 <body>
@@ -216,16 +283,72 @@
   <section id="dashboard-section" class="hidden">
     <aside class="sidebar">
       <h2>Dokumen PAI</h2>
-      <div class="user-info">
+      <div class="user-info" onclick="openProfile()" title="Lihat Profil">
         <p id="user-name"></p>
         <p id="user-school"></p>
+        <button class="btn btn-light" style="margin-top:8px; width:100%;">Profil</button>
       </div>
       <nav id="sidebar-nav"></nav>
     </aside>
     <main class="main-content">
-      <h3>Selamat datang</h3>
-      <p class="placeholder-text">Silakan pilih dokumen pada menu di samping untuk melihat pratinjau.</p>
+      <h3>Selamat datang, <span id="dashboard-nama"></span></h3>
+      <p class="placeholder-text">Berikut ringkasan dokumen yang tersedia.</p>
       <div id="loading-templates" class="spinner hidden"></div>
+      
+      <!-- Kartu Total Besar -->
+      <div id="total-card" class="total-card hidden">
+        <div class="total-icon">📚</div>
+        <div class="total-info">
+          <h2 id="stat-total">0</h2>
+          <p>Total Dokumen</p>
+        </div>
+      </div>
+
+      <!-- Grid Kategori -->
+      <div id="stats-container" class="stats-grid hidden">
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-info">
+            <h4 id="stat-cp">0</h4>
+            <p>CP</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🗺️</div>
+          <div class="stat-info">
+            <h4 id="stat-atp">0</h4>
+            <p>ATP</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📘</div>
+          <div class="stat-info">
+            <h4 id="stat-rpp">0</h4>
+            <p>RPP</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-info">
+            <h4 id="stat-prota">0</h4>
+            <p>Prota</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🗓️</div>
+          <div class="stat-info">
+            <h4 id="stat-promes">0</h4>
+            <p>Promes</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📁</div>
+          <div class="stat-info">
+            <h4 id="stat-lainnya">0</h4>
+            <p>Dokumen Lain</p>
+          </div>
+        </div>
+      </div>
     </main>
   </section>
 
@@ -246,6 +369,30 @@
     </div>
   </div>
 
+  <!-- ========== MODAL PROFIL ========== -->
+  <div id="profile-modal" class="hidden">
+    <div class="modal-box modal-sm">
+      <div class="modal-header">
+        <h4>Profil Pengguna</h4>
+        <button class="btn btn-close" onclick="closeProfile()">✕</button>
+      </div>
+      <div class="modal-body profile-body">
+        <table class="profile-table">
+          <tr><td>Nama Guru</td><td id="prof-nama-guru"></td></tr>
+          <tr><td>NIP Guru</td><td id="prof-nip-guru"></td></tr>
+          <tr><td>Nama Sekolah</td><td id="prof-nama-sekolah"></td></tr>
+          <tr><td>Kepala Sekolah</td><td id="prof-kepala-sekolah"></td></tr>
+          <tr><td>NIP Kepala Sekolah</td><td id="prof-nip-kepala"></td></tr>
+          <tr><td>Kota</td><td id="prof-kota"></td></tr>
+          <tr><td>Tanggal</td><td id="prof-tanggal"></td></tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ================== KONFIGURASI ==================
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwuTUbmIfn--kitwVwnjcDtIYeSppW7JPMFHHdWaerO1wAc64t5kTF6Alp8qygMIo2r8Q/exec';
@@ -254,9 +401,9 @@
     // ================== STATE ==================
     let currentUser = null;
     let currentTemplates = [];
-    let currentDocFile = '';      // file html yang sedang dipreview
+    let currentDocFile = '';
     let currentDocTitle = '';
-    let currentDocHtml = '';      // tidak dipakai untuk server-side, hanya untuk preview
+    let currentDocHtml = '';
 
     // ================== INISIALISASI ==================
     document.addEventListener('DOMContentLoaded', () => {
@@ -279,6 +426,7 @@
       document.getElementById('dashboard-section').classList.remove('hidden');
       document.getElementById('user-name').textContent = currentUser.NAMA_GURU || 'Guru';
       document.getElementById('user-school').textContent = currentUser.NAMA_SEKOLAH || 'Sekolah';
+      document.getElementById('dashboard-nama').textContent = currentUser.NAMA_GURU || 'Guru';
       loadTemplates();
     }
 
@@ -341,51 +489,102 @@
       spinner.classList.toggle('hidden', !show);
     }
 
-    // ================== RENDER SIDEBAR ==================
+    // ================== RENDER SIDEBAR MULTI-LEVEL ==================
     function renderSidebar(templates) {
       const nav = document.getElementById('sidebar-nav');
       nav.innerHTML = '';
 
-      // Kelompokkan berdasarkan kelas
-      const groups = {};
+      // 1. Kelompokkan berdasarkan kelas, lalu kategori
+      const kelasGroups = {};
       templates.forEach(tpl => {
         const kelas = tpl.KELAS || 'Lainnya';
-        if (!groups[kelas]) groups[kelas] = [];
-        groups[kelas].push(tpl);
+        const kategori = tpl.KATEGORI || 'Umum';
+        if (!kelasGroups[kelas]) kelasGroups[kelas] = {};
+        if (!kelasGroups[kelas][kategori]) kelasGroups[kelas][kategori] = [];
+        kelasGroups[kelas][kategori].push(tpl);
       });
 
-      Object.keys(groups).sort((a,b) => a.localeCompare(b, undefined, {numeric:true})).forEach(kelas => {
-        const groupDiv = document.createElement('div');
-        groupDiv.className = 'kelas-group';
+      // 2. Render Level 1 (Kelas)
+      Object.keys(kelasGroups).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).forEach(kelas => {
+        const kelasDiv = document.createElement('div');
+        kelasDiv.className = 'kelas-group';
 
-        const toggleBtn = document.createElement('button');
-        toggleBtn.className = 'kelas-toggle';
-        toggleBtn.textContent = `Kelas ${kelas}`;
-        toggleBtn.onclick = () => {
-          const list = toggleBtn.nextElementSibling;
-          list.classList.toggle('hidden');
+        const kelasToggle = document.createElement('button');
+        kelasToggle.className = 'kelas-toggle';
+        kelasToggle.textContent = `Kelas ${kelas}`;
+        kelasToggle.onclick = () => {
+          kelasToggle.nextElementSibling.classList.toggle('hidden');
         };
 
-        const list = document.createElement('ul');
-        list.className = 'dokumen-list hidden'; // sembunyikan default
+        const kategoriContainer = document.createElement('div');
+        kategoriContainer.className = 'kategori-container hidden';
 
-        groups[kelas].forEach(tpl => {
-          const li = document.createElement('li');
-          const a = document.createElement('a');
-          a.href = '#';
-          a.textContent = tpl.JUDUL || tpl.ID_TEMPLATE;
-          a.onclick = (e) => {
-            e.preventDefault();
-            openPreview(tpl);
+        // 3. Render Level 2 (Kategori)
+        Object.keys(kelasGroups[kelas]).sort().forEach(kategori => {
+          const kategoriDiv = document.createElement('div');
+          kategoriDiv.className = 'kategori-group';
+
+          const kategoriToggle = document.createElement('button');
+          kategoriToggle.className = 'kategori-toggle';
+          kategoriToggle.textContent = kategori;
+          kategoriToggle.onclick = () => {
+            kategoriToggle.nextElementSibling.classList.toggle('hidden');
           };
-          li.appendChild(a);
-          list.appendChild(li);
+
+          const dokumenList = document.createElement('ul');
+          dokumenList.className = 'dokumen-list hidden';
+
+          // 4. Render Level 3 (Dokumen)
+          kelasGroups[kelas][kategori].forEach(tpl => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = '#';
+            a.textContent = tpl.JUDUL || tpl.ID_TEMPLATE;
+            a.onclick = (e) => {
+              e.preventDefault();
+              openPreview(tpl);
+            };
+            li.appendChild(a);
+            dokumenList.appendChild(li);
+          });
+
+          kategoriDiv.appendChild(kategoriToggle);
+          kategoriDiv.appendChild(dokumenList);
+          kategoriContainer.appendChild(kategoriDiv);
         });
 
-        groupDiv.appendChild(toggleBtn);
-        groupDiv.appendChild(list);
-        nav.appendChild(groupDiv);
+        kelasDiv.appendChild(kelasToggle);
+        kelasDiv.appendChild(kategoriContainer);
+        nav.appendChild(kelasDiv);
       });
+
+      // Panggil statistik setelah sidebar dirender
+      renderDashboardStats(templates);
+    }
+
+    // ================== DASHBOARD STATS ==================
+    function renderDashboardStats(templates) {
+      const counts = { CP: 0, ATP: 0, RPP: 0, PROTA: 0, PROMES: 0, LAINNYA: 0 };
+      templates.forEach(tpl => {
+        const kat = (tpl.KATEGORI || '').toUpperCase().trim();
+        if (kat === 'CP') counts.CP++;
+        else if (kat === 'ATP') counts.ATP++;
+        else if (kat === 'RPP') counts.RPP++;
+        else if (kat === 'PROTA' || kat === 'PROGRAM TAHUNAN') counts.PROTA++;
+        else if (kat === 'PROMES' || kat === 'PROGRAM SEMESTER') counts.PROMES++;
+        else counts.LAINNYA++;
+      });
+
+      document.getElementById('stat-total').textContent = templates.length;
+      document.getElementById('total-card').classList.remove('hidden');
+
+      document.getElementById('stat-cp').textContent = counts.CP;
+      document.getElementById('stat-atp').textContent = counts.ATP;
+      document.getElementById('stat-rpp').textContent = counts.RPP;
+      document.getElementById('stat-prota').textContent = counts.PROTA;
+      document.getElementById('stat-promes').textContent = counts.PROMES;
+      document.getElementById('stat-lainnya').textContent = counts.LAINNYA;
+      document.getElementById('stats-container').classList.remove('hidden');
     }
 
     // ================== PREVIEW ==================
@@ -406,7 +605,7 @@
 
         currentDocFile = filePath;
         currentDocTitle = template.JUDUL || 'Dokumen';
-        currentDocHtml = html; // untuk preview
+        currentDocHtml = html;
 
         document.getElementById('preview-title').textContent = currentDocTitle;
         document.getElementById('preview-frame').srcdoc = html;
@@ -470,6 +669,40 @@
     function downloadDOCX() {
       downloadFromGAS('generateDocx');
     }
+
+    // ================== PROFIL ==================
+    function openProfile() {
+      if (!currentUser) return;
+      document.getElementById('prof-nama-guru').textContent = currentUser.NAMA_GURU || '-';
+      document.getElementById('prof-nip-guru').textContent = currentUser.NIP_GURU || '-';
+      document.getElementById('prof-nama-sekolah').textContent = currentUser.NAMA_SEKOLAH || '-';
+      document.getElementById('prof-kepala-sekolah').textContent = currentUser.NAMA_KEPALA_SEKOLAH || '-';
+      document.getElementById('prof-nip-kepala').textContent = currentUser.NIP_KEPALA_SEKOLAH || '-';
+      document.getElementById('prof-kota').textContent = currentUser.KOTA || '-';
+      document.getElementById('prof-tanggal').textContent = currentUser.TANGGAL || '-';
+      document.getElementById('profile-modal').classList.remove('hidden');
+    }
+
+    function closeProfile() {
+      document.getElementById('profile-modal').classList.add('hidden');
+    }
+
+    function logout() {
+      sessionStorage.removeItem('user');
+      currentUser = null;
+      currentTemplates = [];
+      closeProfile();
+      closePreview();
+      showLogin();
+    }
+
+    // Tutup modal saat klik overlay
+    document.getElementById('profile-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeProfile();
+    });
+    document.getElementById('preview-modal').addEventListener('click', function(e) {
+      if (e.target === this) closePreview();
+    });
   </script>
 </body>
 </html>
