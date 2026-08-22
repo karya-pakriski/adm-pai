@@ -84,6 +84,63 @@
     .btn-close { background: #95a5a6; }
     .btn-light { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
 
+    /* ========== LOADER & TOAST ========== */
+    .btn-loading {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    .btn-loading .spinner-btn {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .loader-inline {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(0,0,0,0.1);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    #toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toast {
+      padding: 12px 20px;
+      border-radius: 6px;
+      color: white;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      animation: slideIn 0.3s ease, fadeOut 0.5s ease 3s forwards;
+      max-width: 350px;
+    }
+    .toast-success { background: #2ecc71; }
+    .toast-error { background: #e74c3c; }
+    .toast-info { background: #3498db; }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; transform: translateY(-10px); }
+    }
+
     /* ========== DASHBOARD ========== */
     #dashboard-section {
       display: flex;
@@ -102,18 +159,32 @@
       font-size: 18px;
       border-bottom: 1px solid var(--sidebar-hover);
     }
-    .user-info {
-      padding: 15px 20px;
+
+    /* ========== MENU UTAMA SIDEBAR ========== */
+    .menu-top {
+      list-style: none;
+      padding: 10px 0;
       border-bottom: 1px solid var(--sidebar-hover);
-      margin-bottom: 10px;
-      background: rgba(255,255,255,0.05);
+    }
+    .menu-item {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 12px 20px;
+      background: transparent;
+      color: white;
+      border: none;
       cursor: pointer;
+      font-size: 15px;
       transition: background var(--transition);
     }
-    .user-info:hover { background: rgba(255,255,255,0.1); }
-    .user-info p { font-size: 13px; line-height: 1.5; }
+    .menu-item:hover { background: var(--sidebar-hover); }
+    .menu-item.active { background: var(--primary); }
 
-    /* ========== SIDEBAR MULTI-LEVEL ========== */
+    /* ========== NAVIGASI KELAS ========== */
+    #kelas-nav {
+      padding-bottom: 20px;
+    }
     .kelas-toggle,
     .kategori-toggle {
       width: 100%;
@@ -130,7 +201,7 @@
     .kelas-toggle:hover,
     .kategori-toggle:hover { background: var(--sidebar-hover); }
     .kategori-toggle {
-      padding-left: 35px; /* lebih menjorok */
+      padding-left: 35px;
       background: #2c3e50;
       font-size: 14px;
     }
@@ -227,6 +298,7 @@
       flex: 1;
       padding: 0;
       overflow: hidden;
+      position: relative;
     }
     .modal-body iframe {
       width: 100%;
@@ -256,6 +328,16 @@
       width: 40%;
       color: #555;
     }
+    .loader-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
@@ -282,14 +364,15 @@
   <!-- ========== SECTION DASHBOARD ========== -->
   <section id="dashboard-section" class="hidden">
     <aside class="sidebar">
-      <h2>Dokumen PAI</h2>
-      <div class="user-info" onclick="openProfile()" title="Lihat Profil">
-        <p id="user-name"></p>
-        <p id="user-school"></p>
-        <button class="btn btn-light" style="margin-top:8px; width:100%;">Profil</button>
-      </div>
-      <nav id="sidebar-nav"></nav>
+      <h2>Menu</h2>
+      <ul class="menu-top">
+        <li><button class="menu-item active" data-menu="dashboard">🏠 Dashboard</button></li>
+        <li><button class="menu-item" data-menu="kelas">📁 Kelas</button></li>
+        <li><button class="menu-item" data-menu="pengaturan">⚙️ Pengaturan</button></li>
+      </ul>
+      <nav id="kelas-nav" class="hidden"></nav>
     </aside>
+
     <main class="main-content">
       <h3>Selamat datang, <span id="dashboard-nama"></span></h3>
       <p class="placeholder-text">Berikut ringkasan dokumen yang tersedia.</p>
@@ -360,6 +443,9 @@
         <button class="btn btn-close" onclick="closePreview()">✕</button>
       </div>
       <div class="modal-body">
+        <div id="preview-loader" class="loader-overlay hidden">
+          <div class="loader-inline"></div> Memuat pratinjau...
+        </div>
         <iframe id="preview-frame" sandbox="allow-same-origin"></iframe>
       </div>
       <div class="modal-footer">
@@ -373,7 +459,7 @@
   <div id="profile-modal" class="hidden">
     <div class="modal-box modal-sm">
       <div class="modal-header">
-        <h4>Profil Pengguna</h4>
+        <h4>Pengaturan & Profil</h4>
         <button class="btn btn-close" onclick="closeProfile()">✕</button>
       </div>
       <div class="modal-body profile-body">
@@ -393,6 +479,9 @@
     </div>
   </div>
 
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
   <script>
     // ================== KONFIGURASI ==================
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwuTUbmIfn--kitwVwnjcDtIYeSppW7JPMFHHdWaerO1wAc64t5kTF6Alp8qygMIo2r8Q/exec';
@@ -404,6 +493,7 @@
     let currentDocFile = '';
     let currentDocTitle = '';
     let currentDocHtml = '';
+    let currentMenu = 'dashboard';
 
     // ================== INISIALISASI ==================
     document.addEventListener('DOMContentLoaded', () => {
@@ -414,6 +504,21 @@
       } else {
         showLogin();
       }
+
+      // Event listener untuk menu utama
+      document.querySelectorAll('.menu-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+          setActiveMenu(btn.dataset.menu);
+        });
+      });
+
+      // Tutup modal saat klik overlay
+      document.getElementById('profile-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeProfile();
+      });
+      document.getElementById('preview-modal').addEventListener('click', function(e) {
+        if (e.target === this) closePreview();
+      });
     });
 
     function showLogin() {
@@ -424,10 +529,65 @@
     function showDashboard() {
       document.getElementById('login-section').classList.add('hidden');
       document.getElementById('dashboard-section').classList.remove('hidden');
-      document.getElementById('user-name').textContent = currentUser.NAMA_GURU || 'Guru';
-      document.getElementById('user-school').textContent = currentUser.NAMA_SEKOLAH || 'Sekolah';
       document.getElementById('dashboard-nama').textContent = currentUser.NAMA_GURU || 'Guru';
       loadTemplates();
+    }
+
+    // ================== MENU UTAMA ==================
+    function setActiveMenu(menu) {
+      currentMenu = menu;
+      document.querySelectorAll('.menu-item').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.menu === menu);
+      });
+
+      const kelasNav = document.getElementById('kelas-nav');
+      if (menu === 'kelas') {
+        kelasNav.classList.remove('hidden');
+      } else {
+        kelasNav.classList.add('hidden');
+      }
+
+      if (menu === 'pengaturan') {
+        openProfile();
+      }
+    }
+
+    // ================== NOTIFIKASI TOAST ==================
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.remove();
+      }, 3500);
+    }
+
+    // ================== LOADER HELPERS ==================
+    function setButtonLoading(btn, isLoading, loadingText = 'Memproses...') {
+      if (isLoading) {
+        btn.dataset.originalText = btn.textContent;
+        btn.textContent = '';
+        btn.classList.add('btn-loading');
+        btn.innerHTML = `<span class="spinner-btn"></span> ${loadingText}`;
+        btn.disabled = true;
+      } else {
+        btn.textContent = btn.dataset.originalText || btn.textContent;
+        btn.classList.remove('btn-loading');
+        btn.disabled = false;
+      }
+    }
+
+    function showContentLoader(elementId, show) {
+      const el = document.getElementById(elementId);
+      if (show) {
+        el.innerHTML = '<div class="loader-inline"></div> Memuat...';
+        el.classList.remove('hidden');
+      } else {
+        el.innerHTML = '';
+        el.classList.add('hidden');
+      }
     }
 
     // ================== LOGIN ==================
@@ -435,7 +595,13 @@
       e.preventDefault();
       const id = document.getElementById('login-id').value.trim();
       const pin = document.getElementById('login-pin').value.trim();
-      if (!id || !pin) return alert('Isi ID dan PIN');
+      if (!id || !pin) {
+        showToast('Isi ID dan PIN', 'error');
+        return;
+      }
+
+      const btn = e.target.querySelector('button[type="submit"]');
+      setButtonLoading(btn, true, 'Masuk...');
 
       try {
         const url = `${GAS_URL}?action=login&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin)}`;
@@ -445,12 +611,15 @@
           currentUser = data.user;
           sessionStorage.setItem('user', JSON.stringify(currentUser));
           showDashboard();
+          showToast('Login berhasil', 'success');
         } else {
-          alert(data.error || 'Login gagal');
+          throw new Error(data.error || 'Login gagal');
         }
       } catch (err) {
         console.error(err);
-        alert('Terjadi kesalahan saat login');
+        showToast(err.message, 'error');
+      } finally {
+        setButtonLoading(btn, false);
       }
     });
 
@@ -462,7 +631,7 @@
         currentTemplates = JSON.parse(cached);
         renderSidebar(currentTemplates);
       } else {
-        showLoadingTemplates(true);
+        showContentLoader('loading-templates', true);
       }
 
       try {
@@ -478,20 +647,15 @@
         }
       } catch (err) {
         console.error(err);
-        if (!cached) alert('Gagal memuat daftar template');
+        showToast(err.message, 'error');
       } finally {
-        showLoadingTemplates(false);
+        showContentLoader('loading-templates', false);
       }
-    }
-
-    function showLoadingTemplates(show) {
-      const spinner = document.getElementById('loading-templates');
-      spinner.classList.toggle('hidden', !show);
     }
 
     // ================== RENDER SIDEBAR MULTI-LEVEL ==================
     function renderSidebar(templates) {
-      const nav = document.getElementById('sidebar-nav');
+      const nav = document.getElementById('kelas-nav');
       nav.innerHTML = '';
 
       // 1. Kelompokkan berdasarkan kelas, lalu kategori
@@ -590,6 +754,10 @@
     // ================== PREVIEW ==================
     async function openPreview(template) {
       if (!currentUser) return;
+      const loader = document.getElementById('preview-loader');
+      loader.classList.remove('hidden');
+      document.getElementById('preview-modal').classList.remove('hidden');
+
       try {
         const filePath = template.FILE_HTML;
         const url = `${GITHUB_RAW_BASE}${filePath}`;
@@ -609,10 +777,13 @@
 
         document.getElementById('preview-title').textContent = currentDocTitle;
         document.getElementById('preview-frame').srcdoc = html;
-        document.getElementById('preview-modal').classList.remove('hidden');
+        showToast('Pratinjau dimuat', 'success');
       } catch (err) {
         console.error(err);
-        alert('Gagal memuat template');
+        showToast('Gagal memuat template', 'error');
+        document.getElementById('preview-modal').classList.add('hidden');
+      } finally {
+        loader.classList.add('hidden');
       }
     }
 
@@ -628,9 +799,7 @@
     async function downloadFromGAS(action) {
       if (!currentUser || !currentDocFile) return;
       const btn = event.target;
-      const originalText = btn.textContent;
-      btn.textContent = 'Memproses...';
-      btn.disabled = true;
+      setButtonLoading(btn, true, 'Memproses...');
 
       try {
         const url = `${GAS_URL}?action=${action}&id=${encodeURIComponent(currentUser.ID)}&file=${encodeURIComponent(currentDocFile)}`;
@@ -653,12 +822,12 @@
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(a.href);
+        showToast('Unduhan dimulai', 'success');
       } catch (err) {
         console.error(err);
-        alert(err.message);
+        showToast(err.message, 'error');
       } finally {
-        btn.textContent = originalText;
-        btn.disabled = false;
+        setButtonLoading(btn, false);
       }
     }
 
@@ -670,7 +839,7 @@
       downloadFromGAS('generateDocx');
     }
 
-    // ================== PROFIL ==================
+    // ================== PROFIL & LOGOUT ==================
     function openProfile() {
       if (!currentUser) return;
       document.getElementById('prof-nama-guru').textContent = currentUser.NAMA_GURU || '-';
@@ -693,16 +862,10 @@
       currentTemplates = [];
       closeProfile();
       closePreview();
+      setActiveMenu('dashboard');
       showLogin();
+      showToast('Logout berhasil', 'info');
     }
-
-    // Tutup modal saat klik overlay
-    document.getElementById('profile-modal').addEventListener('click', function(e) {
-      if (e.target === this) closeProfile();
-    });
-    document.getElementById('preview-modal').addEventListener('click', function(e) {
-      if (e.target === this) closePreview();
-    });
   </script>
 </body>
 </html>
