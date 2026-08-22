@@ -1,620 +1,514 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generator Dokumen PAI</title>
-  <style>
-    /* ========== RESET & VARIABEL ========== */
-    :root {
-      --primary: #2848A1;
-      --primary-dark: #1e3570;
-      --sidebar-bg: #2c3e50;
-      --sidebar-hover: #3e5770;
-      --accent: #1abc9c;
-      --text-light: #ecf0f1;
-      --danger: #e74c3c;
-      --info: #2980b9;
-      --bg: #f5f6fa;
-      --modal-overlay: rgba(0,0,0,0.5);
-      --box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      --border-radius: 8px;
-      --transition: 0.2s ease;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: var(--bg);
-      color: #333;
-      height: 100vh;
-      overflow: hidden;
-    }
-    .hidden { display: none !important; }
-    .spinner {
-      border: 3px solid rgba(0,0,0,0.1);
-      border-top: 3px solid var(--primary);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 20px auto;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adm. PAI — Generator Dokumen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ DESIGN TOKENS ============ */
+  :root{
+    --ink:#1B2A28; --ink-soft:#5B6C67; --ink-faint:#8C9C97;
+    --bg:#F6F4EE; --surface:#FFFFFF; --surface-alt:#FBF9F3;
+    --border:#E3DFD2; --border-soft:#ECE9DE;
+    --primary:#0E5C4E; --primary-dark:#093F35; --primary-soft:#E3F0EC;
+    --gold:#B8912E; --gold-soft:#F5EDD6;
+    --sidebar-bg:#0C1F1B; --sidebar-bg-alt:#15342D;
+    --sidebar-text:#D3E4DE; --sidebar-text-dim:#7FA097;
+    --danger:#B3452F; --danger-dark:#94341F;
+    --info:#2B6F86; --info-dark:#205567;
+    --success:#3D8361;
+    --radius-lg:20px; --radius:14px; --radius-sm:9px;
+    --shadow-sm:0 2px 10px rgba(12,31,27,.06);
+    --shadow-md:0 14px 34px rgba(12,31,27,.12);
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, monospace;
+    --ease:cubic-bezier(.4,0,.2,1);
+  }
 
-    /* ========== LOGIN ========== */
-    #login-section {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .login-card {
-      background: white;
-      padding: 40px;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      width: 380px;
-      text-align: center;
-    }
-    .login-card h1 { color: var(--primary); margin-bottom: 10px; }
-    .login-card p { margin-bottom: 20px; font-size: 14px; color: #666; }
-    .form-group { margin-bottom: 15px; text-align: left; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background var(--transition);
-      color: white;
-    }
-    .btn-primary { background: var(--primary); width: 100%; }
-    .btn-primary:hover { background: var(--primary-dark); }
-    .btn-danger { background: var(--danger); }
-    .btn-info { background: var(--info); }
-    .btn-close { background: #95a5a6; }
-    .btn-light { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; }
+  body{
+    font-family:var(--font-body); background:var(--bg); color:var(--ink);
+    overflow:hidden; -webkit-font-smoothing:antialiased;
+  }
+  .hidden{ display:none !important; }
 
-    /* ========== LOADER & TOAST ========== */
-    .btn-loading {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
-    .btn-loading .spinner-btn {
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top: 2px solid white;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    .loader-inline {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(0,0,0,0.1);
-      border-top: 3px solid var(--primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
-    #toast-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .toast {
-      padding: 12px 20px;
-      border-radius: 6px;
-      color: white;
-      font-size: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      animation: slideIn 0.3s ease, fadeOut 0.5s ease 3s forwards;
-      max-width: 350px;
-    }
-    .toast-success { background: #2ecc71; }
-    .toast-error { background: #e74c3c; }
-    .toast-info { background: #3498db; }
-    @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes fadeOut {
-      to { opacity: 0; transform: translateY(-10px); }
-    }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:2px; border-radius:4px; }
 
-    /* ========== DASHBOARD ========== */
-    #dashboard-section {
-      display: flex;
-      height: 100vh;
-    }
-    .sidebar {
-      width: 280px;
-      background: var(--sidebar-bg);
-      color: white;
-      overflow-y: auto;
-      flex-shrink: 0;
-    }
-    .sidebar h2 {
-      padding: 20px;
-      text-align: center;
-      font-size: 18px;
-      border-bottom: 1px solid var(--sidebar-hover);
-    }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  }
 
-    /* ========== MENU UTAMA SIDEBAR ========== */
-    .menu-top {
-      list-style: none;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--sidebar-hover);
-    }
-    .menu-item {
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 12px 20px;
-      background: transparent;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 15px;
-      transition: background var(--transition);
-    }
-    .menu-item:hover { background: var(--sidebar-hover); }
-    .menu-item.active { background: var(--primary); }
+  /* ============ SCROLLBAR MODERN ============ */
+  *{ scrollbar-width:thin; scrollbar-color:var(--primary-soft) transparent; }
+  ::-webkit-scrollbar{ width:8px; height:8px; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+  ::-webkit-scrollbar-thumb{ background:#C7DCD5; border-radius:999px; }
+  ::-webkit-scrollbar-thumb:hover{ background:var(--primary); }
+  .sidebar ::-webkit-scrollbar-thumb{ background:rgba(211,228,222,.25); }
+  .sidebar ::-webkit-scrollbar-thumb:hover{ background:rgba(211,228,222,.45); }
+  .sidebar{ scrollbar-color:rgba(211,228,222,.25) transparent; }
 
-    /* ========== NAVIGASI KELAS ========== */
-    #kelas-nav {
-      padding-bottom: 20px;
-    }
-    .kelas-toggle,
-    .kategori-toggle {
-      width: 100%;
-      text-align: left;
-      padding: 12px 20px;
-      background: #34495e;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 15px;
-      transition: background var(--transition);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .kelas-toggle:hover,
-    .kategori-toggle:hover { background: var(--sidebar-hover); }
-    .kategori-toggle {
-      padding-left: 35px;
-      background: #2c3e50;
-      font-size: 14px;
-    }
-    .kategori-container { background: #263544; }
-    .dokumen-list { list-style: none; }
-    .dokumen-list li a {
-      display: block;
-      padding: 10px 45px;
-      color: var(--text-light);
-      text-decoration: none;
-      font-size: 13px;
-      transition: background var(--transition);
-    }
-    .dokumen-list li a:hover { background: var(--accent); color: white; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  @keyframes slideIn{ from{ transform:translateX(110%); opacity:0; } to{ transform:translateX(0); opacity:1; } }
+  @keyframes fadeOut{ to{ opacity:0; transform:translateY(-8px); } }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
 
-    /* ========== MAIN CONTENT ========== */
-    .main-content {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
-    }
-    .main-content h3 { margin-bottom: 10px; color: var(--primary); }
-    .placeholder-text { color: #777; }
+  .spinner{
+    border:3px solid rgba(14,92,78,.12); border-top:3px solid var(--primary);
+    border-radius:50%; width:38px; height:38px; animation:spin .9s linear infinite; margin:24px auto;
+  }
 
-    /* ========== DASHBOARD STATS ========== */
-    .total-card {
-      background: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin: 20px 0;
-      max-width: 300px;
-    }
-    .total-icon { font-size: 48px; }
-    .total-info h2 { margin: 0; font-size: 36px; color: var(--primary); }
-    .total-info p { margin: 0; font-size: 14px; color: #666; }
+  /* ============ SIGNATURE MOTIF (rub el-hizb, dipakai hemat) ============ */
+  .motif-dark{
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><g fill='none' stroke='rgb(184,145,46)' stroke-width='0.6' opacity='0.5'><rect x='14' y='14' width='28' height='28'/><rect x='14' y='14' width='28' height='28' transform='rotate(45 28 28)'/></g></svg>");
+    background-size:64px 64px;
+  }
+  .motif-light{
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><g fill='none' stroke='rgb(14,92,78)' stroke-width='0.6' opacity='0.16'><rect x='14' y='14' width='28' height='28'/><rect x='14' y='14' width='28' height='28' transform='rotate(45 28 28)'/></g></svg>");
+    background-size:64px 64px;
+  }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
-      margin-top: 10px;
-    }
-    .stat-card {
-      background: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: transform 0.2s;
-    }
-    .stat-card:hover { transform: translateY(-3px); }
-    .stat-icon { font-size: 28px; }
-    .stat-info h4 { font-size: 24px; margin: 0; color: var(--primary); }
-    .stat-info p { margin: 0; font-size: 13px; color: #666; }
+  .brand-mark{
+    width:42px; height:42px; border-radius:12px; flex-shrink:0;
+    background:linear-gradient(155deg, var(--primary), var(--primary-dark));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--shadow-sm);
+  }
+  .brand-mark svg{ width:22px; height:22px; }
 
-    /* ========== MODAL PREVIEW ========== */
-    #preview-modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: var(--modal-overlay);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    .modal-box {
-      background: white;
-      width: 90%;
-      max-width: 900px;
-      height: 90%;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    .modal-header {
-      padding: 15px 20px;
-      border-bottom: 1px solid #ddd;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #fafafa;
-    }
-    .modal-header h4 { margin: 0; font-size: 18px; color: var(--primary); }
-    .modal-body {
-      flex: 1;
-      padding: 0;
-      overflow: hidden;
-      position: relative;
-    }
-    .modal-body iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .modal-footer {
-      padding: 15px 20px;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      background: #fafafa;
-    }
+  /* ============ LOGIN ============ */
+  #login-section{ display:flex; align-items:center; justify-content:center; height:100vh; padding:20px; }
+  .login-card{
+    position:relative; background:var(--surface); width:400px; max-width:100%;
+    border-radius:var(--radius-lg); box-shadow:var(--shadow-md); overflow:hidden;
+    border:1px solid var(--border-soft); animation:fadeUp .5s var(--ease);
+  }
+  .login-hero{
+    position:relative; padding:34px 32px 28px; background:var(--primary-dark); color:#fff; overflow:hidden;
+  }
+  .login-hero::before{ content:''; position:absolute; inset:0; }
+  .login-hero-inner{ position:relative; z-index:1; display:flex; align-items:center; gap:14px; }
+  .login-hero h1{ font-family:var(--font-display); font-weight:600; font-size:21px; letter-spacing:.2px; }
+  .login-hero p{ font-size:12.5px; color:rgba(255,255,255,.68); margin-top:2px; }
 
-    /* ========== MODAL PROFIL ========== */
-    .modal-sm { width: 450px; height: auto; }
-    .profile-body { padding: 20px; overflow-y: auto; }
-    .profile-table { width: 100%; border-collapse: collapse; }
-    .profile-table td {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
+  .login-body{ padding:28px 32px 32px; }
+  .form-group{ margin-bottom:16px; text-align:left; }
+  .form-group label{ display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:var(--ink-soft); }
+  .form-group input{
+    width:100%; padding:12px 14px; border:1.5px solid var(--border); border-radius:var(--radius-sm);
+    font-size:14px; font-family:var(--font-body); background:var(--surface-alt);
+    transition:border-color .15s var(--ease), background .15s var(--ease);
+  }
+  .form-group input:focus{ border-color:var(--primary); background:#fff; outline:none; }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:11px 20px; border:none; border-radius:var(--radius-sm); cursor:pointer;
+    font-size:13.5px; font-weight:600; font-family:var(--font-body); color:#fff;
+    transition:filter .15s var(--ease), transform .1s var(--ease);
+  }
+  .btn:active{ transform:translateY(1px); }
+  .btn:hover{ filter:brightness(1.08); }
+  .btn-primary{ background:var(--primary); width:100%; padding:12px; }
+  .btn-danger{ background:var(--danger); }
+  .btn-info{ background:var(--info); }
+  .btn-close{ background:var(--surface-alt); color:var(--ink-soft); border:1.5px solid var(--border); }
+  .btn-close:hover{ filter:none; background:var(--border-soft); }
+
+  .btn-loading{ cursor:not-allowed; opacity:.75; }
+  .spinner-btn{
+    width:14px; height:14px; border:2px solid rgba(255,255,255,.35); border-top:2px solid #fff;
+    border-radius:50%; animation:spin .7s linear infinite;
+  }
+
+  /* ============ TOAST ============ */
+  #toast-container{ position:fixed; top:20px; right:20px; z-index:9999; display:flex; flex-direction:column; gap:10px; }
+  .toast{
+    padding:13px 18px; border-radius:var(--radius-sm); color:#fff; font-size:13.5px; font-weight:500;
+    box-shadow:var(--shadow-md); max-width:340px;
+    animation:slideIn .3s var(--ease), fadeOut .4s ease 3s forwards;
+  }
+  .toast-success{ background:var(--success); }
+  .toast-error{ background:var(--danger); }
+  .toast-info{ background:var(--info); }
+
+  /* ============ DASHBOARD SHELL ============ */
+  #dashboard-section{ display:flex; height:100vh; }
+
+  .topbar-mobile{
+    display:none; align-items:center; gap:12px; padding:14px 18px;
+    background:var(--surface); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:20;
+  }
+  .hamburger{
+    width:38px; height:38px; border-radius:var(--radius-sm); border:1px solid var(--border);
+    background:var(--surface); display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .hamburger span, .hamburger span::before, .hamburger span::after{
+    display:block; width:16px; height:2px; background:var(--ink); position:relative; border-radius:2px;
+  }
+  .hamburger span::before, .hamburger span::after{ content:''; position:absolute; }
+  .hamburger span::before{ top:-5px; } .hamburger span::after{ top:5px; }
+
+  .sidebar{
+    width:272px; background:var(--sidebar-bg); color:var(--sidebar-text);
+    display:flex; flex-direction:column; flex-shrink:0; overflow-y:auto;
+    transition:transform .25s var(--ease);
+  }
+  .sidebar-header{
+    position:relative; padding:22px 20px 20px; display:flex; align-items:center; gap:12px;
+    border-bottom:1px solid rgba(211,228,222,.10); background:var(--sidebar-bg-alt);
+  }
+  .sidebar-header::after{ content:''; position:absolute; inset:0; pointer-events:none; }
+  .sidebar-header-text h2{ font-family:var(--font-display); font-size:16.5px; font-weight:600; color:#fff; }
+  .sidebar-header-text p{ font-size:11px; color:var(--sidebar-text-dim); margin-top:1px; letter-spacing:.3px; }
+
+  .sidebar-menu{ flex:1; overflow-y:auto; padding:14px 0; }
+  .menu-top{ list-style:none; }
+  .menu-item{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left;
+    padding:11px 20px; background:transparent; color:var(--sidebar-text); border:none;
+    cursor:pointer; font-size:14px; font-weight:500; font-family:var(--font-body);
+    border-left:3px solid transparent; transition:background .15s var(--ease), border-color .15s var(--ease);
+  }
+  .menu-item:hover{ background:rgba(255,255,255,.05); }
+  .menu-item.active{ background:rgba(255,255,255,.06); border-left-color:var(--gold); color:#fff; }
+  .menu-icon{ font-size:16px; width:18px; text-align:center; }
+
+  .kelas-nav{ background:rgba(0,0,0,.14); }
+  .kelas-toggle, .kategori-toggle{
+    width:100%; text-align:left; padding:10px 20px; background:transparent; color:var(--sidebar-text);
+    border:none; cursor:pointer; font-size:13px; font-weight:500;
+    border-bottom:1px solid rgba(255,255,255,.05); display:flex; align-items:center; justify-content:space-between;
+    transition:background .15s var(--ease);
+  }
+  .kelas-toggle:hover, .kategori-toggle:hover{ background:rgba(255,255,255,.06); }
+  .kelas-toggle{ padding-left:20px; font-weight:600; color:#fff; }
+  .kategori-toggle{ padding-left:38px; font-size:12.5px; color:var(--sidebar-text-dim); }
+  .chev{ font-size:10px; opacity:.7; transition:transform .2s var(--ease); }
+  .kategori-container{ background:rgba(0,0,0,.10); }
+  .dokumen-list{ list-style:none; }
+  .dokumen-list li a{
+    display:block; padding:9px 48px; color:var(--sidebar-text); text-decoration:none;
+    font-size:12.5px; border-left:2px solid transparent; transition:background .15s var(--ease), color .15s var(--ease);
+  }
+  .dokumen-list li a:hover{ background:rgba(184,145,46,.12); color:var(--gold); border-left-color:var(--gold); }
+
+  .sidebar-footer{ padding:16px 20px; border-top:1px solid rgba(255,255,255,.08); }
+  .btn-logout{
+    width:100%; background:transparent; color:#E7B8A9; border:1.5px solid rgba(231,184,169,.3);
+    padding:10px; border-radius:var(--radius-sm); font-weight:600; font-size:13px; cursor:pointer;
+    transition:background .15s var(--ease);
+  }
+  .btn-logout:hover{ background:rgba(179,69,47,.18); }
+
+  /* ============ MAIN CONTENT ============ */
+  .main-content{ flex:1; padding:34px 38px; overflow-y:auto; }
+  .main-content h3{ font-family:var(--font-display); font-size:22px; font-weight:600; margin-bottom:6px; color:var(--ink); }
+  .placeholder-text{ color:var(--ink-faint); font-size:14px; }
+  .eyebrow{ font-size:11.5px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:var(--primary); margin-bottom:6px; }
+
+  .total-card{
+    background:linear-gradient(135deg, var(--primary), var(--primary-dark)); color:#fff;
+    border-radius:var(--radius-lg); padding:24px 26px; display:flex; align-items:center; gap:20px;
+    margin:22px 0; max-width:320px; box-shadow:var(--shadow-md);
+  }
+  .total-icon{ font-size:36px; }
+  .total-info h2{ font-family:var(--font-display); font-size:38px; font-weight:600; }
+  .total-info p{ font-size:12.5px; color:rgba(255,255,255,.75); }
+
+  .stats-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:14px; margin-top:8px; }
+  .stat-card{
+    background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius);
+    padding:16px; display:flex; align-items:center; gap:12px; box-shadow:var(--shadow-sm);
+    transition:transform .18s var(--ease), box-shadow .18s var(--ease);
+  }
+  .stat-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-md); }
+  .stat-icon{
+    width:38px; height:38px; border-radius:10px; background:var(--primary-soft); color:var(--primary);
+    display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;
+  }
+  .stat-info h4{ font-family:var(--font-mono); font-size:21px; color:var(--ink); }
+  .stat-info p{ font-size:12px; color:var(--ink-soft); }
+
+  .content-card{
+    background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius-lg);
+    padding:26px; margin-bottom:20px; box-shadow:var(--shadow-sm);
+  }
+  .profile-table{ width:100%; border-collapse:collapse; }
+  .profile-table td{ padding:12px 4px; border-bottom:1px solid var(--border-soft); font-size:14px; }
+  .profile-table td:first-child{ font-weight:600; width:38%; color:var(--ink-soft); }
+  .profile-table td:last-child{ font-family:var(--font-mono); font-size:13.5px; }
+
+  .toolbar{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:14px; margin-bottom:16px; }
+  .toolbar h3{ margin:0; }
+  .toolbar-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .date-field{
+    font-size:13px; display:flex; align-items:center; gap:8px; background:var(--surface-alt);
+    border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:7px 12px; color:var(--ink-soft); font-weight:500;
+  }
+  .date-field input[type="date"]{
+    border:none; background:transparent; font-size:13px; font-family:var(--font-body); color:var(--ink); cursor:pointer;
+  }
+  .date-field input[type="date"]:focus{ outline:none; }
+
+  .preview-container{
+    width:100%; height:calc(100vh - 210px); min-height:460px; border:1px solid var(--border);
+    border-radius:var(--radius); overflow:hidden; background:#fff; box-shadow:var(--shadow-sm);
+  }
+  .preview-container iframe{ width:100%; height:100%; border:none; }
+
+  @media (max-width: 860px){
+    .topbar-mobile{ display:flex; }
+    #dashboard-section{ flex-direction:column; }
+    .sidebar{
+      position:fixed; top:0; left:0; bottom:0; z-index:30; transform:translateX(-100%);
+      box-shadow:var(--shadow-md);
     }
-    .profile-table td:first-child {
-      font-weight: bold;
-      width: 40%;
-      color: #555;
-    }
-    .loader-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(255,255,255,0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-    }
-  </style>
+    .sidebar.open{ transform:translateX(0); }
+    .main-content{ padding:22px; }
+    .preview-container{ height:calc(100vh - 260px); }
+  }
+</style>
 </head>
 <body>
 
-  <!-- ========== SECTION LOGIN ========== -->
+  <!-- ========== LOGIN ========== -->
   <section id="login-section">
     <div class="login-card">
-      <h1>Login</h1>
-      <p>Masukkan ID dan PIN untuk mengakses dokumen</p>
-      <form id="login-form">
-        <div class="form-group">
-          <label for="login-id">ID / NIP</label>
-          <input type="text" id="login-id" required autocomplete="username">
+      <div class="login-hero motif-dark">
+        <div class="login-hero-inner">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#B8912E" stroke-width="1.4">
+              <rect x="7" y="7" width="10" height="10"/>
+              <rect x="7" y="7" width="10" height="10" transform="rotate(45 12 12)"/>
+            </svg>
+          </div>
+          <div>
+            <h1>Adm. PAI</h1>
+            <p>Generator Dokumen Kurikulum Merdeka</p>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="login-pin">PIN</label>
-          <input type="password" id="login-pin" required autocomplete="current-password">
-        </div>
-        <button type="submit" class="btn btn-primary">Masuk</button>
-      </form>
+      </div>
+      <div class="login-body">
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-id">ID / NIP</label>
+            <input type="text" id="login-id" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label for="login-pin">PIN</label>
+            <input type="password" id="login-pin" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn btn-primary">Masuk</button>
+        </form>
+      </div>
     </div>
   </section>
 
-  <!-- ========== SECTION DASHBOARD ========== -->
+  <!-- ========== DASHBOARD ========== -->
   <section id="dashboard-section" class="hidden">
-    <aside class="sidebar">
-      <h2>Menu</h2>
-      <ul class="menu-top">
-        <li><button class="menu-item active" data-menu="dashboard">🏠 Dashboard</button></li>
-        <li><button class="menu-item" data-menu="kelas">📁 Kelas</button></li>
-        <li><button class="menu-item" data-menu="pengaturan">⚙️ Pengaturan</button></li>
-      </ul>
-      <nav id="kelas-nav" class="hidden"></nav>
+    <div class="topbar-mobile">
+      <button class="hamburger" id="hamburger-btn" aria-label="Buka menu"><span></span></button>
+      <strong style="font-family:var(--font-display); font-size:15px;">Adm. PAI</strong>
+    </div>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header motif-dark">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#B8912E" stroke-width="1.4">
+            <rect x="7" y="7" width="10" height="10"/>
+            <rect x="7" y="7" width="10" height="10" transform="rotate(45 12 12)"/>
+          </svg>
+        </div>
+        <div class="sidebar-header-text">
+          <h2>Adm. PAI</h2>
+          <p>DASHBOARD GURU</p>
+        </div>
+      </div>
+      <div class="sidebar-menu">
+        <ul class="menu-top">
+          <li><button class="menu-item" data-menu="dashboard"><span class="menu-icon">🏠</span> Dashboard</button></li>
+          <li>
+            <button class="menu-item" data-menu="kelas"><span class="menu-icon">📁</span> Kelas</button>
+            <div id="kelas-nav" class="kelas-nav hidden"></div>
+          </li>
+          <li><button class="menu-item" data-menu="profil"><span class="menu-icon">👤</span> Informasi Profil</button></li>
+        </ul>
+      </div>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="logout()">Keluar</button>
+      </div>
     </aside>
 
-    <main class="main-content">
-      <h3>Selamat datang, <span id="dashboard-nama"></span></h3>
-      <p class="placeholder-text">Berikut ringkasan dokumen yang tersedia.</p>
-      <div id="loading-templates" class="spinner hidden"></div>
-      
-      <!-- Kartu Total Besar -->
-      <div id="total-card" class="total-card hidden">
-        <div class="total-icon">📚</div>
-        <div class="total-info">
-          <h2 id="stat-total">0</h2>
-          <p>Total Dokumen</p>
-        </div>
-      </div>
-
-      <!-- Grid Kategori -->
-      <div id="stats-container" class="stats-grid hidden">
-        <div class="stat-card">
-          <div class="stat-icon">🎯</div>
-          <div class="stat-info">
-            <h4 id="stat-cp">0</h4>
-            <p>CP</p>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">🗺️</div>
-          <div class="stat-info">
-            <h4 id="stat-atp">0</h4>
-            <p>ATP</p>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">📘</div>
-          <div class="stat-info">
-            <h4 id="stat-rpp">0</h4>
-            <p>RPP</p>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">📅</div>
-          <div class="stat-info">
-            <h4 id="stat-prota">0</h4>
-            <p>Prota</p>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">🗓️</div>
-          <div class="stat-info">
-            <h4 id="stat-promes">0</h4>
-            <p>Promes</p>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">📁</div>
-          <div class="stat-info">
-            <h4 id="stat-lainnya">0</h4>
-            <p>Dokumen Lain</p>
-          </div>
-        </div>
-      </div>
-    </main>
+    <main class="main-content" id="main-content"></main>
   </section>
 
-  <!-- ========== MODAL PREVIEW ========== -->
-  <div id="preview-modal" class="hidden">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h4 id="preview-title">Pratinjau</h4>
-        <button class="btn btn-close" onclick="closePreview()">✕</button>
-      </div>
-      <div class="modal-body">
-        <div id="preview-loader" class="loader-overlay hidden">
-          <div class="loader-inline"></div> Memuat pratinjau...
-        </div>
-        <iframe id="preview-frame" sandbox="allow-same-origin"></iframe>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-danger" onclick="downloadPDF()">Unduh PDF</button>
-        <button class="btn btn-info" onclick="downloadDOCX()">Unduh DOCX</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========== MODAL PROFIL ========== -->
-  <div id="profile-modal" class="hidden">
-    <div class="modal-box modal-sm">
-      <div class="modal-header">
-        <h4>Pengaturan & Profil</h4>
-        <button class="btn btn-close" onclick="closeProfile()">✕</button>
-      </div>
-      <div class="modal-body profile-body">
-        <table class="profile-table">
-          <tr><td>Nama Guru</td><td id="prof-nama-guru"></td></tr>
-          <tr><td>NIP Guru</td><td id="prof-nip-guru"></td></tr>
-          <tr><td>Nama Sekolah</td><td id="prof-nama-sekolah"></td></tr>
-          <tr><td>Kepala Sekolah</td><td id="prof-kepala-sekolah"></td></tr>
-          <tr><td>NIP Kepala Sekolah</td><td id="prof-nip-kepala"></td></tr>
-          <tr><td>Kota</td><td id="prof-kota"></td></tr>
-          <tr><td>Tanggal</td><td id="prof-tanggal"></td></tr>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-danger" onclick="logout()">Logout</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Container -->
   <div id="toast-container"></div>
 
   <script>
     // ================== KONFIGURASI ==================
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwuTUbmIfn--kitwVwnjcDtIYeSppW7JPMFHHdWaerO1wAc64t5kTF6Alp8qygMIo2r8Q/exec';
     const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/karya-pakriski/adm-pai/main/template/';
+    const BULAN_ID = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 
     // ================== STATE ==================
     let currentUser = null;
     let currentTemplates = [];
     let currentDocFile = '';
     let currentDocTitle = '';
-    let currentDocHtml = '';
     let currentMenu = 'dashboard';
+    let currentTemplateRawHtml = '';
+    let currentTanggal = '';
+
+    const qs = (sel) => document.querySelector(sel);
+    const qsa = (sel) => document.querySelectorAll(sel);
+
+    // ================== TANGGAL HELPERS ==================
+    function getTodayISO(){
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function formatTanggalIndonesia(iso){
+      const [y,m,d] = iso.split('-').map(Number);
+      return `${d} ${BULAN_ID[m-1]} ${y}`;
+    }
 
     // ================== INISIALISASI ==================
     document.addEventListener('DOMContentLoaded', () => {
       const savedUser = sessionStorage.getItem('user');
-      if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        showDashboard();
-      } else {
-        showLogin();
-      }
+      if (savedUser) { currentUser = JSON.parse(savedUser); showDashboard(); }
+      else showLogin();
 
-      // Event listener untuk menu utama
-      document.querySelectorAll('.menu-item').forEach(btn => {
-        btn.addEventListener('click', () => {
-          setActiveMenu(btn.dataset.menu);
-        });
-      });
+      qsa('.menu-item').forEach(btn => btn.addEventListener('click', () => setActiveMenu(btn.dataset.menu)));
 
-      // Tutup modal saat klik overlay
-      document.getElementById('profile-modal').addEventListener('click', function(e) {
-        if (e.target === this) closeProfile();
-      });
-      document.getElementById('preview-modal').addEventListener('click', function(e) {
-        if (e.target === this) closePreview();
-      });
+      qs('#hamburger-btn')?.addEventListener('click', () => qs('#sidebar').classList.toggle('open'));
     });
 
-    function showLogin() {
-      document.getElementById('login-section').classList.remove('hidden');
-      document.getElementById('dashboard-section').classList.add('hidden');
+    function showLogin(){
+      qs('#login-section').classList.remove('hidden');
+      qs('#dashboard-section').classList.add('hidden');
     }
-
-    function showDashboard() {
-      document.getElementById('login-section').classList.add('hidden');
-      document.getElementById('dashboard-section').classList.remove('hidden');
-      document.getElementById('dashboard-nama').textContent = currentUser.NAMA_GURU || 'Guru';
+    function showDashboard(){
+      qs('#login-section').classList.add('hidden');
+      qs('#dashboard-section').classList.remove('hidden');
       loadTemplates();
+      setActiveMenu('dashboard');
     }
 
-    // ================== MENU UTAMA ==================
-    function setActiveMenu(menu) {
-      currentMenu = menu;
-      document.querySelectorAll('.menu-item').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.menu === menu);
-      });
-
-      const kelasNav = document.getElementById('kelas-nav');
-      if (menu === 'kelas') {
-        kelasNav.classList.remove('hidden');
-      } else {
-        kelasNav.classList.add('hidden');
-      }
-
-      if (menu === 'pengaturan') {
-        openProfile();
-      }
-    }
-
-    // ================== NOTIFIKASI TOAST ==================
-    function showToast(message, type = 'info') {
-      const container = document.getElementById('toast-container');
+    // ================== TOAST ==================
+    function showToast(message, type = 'info'){
+      const container = qs('#toast-container');
       const toast = document.createElement('div');
       toast.className = `toast toast-${type}`;
       toast.textContent = message;
       container.appendChild(toast);
-      setTimeout(() => {
-        toast.remove();
-      }, 3500);
+      setTimeout(() => toast.remove(), 3500);
     }
 
     // ================== LOADER HELPERS ==================
-    function setButtonLoading(btn, isLoading, loadingText = 'Memproses...') {
-      if (isLoading) {
-        btn.dataset.originalText = btn.textContent;
-        btn.textContent = '';
-        btn.classList.add('btn-loading');
+    function setButtonLoading(btn, isLoading, loadingText = 'Memproses...'){
+      if (isLoading){
+        btn.dataset.originalText = btn.innerHTML;
         btn.innerHTML = `<span class="spinner-btn"></span> ${loadingText}`;
+        btn.classList.add('btn-loading');
         btn.disabled = true;
       } else {
-        btn.textContent = btn.dataset.originalText || btn.textContent;
+        btn.innerHTML = btn.dataset.originalText;
         btn.classList.remove('btn-loading');
         btn.disabled = false;
       }
     }
+    function showContentLoader(){
+      qs('#main-content').innerHTML = `<div class="spinner"></div><p class="placeholder-text" style="text-align:center;">Memuat...</p>`;
+    }
 
-    function showContentLoader(elementId, show) {
-      const el = document.getElementById(elementId);
-      if (show) {
-        el.innerHTML = '<div class="loader-inline"></div> Memuat...';
-        el.classList.remove('hidden');
-      } else {
-        el.innerHTML = '';
-        el.classList.add('hidden');
+    // ================== MENU UTAMA ==================
+    function setActiveMenu(menu){
+      currentMenu = menu;
+      qsa('.menu-item').forEach(btn => btn.classList.toggle('active', btn.dataset.menu === menu));
+      const kelasNav = qs('#kelas-nav');
+      kelasNav.classList.toggle('hidden', menu !== 'kelas');
+      qs('#sidebar').classList.remove('open');
+      renderMainContent(menu);
+    }
+
+    function renderMainContent(menu){
+      const main = qs('#main-content');
+      switch (menu){
+        case 'dashboard': renderDashboardContent(); break;
+        case 'kelas':
+          main.innerHTML = currentTemplates.length === 0
+            ? `<div class="eyebrow">Kelas</div><h3>Pilih dokumen</h3><p class="placeholder-text">Pilih kelas pada menu di samping.</p>`
+            : renderDashboardContent();
+          break;
+        case 'profil': renderProfileContent(); break;
+        default: main.innerHTML = `<h3>Selamat datang</h3>`;
       }
     }
 
+    function renderDashboardContent(){
+      const main = qs('#main-content');
+      const nama = currentUser?.NAMA_GURU || 'Guru';
+      main.innerHTML = `
+        <div class="eyebrow">Ringkasan</div>
+        <h3>Selamat datang, ${nama}</h3>
+        <p class="placeholder-text">Berikut ringkasan dokumen yang tersedia untuk Anda.</p>
+        <div id="total-card" class="total-card hidden">
+          <div class="total-icon">📚</div>
+          <div class="total-info"><h2 id="stat-total">0</h2><p>Total Dokumen</p></div>
+        </div>
+        <div id="stats-container" class="stats-grid hidden">
+          <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-info"><h4 id="stat-cp">0</h4><p>CP</p></div></div>
+          <div class="stat-card"><div class="stat-icon">🗺️</div><div class="stat-info"><h4 id="stat-atp">0</h4><p>ATP</p></div></div>
+          <div class="stat-card"><div class="stat-icon">📘</div><div class="stat-info"><h4 id="stat-rpp">0</h4><p>RPP</p></div></div>
+          <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-info"><h4 id="stat-prota">0</h4><p>Prota</p></div></div>
+          <div class="stat-card"><div class="stat-icon">🗓️</div><div class="stat-info"><h4 id="stat-promes">0</h4><p>Promes</p></div></div>
+          <div class="stat-card"><div class="stat-icon">📁</div><div class="stat-info"><h4 id="stat-lainnya">0</h4><p>Dokumen Lain</p></div></div>
+        </div>
+      `;
+      if (currentTemplates.length > 0) renderDashboardStats(currentTemplates);
+    }
+
+    function renderProfileContent(){
+      if (!currentUser) return;
+      qs('#main-content').innerHTML = `
+        <div class="eyebrow">Akun</div>
+        <h3>Informasi Profil</h3>
+        <div class="content-card" style="margin-top:16px;">
+          <table class="profile-table">
+            <tr><td>Nama Guru</td><td>${currentUser.NAMA_GURU || '-'}</td></tr>
+            <tr><td>NIP Guru</td><td>${currentUser.NIP_GURU || '-'}</td></tr>
+            <tr><td>Nama Sekolah</td><td>${currentUser.NAMA_SEKOLAH || '-'}</td></tr>
+            <tr><td>Kepala Sekolah</td><td>${currentUser.NAMA_KEPALA_SEKOLAH || '-'}</td></tr>
+            <tr><td>NIP Kepala Sekolah</td><td>${currentUser.NIP_KEPALA_SEKOLAH || '-'}</td></tr>
+            <tr><td>Kota</td><td>${currentUser.KOTA || '-'}</td></tr>
+          </table>
+        </div>
+      `;
+    }
+
     // ================== LOGIN ==================
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
+    qs('#login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const id = document.getElementById('login-id').value.trim();
-      const pin = document.getElementById('login-pin').value.trim();
-      if (!id || !pin) {
-        showToast('Isi ID dan PIN', 'error');
-        return;
-      }
+      const id = qs('#login-id').value.trim();
+      const pin = qs('#login-pin').value.trim();
+      if (!id || !pin) return showToast('Isi ID dan PIN', 'error');
 
       const btn = e.target.querySelector('button[type="submit"]');
       setButtonLoading(btn, true, 'Masuk...');
-
       try {
-        const url = `${GAS_URL}?action=login&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin)}`;
-        const res = await fetch(url);
+        const res = await fetch(`${GAS_URL}?action=login&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin)}`);
         const data = await res.json();
-        if (data.success) {
-          currentUser = data.user;
-          sessionStorage.setItem('user', JSON.stringify(currentUser));
-          showDashboard();
-          showToast('Login berhasil', 'success');
-        } else {
-          throw new Error(data.error || 'Login gagal');
-        }
+        if (!data.success) throw new Error(data.error || 'Login gagal');
+        currentUser = data.user;
+        sessionStorage.setItem('user', JSON.stringify(currentUser));
+        showDashboard();
+        showToast('Login berhasil', 'success');
       } catch (err) {
         console.error(err);
         showToast(err.message, 'error');
@@ -623,91 +517,67 @@
       }
     });
 
-    // ================== LOAD TEMPLATE LIST (STALE-WHILE-REVALIDATE) ==================
-    async function loadTemplates() {
+    // ================== LOAD TEMPLATE LIST ==================
+    async function loadTemplates(){
       const cacheKey = 'template_list_cache';
       const cached = localStorage.getItem(cacheKey);
-      if (cached) {
+      if (cached){
         currentTemplates = JSON.parse(cached);
         renderSidebar(currentTemplates);
+        if (currentMenu === 'dashboard') renderDashboardStats(currentTemplates);
       } else {
-        showContentLoader('loading-templates', true);
+        showContentLoader();
       }
-
       try {
-        const url = `${GAS_URL}?action=getTemplateList`;
-        const res = await fetch(url);
+        const res = await fetch(`${GAS_URL}?action=getTemplateList`);
         const data = await res.json();
-        if (data.success) {
-          currentTemplates = data.templates;
-          localStorage.setItem(cacheKey, JSON.stringify(currentTemplates));
-          renderSidebar(currentTemplates);
-        } else {
-          throw new Error(data.error || 'Gagal memuat daftar template');
-        }
+        if (!data.success) throw new Error(data.error || 'Gagal memuat daftar template');
+        currentTemplates = data.templates;
+        localStorage.setItem(cacheKey, JSON.stringify(currentTemplates));
+        renderSidebar(currentTemplates);
+        if (currentMenu === 'dashboard') renderDashboardStats(currentTemplates);
       } catch (err) {
         console.error(err);
         showToast(err.message, 'error');
-      } finally {
-        showContentLoader('loading-templates', false);
       }
     }
 
-    // ================== RENDER SIDEBAR MULTI-LEVEL ==================
-    function renderSidebar(templates) {
-      const nav = document.getElementById('kelas-nav');
+    // ================== SIDEBAR (KELAS ACCORDION) ==================
+    function renderSidebar(templates){
+      const nav = qs('#kelas-nav');
       nav.innerHTML = '';
-
-      // 1. Kelompokkan berdasarkan kelas, lalu kategori
       const kelasGroups = {};
       templates.forEach(tpl => {
         const kelas = tpl.KELAS || 'Lainnya';
         const kategori = tpl.KATEGORI || 'Umum';
-        if (!kelasGroups[kelas]) kelasGroups[kelas] = {};
-        if (!kelasGroups[kelas][kategori]) kelasGroups[kelas][kategori] = [];
-        kelasGroups[kelas][kategori].push(tpl);
+        (kelasGroups[kelas] ??= {});
+        (kelasGroups[kelas][kategori] ??= []).push(tpl);
       });
 
-      // 2. Render Level 1 (Kelas)
-      Object.keys(kelasGroups).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).forEach(kelas => {
+      Object.keys(kelasGroups).sort((a,b) => a.localeCompare(b, undefined, {numeric:true})).forEach(kelas => {
         const kelasDiv = document.createElement('div');
-        kelasDiv.className = 'kelas-group';
-
         const kelasToggle = document.createElement('button');
         kelasToggle.className = 'kelas-toggle';
-        kelasToggle.textContent = `Kelas ${kelas}`;
-        kelasToggle.onclick = () => {
-          kelasToggle.nextElementSibling.classList.toggle('hidden');
-        };
-
+        kelasToggle.innerHTML = `<span>Kelas ${kelas}</span><span class="chev">▾</span>`;
         const kategoriContainer = document.createElement('div');
         kategoriContainer.className = 'kategori-container hidden';
+        kelasToggle.onclick = () => kategoriContainer.classList.toggle('hidden');
 
-        // 3. Render Level 2 (Kategori)
         Object.keys(kelasGroups[kelas]).sort().forEach(kategori => {
           const kategoriDiv = document.createElement('div');
-          kategoriDiv.className = 'kategori-group';
-
           const kategoriToggle = document.createElement('button');
           kategoriToggle.className = 'kategori-toggle';
-          kategoriToggle.textContent = kategori;
-          kategoriToggle.onclick = () => {
-            kategoriToggle.nextElementSibling.classList.toggle('hidden');
-          };
-
+          kategoriToggle.innerHTML = `<span>${kategori}</span><span class="chev">▾</span>`;
           const dokumenList = document.createElement('ul');
           dokumenList.className = 'dokumen-list hidden';
+          kategoriToggle.onclick = () => dokumenList.classList.toggle('hidden');
 
-          // 4. Render Level 3 (Dokumen)
           kelasGroups[kelas][kategori].forEach(tpl => {
             const li = document.createElement('li');
             const a = document.createElement('a');
             a.href = '#';
             a.textContent = tpl.JUDUL || tpl.ID_TEMPLATE;
-            a.onclick = (e) => {
-              e.preventDefault();
-              openPreview(tpl);
-            };
+            a.onclick = (e) => { e.preventDefault(); openPreview(tpl); };
             li.appendChild(a);
             dokumenList.appendChild(li);
           });
@@ -721,14 +591,11 @@
         kelasDiv.appendChild(kategoriContainer);
         nav.appendChild(kelasDiv);
       });
-
-      // Panggil statistik setelah sidebar dirender
-      renderDashboardStats(templates);
     }
 
     // ================== DASHBOARD STATS ==================
-    function renderDashboardStats(templates) {
-      const counts = { CP: 0, ATP: 0, RPP: 0, PROTA: 0, PROMES: 0, LAINNYA: 0 };
+    function renderDashboardStats(templates){
+      const counts = { CP:0, ATP:0, RPP:0, PROTA:0, PROMES:0, LAINNYA:0 };
       templates.forEach(tpl => {
         const kat = (tpl.KATEGORI || '').toUpperCase().trim();
         if (kat === 'CP') counts.CP++;
@@ -738,83 +605,94 @@
         else if (kat === 'PROMES' || kat === 'PROGRAM SEMESTER') counts.PROMES++;
         else counts.LAINNYA++;
       });
-
-      document.getElementById('stat-total').textContent = templates.length;
-      document.getElementById('total-card').classList.remove('hidden');
-
-      document.getElementById('stat-cp').textContent = counts.CP;
-      document.getElementById('stat-atp').textContent = counts.ATP;
-      document.getElementById('stat-rpp').textContent = counts.RPP;
-      document.getElementById('stat-prota').textContent = counts.PROTA;
-      document.getElementById('stat-promes').textContent = counts.PROMES;
-      document.getElementById('stat-lainnya').textContent = counts.LAINNYA;
-      document.getElementById('stats-container').classList.remove('hidden');
+      qs('#stat-total').textContent = templates.length;
+      qs('#total-card').classList.remove('hidden');
+      qs('#stat-cp').textContent = counts.CP;
+      qs('#stat-atp').textContent = counts.ATP;
+      qs('#stat-rpp').textContent = counts.RPP;
+      qs('#stat-prota').textContent = counts.PROTA;
+      qs('#stat-promes').textContent = counts.PROMES;
+      qs('#stat-lainnya').textContent = counts.LAINNYA;
+      qs('#stats-container').classList.remove('hidden');
     }
 
-    // ================== PREVIEW ==================
-    async function openPreview(template) {
+    // ================== PREVIEW (dengan date-picker TANGGAL) ==================
+    async function openPreview(template){
       if (!currentUser) return;
-      const loader = document.getElementById('preview-loader');
-      loader.classList.remove('hidden');
-      document.getElementById('preview-modal').classList.remove('hidden');
-
+      const main = qs('#main-content');
+      main.innerHTML = `<div class="spinner"></div><p class="placeholder-text" style="text-align:center;">Memuat pratinjau...</p>`;
       try {
         const filePath = template.FILE_HTML;
-        const url = `${GITHUB_RAW_BASE}${filePath}`;
-        const res = await fetch(url);
+        const res = await fetch(`${GITHUB_RAW_BASE}${filePath}`);
         if (!res.ok) throw new Error('Template tidak ditemukan');
-        let html = await res.text();
 
-        // Ganti placeholder dengan data user
-        for (const key in currentUser) {
-          const placeholder = `{{${key}}}`;
-          html = html.replaceAll(placeholder, currentUser[key] || '');
-        }
-
+        currentTemplateRawHtml = await res.text();
         currentDocFile = filePath;
         currentDocTitle = template.JUDUL || 'Dokumen';
-        currentDocHtml = html;
+        currentTanggal = getTodayISO();
 
-        document.getElementById('preview-title').textContent = currentDocTitle;
-        document.getElementById('preview-frame').srcdoc = html;
+        renderPreviewUI();
         showToast('Pratinjau dimuat', 'success');
       } catch (err) {
         console.error(err);
         showToast('Gagal memuat template', 'error');
-        document.getElementById('preview-modal').classList.add('hidden');
-      } finally {
-        loader.classList.add('hidden');
+        renderMainContent('dashboard');
       }
     }
 
-    function closePreview() {
-      document.getElementById('preview-modal').classList.add('hidden');
-      document.getElementById('preview-frame').srcdoc = '';
-      currentDocFile = '';
-      currentDocTitle = '';
-      currentDocHtml = '';
+    function buildFilledHtml(){
+      const userForFill = { ...currentUser, TANGGAL: formatTanggalIndonesia(currentTanggal) };
+      let html = currentTemplateRawHtml;
+      for (const key in userForFill){
+        html = html.replaceAll(`{{${key}}}`, userForFill[key] || '');
+      }
+      return html;
     }
 
-    // ================== DOWNLOAD HELPERS (SERVER-SIDE GENERATION) ==================
-    async function downloadFromGAS(action) {
+    function renderPreviewUI(){
+      const main = qs('#main-content');
+      const filledHtml = buildFilledHtml();
+      main.innerHTML = `
+        <div class="toolbar">
+          <h3>${currentDocTitle}</h3>
+          <div class="toolbar-actions">
+            <label class="date-field">
+              📅 <input type="date" id="tanggal-picker" value="${currentTanggal}" onchange="onTanggalChange(this.value)">
+            </label>
+            <button class="btn btn-danger" onclick="downloadPDF()">Unduh PDF</button>
+            <button class="btn btn-info" onclick="downloadDOCX()">Unduh DOCX</button>
+            <button class="btn btn-close" onclick="renderMainContent('dashboard')">Kembali</button>
+          </div>
+        </div>
+        <div class="preview-container">
+          <iframe id="preview-frame" sandbox="allow-same-origin" srcdoc="${filledHtml.replace(/"/g, '&quot;')}"></iframe>
+        </div>
+      `;
+    }
+
+    function onTanggalChange(newIso){
+      currentTanggal = newIso;
+      const iframe = qs('#preview-frame');
+      if (iframe) iframe.srcdoc = buildFilledHtml();
+    }
+
+    // ================== DOWNLOAD ==================
+    async function downloadFromGAS(action){
       if (!currentUser || !currentDocFile) return;
       const btn = event.target;
       setButtonLoading(btn, true, 'Memproses...');
-
       try {
-        const url = `${GAS_URL}?action=${action}&id=${encodeURIComponent(currentUser.ID)}&file=${encodeURIComponent(currentDocFile)}`;
+        const tanggalFormatted = formatTanggalIndonesia(currentTanggal);
+        const url = `${GAS_URL}?action=${action}&id=${encodeURIComponent(currentUser.ID)}&file=${encodeURIComponent(currentDocFile)}&tanggal=${encodeURIComponent(tanggalFormatted)}`;
         const res = await fetch(url);
         const data = await res.json();
         if (!data.success) throw new Error(data.error || 'Gagal memproses');
 
-        // Decode base64 ke blob
         const byteString = atob(data.base64);
-        const arrayBuffer = new ArrayBuffer(byteString.length);
-        const uintArray = new Uint8Array(arrayBuffer);
-        for (let i = 0; i < byteString.length; i++) {
-          uintArray[i] = byteString.charCodeAt(i);
-        }
+        const uintArray = new Uint8Array(byteString.length);
+        for (let i = 0; i < byteString.length; i++) uintArray[i] = byteString.charCodeAt(i);
         const blob = new Blob([uintArray], { type: data.mimeType });
+
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = data.fileName;
@@ -830,39 +708,14 @@
         setButtonLoading(btn, false);
       }
     }
+    function downloadPDF(){ downloadFromGAS('generatePdf'); }
+    function downloadDOCX(){ downloadFromGAS('generateDocx'); }
 
-    function downloadPDF() {
-      downloadFromGAS('generatePdf');
-    }
-
-    function downloadDOCX() {
-      downloadFromGAS('generateDocx');
-    }
-
-    // ================== PROFIL & LOGOUT ==================
-    function openProfile() {
-      if (!currentUser) return;
-      document.getElementById('prof-nama-guru').textContent = currentUser.NAMA_GURU || '-';
-      document.getElementById('prof-nip-guru').textContent = currentUser.NIP_GURU || '-';
-      document.getElementById('prof-nama-sekolah').textContent = currentUser.NAMA_SEKOLAH || '-';
-      document.getElementById('prof-kepala-sekolah').textContent = currentUser.NAMA_KEPALA_SEKOLAH || '-';
-      document.getElementById('prof-nip-kepala').textContent = currentUser.NIP_KEPALA_SEKOLAH || '-';
-      document.getElementById('prof-kota').textContent = currentUser.KOTA || '-';
-      document.getElementById('prof-tanggal').textContent = currentUser.TANGGAL || '-';
-      document.getElementById('profile-modal').classList.remove('hidden');
-    }
-
-    function closeProfile() {
-      document.getElementById('profile-modal').classList.add('hidden');
-    }
-
-    function logout() {
+    // ================== LOGOUT ==================
+    function logout(){
       sessionStorage.removeItem('user');
       currentUser = null;
       currentTemplates = [];
-      closeProfile();
-      closePreview();
-      setActiveMenu('dashboard');
       showLogin();
       showToast('Logout berhasil', 'info');
     }
