@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Contoh Dokumen Uji Coba</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12pt; color: #000; margin: 2cm; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #333; padding: 8px; vertical-align: top; }
+    th { background: #e0e0e0; text-align: left; }
+    h1 { text-align: center; font-size: 16pt; margin-bottom: 10px; }
+    .ttd { margin-top: 60px; width: 100%; border: none; }
+    .ttd td { border: none; padding: 4px; vertical-align: top; width: 50%; }
+    .ttd .spasi { height: 70px; }
+  </style>
+</head>
+<body>
+
+  <h1>DOKUMEN UJI COBA</h1>
+  <p style="text-align: center;">Integrasi GitHub, Apps Script, dan Sheets</p>
+
+  <table>
+    <tr>
+      <th style="width: 35%;">Komponen</th>
+      <th>Isi</th>
+    </tr>
+    <tr>
+      <td>Nama Guru</td>
+      <td>{{NAMA_GURU}}</td>
+    </tr>
+    <tr>
+      <td>NIP Guru</td>
+      <td>{{NIP_GURU}}</td>
+    </tr>
+    <tr>
+      <td>Nama Sekolah</td>
+      <td>{{NAMA_SEKOLAH}}</td>
+    </tr>
+    <tr>
+      <td>Kepala Sekolah</td>
+      <td>{{NAMA_KEPALA_SEKOLAH}}</td>
+    </tr>
+    <tr>
+      <td>NIP Kepala Sekolah</td>
+      <td>{{NIP_KEPALA_SEKOLAH}}</td>
+    </tr>
+    <tr>
+      <td>Kota</td>
+      <td>{{KOTA}}</td>
+    </tr>
+    <tr>
+      <td>Tanggal</td>
+      <td>{{TANGGAL}}</td>
+    </tr>
+  </table>
+
+  <table class="ttd">
+    <tr>
+      <td>Mengetahui,<br>Kepala {{NAMA_SEKOLAH}}</td>
+      <td>{{KOTA}}, {{TANGGAL}}<br>Guru PAI</td>
+    </tr>
+    <tr>
+      <td class="spasi"></td>
+      <td class="spasi"></td>
+    </tr>
+    <tr>
+      <td><strong>{{NAMA_KEPALA_SEKOLAH}}</strong><br>NIP. {{NIP_KEPALA_SEKOLAH}}</td>
+      <td><strong>{{NAMA_GURU}}</strong><br>NIP. {{NIP_GURU}}</td>
+    </tr>
+  </table>
+
+</body>
+</html>
