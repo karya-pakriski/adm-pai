@@ -271,7 +271,11 @@
   .total-info h2{ font-family:var(--font-display); font-size:38px; font-weight:600; }
   .total-info p{ font-size:12.5px; color:rgba(255,255,255,.75); }
 
-  .stats-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:14px; margin-top:8px; }
+  .content-wrap{ max-width:960px; }
+
+  .stats-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:14px; margin-top:8px; }
+  @media (min-width:640px){ .stats-grid{ grid-template-columns:repeat(3, 1fr); } }
+  @media (max-width:420px){ .stats-grid{ grid-template-columns:1fr; } }
   .stat-card{
     background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius);
     padding:16px; display:flex; align-items:center; gap:12px; box-shadow:var(--shadow-sm);
@@ -505,10 +509,12 @@
 
       if (currentTemplates.length === 0){
         main.innerHTML = `
-          <div class="eyebrow">Kelas</div>
-          <div class="empty-state">
-            <div class="empty-icon">📂</div>
-            <p>Daftar dokumen belum termuat. Coba muat ulang halaman.</p>
+          <div class="content-wrap">
+            <div class="eyebrow">Kelas</div>
+            <div class="empty-state">
+              <div class="empty-icon">📂</div>
+              <p>Daftar dokumen belum termuat. Coba muat ulang halaman.</p>
+            </div>
           </div>
         `;
         return;
@@ -519,22 +525,24 @@
           .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 
         main.innerHTML = `
-          <div class="eyebrow">Kelas</div>
-          <h3>Pilih Kelas</h3>
-          <p class="placeholder-text">Pilih folder kelas untuk melihat dokumen yang tersedia.</p>
-          <div class="folder-grid">
-            ${kelasList.map(k => {
-              const count = currentTemplates.filter(t => (t.KELAS || 'Lainnya') === k).length;
-              return `
-                <button class="folder-card" onclick="openKelasFolder('${k}')">
-                  <div class="folder-icon">📁</div>
-                  <div class="folder-info">
-                    <strong>Kelas ${k}</strong>
-                    <span>${count} dokumen</span>
-                  </div>
-                </button>
-              `;
-            }).join('')}
+          <div class="content-wrap">
+            <div class="eyebrow">Kelas</div>
+            <h3>Pilih Kelas</h3>
+            <p class="placeholder-text">Pilih folder kelas untuk melihat dokumen yang tersedia.</p>
+            <div class="folder-grid">
+              ${kelasList.map(k => {
+                const count = currentTemplates.filter(t => (t.KELAS || 'Lainnya') === k).length;
+                return `
+                  <button class="folder-card" onclick="openKelasFolder('${k}')">
+                    <div class="folder-icon">📁</div>
+                    <div class="folder-info">
+                      <strong>Kelas ${k}</strong>
+                      <span>${count} dokumen</span>
+                    </div>
+                  </button>
+                `;
+              }).join('')}
+            </div>
           </div>
         `;
         return;
@@ -548,27 +556,29 @@
       });
 
       main.innerHTML = `
-        <div class="eyebrow">Kelas</div>
-        <div class="breadcrumb">
-          <button class="btn-link" onclick="backToKelasGrid()">← Semua Kelas</button>
-          <h3 style="margin-top:8px;">Kelas ${kelasFolderView}</h3>
-        </div>
-        ${Object.keys(byKategori).sort().map(kat => `
-          <div class="kategori-block">
-            <h4 class="kategori-title">${kat}</h4>
-            <div class="doc-list">
-              ${byKategori[kat].map(tpl => `
-                <div class="doc-item">
-                  <div class="doc-item-info">
-                    <span class="doc-icon">${kategoriIcon(kat)}</span>
-                    <span>${tpl.JUDUL || tpl.ID_TEMPLATE}</span>
-                  </div>
-                  <button class="btn-primary-outline" onclick="openPreviewById('${tpl.ID_TEMPLATE}')">Lihat &amp; Unduh</button>
-                </div>
-              `).join('')}
-            </div>
+        <div class="content-wrap">
+          <div class="eyebrow">Kelas</div>
+          <div class="breadcrumb">
+            <button class="btn-link" onclick="backToKelasGrid()">← Semua Kelas</button>
+            <h3 style="margin-top:8px;">Kelas ${kelasFolderView}</h3>
           </div>
-        `).join('')}
+          ${Object.keys(byKategori).sort().map(kat => `
+            <div class="kategori-block">
+              <h4 class="kategori-title">${kat}</h4>
+              <div class="doc-list">
+                ${byKategori[kat].map(tpl => `
+                  <div class="doc-item">
+                    <div class="doc-item-info">
+                      <span class="doc-icon">${kategoriIcon(kat)}</span>
+                      <span>${tpl.JUDUL || tpl.ID_TEMPLATE}</span>
+                    </div>
+                    <button class="btn-primary-outline" onclick="openPreviewById('${tpl.ID_TEMPLATE}')">Lihat &amp; Unduh</button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
       `;
     }
 
@@ -587,20 +597,22 @@
       const main = qs('#main-content');
       const nama = currentUser?.NAMA_GURU || 'Guru';
       main.innerHTML = `
-        <div class="eyebrow">Ringkasan</div>
-        <h3>Selamat datang, ${nama}</h3>
-        <p class="placeholder-text">Berikut ringkasan dokumen yang tersedia untuk Anda.</p>
-        <div id="total-card" class="total-card hidden">
-          <div class="total-icon">📚</div>
-          <div class="total-info"><h2 id="stat-total">0</h2><p>Total Dokumen</p></div>
-        </div>
-        <div id="stats-container" class="stats-grid hidden">
-          <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-info"><h4 id="stat-cp">0</h4><p>CP</p></div></div>
-          <div class="stat-card"><div class="stat-icon">🗺️</div><div class="stat-info"><h4 id="stat-atp">0</h4><p>ATP</p></div></div>
-          <div class="stat-card"><div class="stat-icon">📘</div><div class="stat-info"><h4 id="stat-rpp">0</h4><p>RPP</p></div></div>
-          <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-info"><h4 id="stat-prota">0</h4><p>Prota</p></div></div>
-          <div class="stat-card"><div class="stat-icon">🗓️</div><div class="stat-info"><h4 id="stat-promes">0</h4><p>Promes</p></div></div>
-          <div class="stat-card"><div class="stat-icon">📁</div><div class="stat-info"><h4 id="stat-lainnya">0</h4><p>Dokumen Lain</p></div></div>
+        <div class="content-wrap">
+          <div class="eyebrow">Ringkasan</div>
+          <h3>Selamat datang, ${nama}</h3>
+          <p class="placeholder-text">Berikut ringkasan dokumen yang tersedia untuk Anda.</p>
+          <div id="total-card" class="total-card hidden">
+            <div class="total-icon">📚</div>
+            <div class="total-info"><h2 id="stat-total">0</h2><p>Total Dokumen</p></div>
+          </div>
+          <div id="stats-container" class="stats-grid hidden">
+            <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-info"><h4 id="stat-cp">0</h4><p>CP</p></div></div>
+            <div class="stat-card"><div class="stat-icon">🗺️</div><div class="stat-info"><h4 id="stat-atp">0</h4><p>ATP</p></div></div>
+            <div class="stat-card"><div class="stat-icon">📘</div><div class="stat-info"><h4 id="stat-rpp">0</h4><p>RPP</p></div></div>
+            <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-info"><h4 id="stat-prota">0</h4><p>Prota</p></div></div>
+            <div class="stat-card"><div class="stat-icon">🗓️</div><div class="stat-info"><h4 id="stat-promes">0</h4><p>Promes</p></div></div>
+            <div class="stat-card"><div class="stat-icon">📁</div><div class="stat-info"><h4 id="stat-lainnya">0</h4><p>Dokumen Lain</p></div></div>
+          </div>
         </div>
       `;
       if (currentTemplates.length > 0) renderDashboardStats(currentTemplates);
@@ -609,17 +621,19 @@
     function renderProfileContent(){
       if (!currentUser) return;
       qs('#main-content').innerHTML = `
-        <div class="eyebrow">Akun</div>
-        <h3>Informasi Profil</h3>
-        <div class="content-card" style="margin-top:16px;">
-          <table class="profile-table">
-            <tr><td>Nama Guru</td><td>${currentUser.NAMA_GURU || '-'}</td></tr>
-            <tr><td>NIP Guru</td><td>${currentUser.NIP_GURU || '-'}</td></tr>
-            <tr><td>Nama Sekolah</td><td>${currentUser.NAMA_SEKOLAH || '-'}</td></tr>
-            <tr><td>Kepala Sekolah</td><td>${currentUser.NAMA_KEPALA_SEKOLAH || '-'}</td></tr>
-            <tr><td>NIP Kepala Sekolah</td><td>${currentUser.NIP_KEPALA_SEKOLAH || '-'}</td></tr>
-            <tr><td>Kota</td><td>${currentUser.KOTA || '-'}</td></tr>
-          </table>
+        <div class="content-wrap">
+          <div class="eyebrow">Akun</div>
+          <h3>Informasi Profil</h3>
+          <div class="content-card" style="margin-top:16px;">
+            <table class="profile-table">
+              <tr><td>Nama Guru</td><td>${currentUser.NAMA_GURU || '-'}</td></tr>
+              <tr><td>NIP Guru</td><td>${currentUser.NIP_GURU || '-'}</td></tr>
+              <tr><td>Nama Sekolah</td><td>${currentUser.NAMA_SEKOLAH || '-'}</td></tr>
+              <tr><td>Kepala Sekolah</td><td>${currentUser.NAMA_KEPALA_SEKOLAH || '-'}</td></tr>
+              <tr><td>NIP Kepala Sekolah</td><td>${currentUser.NIP_KEPALA_SEKOLAH || '-'}</td></tr>
+              <tr><td>Kota</td><td>${currentUser.KOTA || '-'}</td></tr>
+            </table>
+          </div>
         </div>
       `;
     }
