@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adm. PAI — Generator Dokumen</title>
+<title>Administrasi PAI — Generator Dokumen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -212,6 +212,56 @@
   .placeholder-text{ color:var(--ink-faint); font-size:14px; }
   .eyebrow{ font-size:11.5px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:var(--primary); margin-bottom:6px; }
 
+  /* ---- Folder Kelas ---- */
+  .folder-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(170px,1fr)); gap:14px; margin-top:20px; }
+  .folder-card{
+    display:flex; flex-direction:column; align-items:flex-start; gap:10px; text-align:left;
+    background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius);
+    padding:18px; cursor:pointer; font-family:var(--font-body); box-shadow:var(--shadow-sm);
+    transition:transform .18s var(--ease), box-shadow .18s var(--ease), border-color .18s var(--ease);
+  }
+  .folder-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--primary-soft); }
+  .folder-icon{
+    width:42px; height:42px; border-radius:11px; background:var(--gold-soft); color:var(--gold);
+    display:flex; align-items:center; justify-content:center; font-size:20px;
+  }
+  .folder-info strong{ display:block; font-size:15px; color:var(--ink); font-family:var(--font-display); font-weight:600; }
+  .folder-info span{ font-size:12px; color:var(--ink-faint); }
+
+  .breadcrumb{ margin-bottom:18px; }
+  .btn-link{
+    background:none; border:none; color:var(--primary); font-weight:600; font-size:13px;
+    cursor:pointer; padding:0; font-family:var(--font-body);
+  }
+  .btn-link:hover{ text-decoration:underline; }
+
+  .kategori-block{ margin-bottom:22px; }
+  .kategori-title{
+    font-size:12px; font-weight:700; letter-spacing:.5px; text-transform:uppercase;
+    color:var(--ink-soft); margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--border-soft);
+  }
+  .doc-list{ display:flex; flex-direction:column; gap:8px; }
+  .doc-item{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius-sm);
+    padding:12px 16px; transition:border-color .15s var(--ease), background .15s var(--ease);
+  }
+  .doc-item:hover{ border-color:var(--primary-soft); background:var(--surface-alt); }
+  .doc-item-info{ display:flex; align-items:center; gap:10px; font-size:13.5px; color:var(--ink); }
+  .doc-icon{ font-size:17px; }
+  .btn-primary-outline{
+    background:transparent; border:1.5px solid var(--primary); color:var(--primary);
+    padding:7px 14px; border-radius:var(--radius-sm); font-size:12.5px; font-weight:600;
+    cursor:pointer; font-family:var(--font-body); transition:background .15s var(--ease), color .15s var(--ease);
+    white-space:nowrap;
+  }
+  .btn-primary-outline:hover{ background:var(--primary); color:#fff; }
+
+  .empty-state{
+    text-align:center; padding:50px 20px; color:var(--ink-faint);
+  }
+  .empty-state .empty-icon{ font-size:40px; margin-bottom:10px; }
+
   .total-card{
     background:linear-gradient(135deg, var(--primary), var(--primary-dark)); color:#fff;
     border-radius:var(--radius-lg); padding:24px 26px; display:flex; align-items:center; gap:20px;
@@ -289,7 +339,7 @@
             </svg>
           </div>
           <div>
-            <h1>Adm. PAI</h1>
+            <h1>Administrasi PAI</h1>
             <p>Generator Dokumen Kurikulum Merdeka</p>
           </div>
         </div>
@@ -364,6 +414,7 @@
     let currentMenu = 'dashboard';
     let currentTemplateRawHtml = '';
     let currentTanggal = '';
+    let kelasFolderView = null; // null = tampilkan grid folder kelas
 
     const qs = (sel) => document.querySelector(sel);
     const qsa = (sel) => document.querySelectorAll(sel);
@@ -396,8 +447,8 @@
     function showDashboard(){
       qs('#login-section').classList.add('hidden');
       qs('#dashboard-section').classList.remove('hidden');
+      setActiveMenu('dashboard'); // bangun markup dulu, baru muat data (hindari crash cache)
       loadTemplates();
-      setActiveMenu('dashboard');
     }
 
     // ================== TOAST ==================
@@ -430,6 +481,7 @@
     // ================== MENU UTAMA ==================
     function setActiveMenu(menu){
       currentMenu = menu;
+      if (menu === 'kelas') kelasFolderView = null; // klik menu utama Kelas selalu mulai dari grid
       qsa('.menu-item').forEach(btn => btn.classList.toggle('active', btn.dataset.menu === menu));
       const kelasNav = qs('#kelas-nav');
       kelasNav.classList.toggle('hidden', menu !== 'kelas');
@@ -441,14 +493,94 @@
       const main = qs('#main-content');
       switch (menu){
         case 'dashboard': renderDashboardContent(); break;
-        case 'kelas':
-          main.innerHTML = currentTemplates.length === 0
-            ? `<div class="eyebrow">Kelas</div><h3>Pilih dokumen</h3><p class="placeholder-text">Pilih kelas pada menu di samping.</p>`
-            : renderDashboardContent();
-          break;
+        case 'kelas': renderKelasContent(); break;
         case 'profil': renderProfileContent(); break;
         default: main.innerHTML = `<h3>Selamat datang</h3>`;
       }
+    }
+
+    // ================== TAMPILAN FOLDER KELAS (main content) ==================
+    function renderKelasContent(){
+      const main = qs('#main-content');
+
+      if (currentTemplates.length === 0){
+        main.innerHTML = `
+          <div class="eyebrow">Kelas</div>
+          <div class="empty-state">
+            <div class="empty-icon">📂</div>
+            <p>Daftar dokumen belum termuat. Coba muat ulang halaman.</p>
+          </div>
+        `;
+        return;
+      }
+
+      if (!kelasFolderView){
+        const kelasList = [...new Set(currentTemplates.map(t => t.KELAS || 'Lainnya'))]
+          .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+
+        main.innerHTML = `
+          <div class="eyebrow">Kelas</div>
+          <h3>Pilih Kelas</h3>
+          <p class="placeholder-text">Pilih folder kelas untuk melihat dokumen yang tersedia.</p>
+          <div class="folder-grid">
+            ${kelasList.map(k => {
+              const count = currentTemplates.filter(t => (t.KELAS || 'Lainnya') === k).length;
+              return `
+                <button class="folder-card" onclick="openKelasFolder('${k}')">
+                  <div class="folder-icon">📁</div>
+                  <div class="folder-info">
+                    <strong>Kelas ${k}</strong>
+                    <span>${count} dokumen</span>
+                  </div>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+        return;
+      }
+
+      const docsInKelas = currentTemplates.filter(t => (t.KELAS || 'Lainnya') === kelasFolderView);
+      const byKategori = {};
+      docsInKelas.forEach(t => {
+        const kat = t.KATEGORI || 'Umum';
+        (byKategori[kat] ??= []).push(t);
+      });
+
+      main.innerHTML = `
+        <div class="eyebrow">Kelas</div>
+        <div class="breadcrumb">
+          <button class="btn-link" onclick="backToKelasGrid()">← Semua Kelas</button>
+          <h3 style="margin-top:8px;">Kelas ${kelasFolderView}</h3>
+        </div>
+        ${Object.keys(byKategori).sort().map(kat => `
+          <div class="kategori-block">
+            <h4 class="kategori-title">${kat}</h4>
+            <div class="doc-list">
+              ${byKategori[kat].map(tpl => `
+                <div class="doc-item">
+                  <div class="doc-item-info">
+                    <span class="doc-icon">${kategoriIcon(kat)}</span>
+                    <span>${tpl.JUDUL || tpl.ID_TEMPLATE}</span>
+                  </div>
+                  <button class="btn-primary-outline" onclick="openPreviewById('${tpl.ID_TEMPLATE}')">Lihat &amp; Unduh</button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      `;
+    }
+
+    function kategoriIcon(kat){
+      const map = { CP:'🎯', ATP:'🗺️', RPP:'📘', PROTA:'📅', PROMES:'🗓️' };
+      return map[(kat || '').toUpperCase()] || '📁';
+    }
+    function openKelasFolder(kelas){ kelasFolderView = kelas; renderKelasContent(); }
+    function backToKelasGrid(){ kelasFolderView = null; renderKelasContent(); }
+    function openPreviewById(idTemplate){
+      const tpl = currentTemplates.find(t => t.ID_TEMPLATE === idTemplate);
+      if (tpl) openPreview(tpl);
     }
 
     function renderDashboardContent(){
@@ -595,6 +727,8 @@
 
     // ================== DASHBOARD STATS ==================
     function renderDashboardStats(templates){
+      const totalEl = qs('#stat-total');
+      if (!totalEl) return; // main-content sedang menampilkan tampilan lain, lewati
       const counts = { CP:0, ATP:0, RPP:0, PROTA:0, PROMES:0, LAINNYA:0 };
       templates.forEach(tpl => {
         const kat = (tpl.KATEGORI || '').toUpperCase().trim();
@@ -635,8 +769,8 @@
         showToast('Pratinjau dimuat', 'success');
       } catch (err) {
         console.error(err);
-        showToast('Gagal memuat template', 'error');
-        renderMainContent('dashboard');
+        showToast('Template belum ditemukan di GitHub. Pastikan file sudah diunggah sesuai path FILE_HTML.', 'error');
+        goBackFromPreview();
       }
     }
 
@@ -661,7 +795,7 @@
             </label>
             <button class="btn btn-danger" onclick="downloadPDF()">Unduh PDF</button>
             <button class="btn btn-info" onclick="downloadDOCX()">Unduh DOCX</button>
-            <button class="btn btn-close" onclick="renderMainContent('dashboard')">Kembali</button>
+            <button class="btn btn-close" onclick="goBackFromPreview()">Kembali</button>
           </div>
         </div>
         <div class="preview-container">
@@ -674,6 +808,14 @@
       currentTanggal = newIso;
       const iframe = qs('#preview-frame');
       if (iframe) iframe.srcdoc = buildFilledHtml();
+    }
+
+    function goBackFromPreview(){
+      // kembali ke folder kelas yang sedang dibuka (jika ada), bukan selalu ke root dashboard
+      currentMenu = 'kelas';
+      qsa('.menu-item').forEach(btn => btn.classList.toggle('active', btn.dataset.menu === 'kelas'));
+      qs('#kelas-nav').classList.remove('hidden');
+      renderKelasContent();
     }
 
     // ================== DOWNLOAD ==================
