@@ -213,8 +213,9 @@
   .eyebrow{ font-size:11.5px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:var(--primary); margin-bottom:6px; }
 
   /* ---- Folder Kelas ---- */
-  .folder-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(170px,1fr)); gap:14px; margin-top:20px; }
+  .folder-grid{ display:flex; flex-wrap:wrap; gap:14px; margin-top:20px; }
   .folder-card{
+    flex:1 1 190px; max-width:240px;
     display:flex; flex-direction:column; align-items:flex-start; gap:10px; text-align:left;
     background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius);
     padding:18px; cursor:pointer; font-family:var(--font-body); box-shadow:var(--shadow-sm);
@@ -263,20 +264,29 @@
   .empty-state .empty-icon{ font-size:40px; margin-bottom:10px; }
 
   .total-card{
+    position:relative; overflow:hidden;
     background:linear-gradient(135deg, var(--primary), var(--primary-dark)); color:#fff;
-    border-radius:var(--radius-lg); padding:24px 26px; display:flex; align-items:center; gap:20px;
-    margin:22px 0; max-width:320px; box-shadow:var(--shadow-md);
+    border-radius:var(--radius-lg); padding:26px 30px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:18px;
+    margin:22px 0; width:100%; box-shadow:var(--shadow-md);
   }
+  .total-card-main{ display:flex; align-items:center; gap:18px; position:relative; z-index:1; }
   .total-icon{ font-size:36px; }
-  .total-info h2{ font-family:var(--font-display); font-size:38px; font-weight:600; }
+  .total-info h2{ font-family:var(--font-display); font-size:38px; font-weight:600; line-height:1; }
   .total-info p{ font-size:12.5px; color:rgba(255,255,255,.75); }
+  .total-breakdown{ display:flex; gap:8px; flex-wrap:wrap; position:relative; z-index:1; max-width:420px; }
+  .total-pill{
+    background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2);
+    padding:6px 13px; border-radius:999px; font-size:12px; font-weight:600; white-space:nowrap;
+  }
 
   .content-wrap{ max-width:960px; }
 
-  .stats-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:14px; margin-top:8px; }
-  @media (min-width:640px){ .stats-grid{ grid-template-columns:repeat(3, 1fr); } }
-  @media (max-width:420px){ .stats-grid{ grid-template-columns:1fr; } }
+  /* Flexbox: sisa kartu di baris terakhir otomatis melar mengisi lebar,
+     tidak ada "kolom hantu" kosong seperti CSS grid auto-fit/fixed-column */
+  .stats-grid{ display:flex; flex-wrap:wrap; gap:14px; margin-top:8px; }
   .stat-card{
+    flex:1 1 220px; max-width:320px;
     background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius);
     padding:16px; display:flex; align-items:center; gap:12px; box-shadow:var(--shadow-sm);
     transition:transform .18s var(--ease), box-shadow .18s var(--ease);
@@ -498,22 +508,29 @@
       switch (menu){
         case 'dashboard': renderDashboardContent(); break;
         case 'kelas': renderKelasContent(); break;
+        case 'dokumenlain': renderDokumenLainContent(); break;
         case 'profil': renderProfileContent(); break;
         default: main.innerHTML = `<h3>Selamat datang</h3>`;
       }
     }
 
+    // Dokumen dianggap "terikat kelas" hanya jika kolom KELAS diisi di sheet Templates.
+    // Kosongkan KELAS untuk dokumen umum/lintas kelas (SK, panduan sekolah, dll)
+    // -> otomatis masuk ke menu "Dokumen Lain", bukan folder Kelas mana pun.
+    function hasKelas(t){ return !!(t.KELAS && String(t.KELAS).trim()); }
+
     // ================== TAMPILAN FOLDER KELAS (main content) ==================
     function renderKelasContent(){
       const main = qs('#main-content');
+      const kelasTemplates = currentTemplates.filter(hasKelas);
 
-      if (currentTemplates.length === 0){
+      if (kelasTemplates.length === 0){
         main.innerHTML = `
           <div class="content-wrap">
             <div class="eyebrow">Kelas</div>
             <div class="empty-state">
               <div class="empty-icon">📂</div>
-              <p>Daftar dokumen belum termuat. Coba muat ulang halaman.</p>
+              <p>Belum ada dokumen yang terikat ke kelas tertentu.</p>
             </div>
           </div>
         `;
@@ -521,7 +538,7 @@
       }
 
       if (!kelasFolderView){
-        const kelasList = [...new Set(currentTemplates.map(t => t.KELAS || 'Lainnya'))]
+        const kelasList = [...new Set(kelasTemplates.map(t => t.KELAS))]
           .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 
         main.innerHTML = `
@@ -531,7 +548,7 @@
             <p class="placeholder-text">Pilih folder kelas untuk melihat dokumen yang tersedia.</p>
             <div class="folder-grid">
               ${kelasList.map(k => {
-                const count = currentTemplates.filter(t => (t.KELAS || 'Lainnya') === k).length;
+                const count = kelasTemplates.filter(t => t.KELAS === k).length;
                 return `
                   <button class="folder-card" onclick="openKelasFolder('${k}')">
                     <div class="folder-icon">📁</div>
@@ -548,7 +565,7 @@
         return;
       }
 
-      const docsInKelas = currentTemplates.filter(t => (t.KELAS || 'Lainnya') === kelasFolderView);
+      const docsInKelas = kelasTemplates.filter(t => t.KELAS === kelasFolderView);
       const byKategori = {};
       docsInKelas.forEach(t => {
         const kat = t.KATEGORI || 'Umum';
@@ -562,6 +579,55 @@
             <button class="btn-link" onclick="backToKelasGrid()">← Semua Kelas</button>
             <h3 style="margin-top:8px;">Kelas ${kelasFolderView}</h3>
           </div>
+          ${Object.keys(byKategori).sort().map(kat => `
+            <div class="kategori-block">
+              <h4 class="kategori-title">${kat}</h4>
+              <div class="doc-list">
+                ${byKategori[kat].map(tpl => `
+                  <div class="doc-item">
+                    <div class="doc-item-info">
+                      <span class="doc-icon">${kategoriIcon(kat)}</span>
+                      <span>${tpl.JUDUL || tpl.ID_TEMPLATE}</span>
+                    </div>
+                    <button class="btn-primary-outline" onclick="openPreviewById('${tpl.ID_TEMPLATE}')">Lihat &amp; Unduh</button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // ================== TAMPILAN DOKUMEN TIDAK TERIKAT KELAS ==================
+    function renderDokumenLainContent(){
+      const main = qs('#main-content');
+      const docs = currentTemplates.filter(t => !hasKelas(t));
+
+      if (docs.length === 0){
+        main.innerHTML = `
+          <div class="content-wrap">
+            <div class="eyebrow">Dokumen Lain</div>
+            <div class="empty-state">
+              <div class="empty-icon">📄</div>
+              <p>Belum ada dokumen yang tidak terikat kelas tertentu.</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const byKategori = {};
+      docs.forEach(t => {
+        const kat = t.KATEGORI || 'Umum';
+        (byKategori[kat] ??= []).push(t);
+      });
+
+      main.innerHTML = `
+        <div class="content-wrap">
+          <div class="eyebrow">Dokumen Lain</div>
+          <h3>Dokumen Tidak Terikat Kelas</h3>
+          <p class="placeholder-text">Dokumen umum atau lintas kelas yang tidak spesifik untuk satu kelas tertentu.</p>
           ${Object.keys(byKategori).sort().map(kat => `
             <div class="kategori-block">
               <h4 class="kategori-title">${kat}</h4>
@@ -601,9 +667,12 @@
           <div class="eyebrow">Ringkasan</div>
           <h3>Selamat datang, ${nama}</h3>
           <p class="placeholder-text">Berikut ringkasan dokumen yang tersedia untuk Anda.</p>
-          <div id="total-card" class="total-card hidden">
-            <div class="total-icon">📚</div>
-            <div class="total-info"><h2 id="stat-total">0</h2><p>Total Dokumen</p></div>
+          <div id="total-card" class="total-card motif-dark hidden">
+            <div class="total-card-main">
+              <div class="total-icon">📚</div>
+              <div class="total-info"><h2 id="stat-total">0</h2><p>Total Dokumen</p></div>
+            </div>
+            <div class="total-breakdown" id="total-breakdown"></div>
           </div>
           <div id="stats-container" class="stats-grid hidden">
             <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-info"><h4 id="stat-cp">0</h4><p>CP</p></div></div>
@@ -611,7 +680,7 @@
             <div class="stat-card"><div class="stat-icon">📘</div><div class="stat-info"><h4 id="stat-rpp">0</h4><p>RPP</p></div></div>
             <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-info"><h4 id="stat-prota">0</h4><p>Prota</p></div></div>
             <div class="stat-card"><div class="stat-icon">🗓️</div><div class="stat-info"><h4 id="stat-promes">0</h4><p>Promes</p></div></div>
-            <div class="stat-card"><div class="stat-icon">📁</div><div class="stat-info"><h4 id="stat-lainnya">0</h4><p>Dokumen Lain</p></div></div>
+            <div class="stat-card hidden" id="card-lainnya"><div class="stat-icon">📁</div><div class="stat-info"><h4 id="stat-lainnya">0</h4><p>Dokumen Lain</p></div></div>
           </div>
         </div>
       `;
@@ -670,6 +739,7 @@
       if (cached){
         currentTemplates = JSON.parse(cached);
         renderSidebar(currentTemplates);
+        ensureDokumenLainMenuItem();
         if (currentMenu === 'dashboard') renderDashboardStats(currentTemplates);
       } else {
         showContentLoader();
@@ -681,10 +751,30 @@
         currentTemplates = data.templates;
         localStorage.setItem(cacheKey, JSON.stringify(currentTemplates));
         renderSidebar(currentTemplates);
+        ensureDokumenLainMenuItem();
         if (currentMenu === 'dashboard') renderDashboardStats(currentTemplates);
       } catch (err) {
         console.error(err);
         showToast(err.message, 'error');
+      }
+    }
+
+    // Menu "Dokumen Lain" hanya muncul di sidebar kalau memang ada template
+    // dengan kolom KELAS kosong di sheet Templates.
+    function ensureDokumenLainMenuItem(){
+      const hasAny = currentTemplates.some(t => !hasKelas(t));
+      const existingBtn = qs('.menu-item[data-menu="dokumenlain"]');
+      const existingLi = existingBtn?.closest('li');
+
+      if (hasAny && !existingLi){
+        const profilLi = qs('.menu-item[data-menu="profil"]').closest('li');
+        const li = document.createElement('li');
+        li.innerHTML = `<button class="menu-item" data-menu="dokumenlain"><span class="menu-icon">📄</span> Dokumen Lain</button>`;
+        li.querySelector('button').addEventListener('click', () => setActiveMenu('dokumenlain'));
+        profilLi.parentNode.insertBefore(li, profilLi);
+      } else if (!hasAny && existingLi){
+        if (currentMenu === 'dokumenlain') setActiveMenu('dashboard');
+        existingLi.remove();
       }
     }
 
@@ -693,8 +783,8 @@
       const nav = qs('#kelas-nav');
       nav.innerHTML = '';
       const kelasGroups = {};
-      templates.forEach(tpl => {
-        const kelas = tpl.KELAS || 'Lainnya';
+      templates.filter(hasKelas).forEach(tpl => {
+        const kelas = tpl.KELAS;
         const kategori = tpl.KATEGORI || 'Umum';
         (kelasGroups[kelas] ??= {});
         (kelasGroups[kelas][kategori] ??= []).push(tpl);
@@ -762,6 +852,24 @@
       qs('#stat-promes').textContent = counts.PROMES;
       qs('#stat-lainnya').textContent = counts.LAINNYA;
       qs('#stats-container').classList.remove('hidden');
+
+      // "Dokumen Lain" hanya ditampilkan kalau memang ada dokumen yang
+      // kategorinya tidak cocok CP/ATP/RPP/Prota/Promes (idealnya jarang/0)
+      qs('#card-lainnya')?.classList.toggle('hidden', counts.LAINNYA === 0);
+
+      // Ringkasan kategori sebagai pill di sisi kanan banner Total Dokumen
+      const breakdownEl = qs('#total-breakdown');
+      if (breakdownEl){
+        const parts = [
+          counts.CP    ? `${counts.CP} CP`       : null,
+          counts.ATP   ? `${counts.ATP} ATP`     : null,
+          counts.RPP   ? `${counts.RPP} RPP`     : null,
+          counts.PROTA ? `${counts.PROTA} Prota` : null,
+          counts.PROMES? `${counts.PROMES} Promes`: null,
+          counts.LAINNYA? `${counts.LAINNYA} Lainnya`: null,
+        ].filter(Boolean);
+        breakdownEl.innerHTML = parts.map(p => `<span class="total-pill">${p}</span>`).join('');
+      }
     }
 
     // ================== PREVIEW (dengan date-picker TANGGAL) ==================
