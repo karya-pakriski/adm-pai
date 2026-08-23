@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Tahunan PAI - Kelas V</title>
+    <style>
+        /* CSS sama, ubah kelas/fase dan isi TP */
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            padding: 0.5in 0.5in;
+            margin: 0 auto;
+            max-width: 1100px;
+            font-size: 11pt;
+            line-height: 1.5;
+        }
+        .page {
+            page-break-after: avoid;
+            page-break-inside: avoid;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        .header-title {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            letter-spacing: 0px;
+            margin-bottom: 10pt;
+            text-transform: uppercase;
+            font-family: Arial, sans-serif;
+        }
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: none;
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+            margin-bottom: 8pt;
+            table-layout: fixed;
+            line-height: 1.3;
+        }
+        .info-table td {
+            border: none;
+            padding: 0px 2px;
+            vertical-align: top;
+            text-align: left;
+        }
+        .info-table .col-label {
+            width: 22%;
+            text-align: left;
+            padding-right: 1px;
+        }
+        .info-table .col-colon {
+            width: 5%;
+            text-align: left;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .info-table .col-value {
+            width: 73%;
+            text-align: left;
+            padding-left: 1px;
+        }
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11pt;
+            font-family: Arial, sans-serif;
+            table-layout: fixed;
+            word-wrap: break-word;
+            border: 1px solid #000;
+        }
+        .main-table th,
+        .main-table td {
+            border: 1px solid #000;
+            padding: 3px 4px;
+            vertical-align: middle;
+        }
+        .main-table th {
+            background: #2ACCEB;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .text-center {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .semester-cell {
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+            background: #fafafa;
+        }
+        .total-row td {
+            font-weight: 600;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .total-row .label-left {
+            text-align: center;
+            padding-left: 10px;
+        }
+        .main-table .col-semester {
+            width: 13%;
+            text-align: center;
+        }
+        .main-table .col-no {
+            width: 6%;
+            text-align: center;
+        }
+        .main-table .col-elemen {
+            width: 17%;
+            text-align: center;
+        }
+        .main-table .col-tp {
+            width: 47%;
+            text-align: left;
+        }
+        .main-table .col-waktu {
+            width: 17%;
+            text-align: center;
+        }
+        .signature-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: none;
+            margin-top: 40pt;
+            margin-bottom: 20pt;
+            font-size: 11pt;
+            font-family: Arial, sans-serif;
+        }
+        .signature-table td {
+            border: none;
+            padding: 4px 8px;
+            vertical-align: top;
+            text-align: left;
+        }
+        .signature-table .sig-left {
+            width: 40%;
+        }
+        .signature-table .sig-spacer {
+            width: 20%;
+        }
+        .signature-table .sig-right {
+            width: 40%;
+        }
+        .signature-table .sig-spacer-row {
+            height: 80px;
+        }
+        @media print {
+            body {
+                padding: 0.4in 0.4in;
+                margin: 0;
+            }
+            .main-table {
+                font-size: 10pt;
+            }
+            .main-table th,
+            .main-table td {
+                padding: 2px 3px;
+            }
+            .header-title {
+                font-size: 13pt;
+            }
+            .info-table {
+                font-size: 10pt;
+                margin-bottom: 15pt;
+                line-height: 1.2;
+            }
+            .info-table td {
+                padding: 0px 0px;
+            }
+            .signature-table {
+                font-size: 10pt;
+                margin-top: 10pt;
+            }
+            .signature-table .sig-spacer-row {
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="header-title">PROGRAM TAHUNAN</div>
+        <table class="info-table">
+            <tr><td class="col-label">Satuan Pendidikan</td><td class="col-colon">:</td><td class="col-value">{{NAMA_SEKOLAH}}</td></tr>
+            <tr><td class="col-label">Mata Pelajaran</td><td class="col-colon">:</td><td class="col-value">Pendidikan Agama Islam dan Budi Pekerti</td></tr>
+            <tr><td class="col-label">Kelas / Fase</td><td class="col-colon">:</td><td class="col-value">V (Lima) / C</td></tr>
+            <tr><td class="col-label">Tahun Ajaran</td><td class="col-colon">:</td><td class="col-value">{{TA}}</td></tr>
+        </table>
+        <table class="main-table">
+            <colgroup>
+                <col class="col-semester" /><col class="col-no" /><col class="col-elemen" /><col class="col-tp" /><col class="col-waktu" />
+            </colgroup>
+            <thead><tr><th>Semester</th><th>No</th><th>Elemen Materi</th><th>Tujuan Pembelajaran (TP)</th><th>Alokasi Waktu</th></tr></thead>
+            <tbody>
+                <tr><td class="semester-cell" rowspan="5">Ganjil</td><td class="text-center">1</td><td>Al-Qur'an Hadis</td><td>Membaca, menulis, menghafal, dan menjelaskan kandungan Surah Al-Qadr.</td><td class="text-center">4 Pertemuan</td></tr>
+                <tr><td class="text-center">2</td><td>Akidah</td><td>Menjelaskan dan meyakini asmaulhusna Al-Muhyi, Al-Mumit, Al-Ba'its, dan Al-Qayyum.</td><td class="text-center">3 Pertemuan</td></tr>
+                <tr><td class="text-center">3</td><td>Akhlak</td><td>Menerapkan akhlak terhadap Allah Swt. dengan rajin berdoa dan bertawakal.</td><td class="text-center">3 Pertemuan</td></tr>
+                <tr><td class="text-center">4</td><td>Fikih</td><td>Menerapkan ketentuan puasa wajib Ramadan dan puasa sunah.</td><td class="text-center">4 Pertemuan</td></tr>
+                <tr><td class="text-center">5</td><td>Sejarah Peradaban Islam</td><td>Menceritakan dan menjelaskan kisah Nabi Muhammad saw. periode Madinah.</td><td class="text-center">4 Pertemuan</td></tr>
+                <tr class="total-row"><td colspan="4" class="label-left">Jumlah Semester Ganjil</td><td>18 Pertemuan</td></tr>
+                <tr><td class="semester-cell" rowspan="5">Genap</td><td class="text-center">6</td><td>Al-Qur'an Hadis</td><td>Menjelaskan pesan Hadis Riwayat At Tirmidzi 1899 tentang berbuat baik kepada orang tua dan guru.</td><td class="text-center">4 Pertemuan</td></tr>
+                <tr><td class="text-center">7</td><td>Akidah</td><td>Menjelaskan dan meyakini iman kepada hari akhir.</td><td class="text-center">3 Pertemuan</td></tr>
+                <tr><td class="text-center">8</td><td>Akhlak</td><td>Menerapkan akhlak terhadap tetangga melalui sikap saling menghargai, rukun, dan tolong-menolong.</td><td class="text-center">4 Pertemuan</td></tr>
+                <tr><td class="text-center">9</td><td>Fikih</td><td>Menerapkan pembayaran zakat fitrah dan zakat mal.</td><td class="text-center">4 Pertemuan</td></tr>
+                <tr><td class="text-center">10</td><td>Sejarah Peradaban Islam</td><td>Menceritakan dan menjelaskan peristiwa Fathu Makkah dan Haji Wada' sebagai bagian dari dakwah periode Madinah.</td><td class="text-center">4 Pertemuan</td></tr>
+                <tr class="total-row"><td colspan="4" class="label-left">Jumlah Semester Genap</td><td>19 Pertemuan</td></tr>
+                <tr class="total-row" style="border-top:2px solid #000;"><td colspan="4" class="label-left">TOTAL ALOKASI WAKTU</td><td>37 Pertemuan</td></tr>
+            </tbody>
+        </table>
+        <table class="signature-table">
+            <tr><td class="sig-left">Mengetahui,<br>Kepala {{NAMA_SEKOLAH}}</td><td class="sig-spacer"></td><td class="sig-right">{{KOTA}}, {{TANGGAL}}<br>Guru PAI</td></tr>
+            <tr><td class="sig-left sig-spacer-row"></td><td class="sig-spacer sig-spacer-row"></td><td class="sig-right sig-spacer-row"></td></tr>
+            <tr><td class="sig-left"><strong>{{NAMA_KEPALA_SEKOLAH}}</strong><br>NIP. {{NIP_KEPALA_SEKOLAH}}</td><td class="sig-spacer"></td><td class="sig-right"><strong>{{NAMA_GURU}}</strong><br>NIP. {{NIP_GURU}}</td></tr>
+        </table>
+    </div>
+</body>
+</html>
