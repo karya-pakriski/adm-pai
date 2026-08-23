@@ -315,10 +315,11 @@
     font-size:13px; display:flex; align-items:center; gap:8px; background:var(--surface-alt);
     border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:7px 12px; color:var(--ink-soft); font-weight:500;
   }
-  .date-field input[type="date"]{
+  .date-field input{
     border:none; background:transparent; font-size:13px; font-family:var(--font-body); color:var(--ink); cursor:pointer;
   }
-  .date-field input[type="date"]:focus{ outline:none; }
+  .date-field input[type="text"]{ cursor:text; }
+  .date-field input:focus{ outline:none; }
 
   .preview-container{
     width:100%; height:calc(100vh - 210px); min-height:460px; border:1px solid var(--border);
@@ -428,6 +429,7 @@
     let currentMenu = 'dashboard';
     let currentTemplateRawHtml = '';
     let currentTanggal = '';
+    let currentTA = '';
     let kelasFolderView = null; // null = tampilkan grid folder kelas
 
     const qs = (sel) => document.querySelector(sel);
@@ -441,6 +443,16 @@
     function formatTanggalIndonesia(iso){
       const [y,m,d] = iso.split('-').map(Number);
       return `${d} ${BULAN_ID[m-1]} ${y}`;
+    }
+
+    // ================== TAHUN AJARAN HELPER ==================
+    // Tahun ajaran Indonesia lazimnya dimulai bulan Juli. Default dihitung
+    // otomatis dari tanggal hari ini, tapi tetap bisa diedit manual di preview.
+    function getDefaultTahunAjaran(){
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = d.getMonth() + 1; // 1-12
+      return m >= 7 ? `${y}/${y + 1}` : `${y - 1}/${y}`;
     }
 
     // ================== INISIALISASI ==================
@@ -886,6 +898,7 @@
         currentDocFile = filePath;
         currentDocTitle = template.JUDUL || 'Dokumen';
         currentTanggal = getTodayISO();
+        currentTA = getDefaultTahunAjaran();
 
         renderPreviewUI();
         showToast('Pratinjau dimuat', 'success');
@@ -897,7 +910,7 @@
     }
 
     function buildFilledHtml(){
-      const userForFill = { ...currentUser, TANGGAL: formatTanggalIndonesia(currentTanggal) };
+      const userForFill = { ...currentUser, TANGGAL: formatTanggalIndonesia(currentTanggal), TA: currentTA };
       let html = currentTemplateRawHtml;
       for (const key in userForFill){
         html = html.replaceAll(`{{${key}}}`, userForFill[key] || '');
@@ -915,6 +928,10 @@
             <label class="date-field">
               📅 <input type="date" id="tanggal-picker" value="${currentTanggal}" onchange="onTanggalChange(this.value)">
             </label>
+            <label class="date-field">
+              🗓️ <input type="text" id="ta-input" value="${currentTA}" placeholder="2026/2027"
+                     size="9" oninput="onTAChange(this.value)">
+            </label>
             <button class="btn btn-danger" onclick="downloadPDF()">Unduh PDF</button>
             <button class="btn btn-info" onclick="downloadDOCX()">Unduh DOCX</button>
             <button class="btn btn-close" onclick="goBackFromPreview()">Kembali</button>
@@ -928,6 +945,12 @@
 
     function onTanggalChange(newIso){
       currentTanggal = newIso;
+      const iframe = qs('#preview-frame');
+      if (iframe) iframe.srcdoc = buildFilledHtml();
+    }
+
+    function onTAChange(newVal){
+      currentTA = newVal;
       const iframe = qs('#preview-frame');
       if (iframe) iframe.srcdoc = buildFilledHtml();
     }
@@ -947,7 +970,7 @@
       setButtonLoading(btn, true, 'Memproses...');
       try {
         const tanggalFormatted = formatTanggalIndonesia(currentTanggal);
-        const url = `${GAS_URL}?action=${action}&id=${encodeURIComponent(currentUser.ID)}&file=${encodeURIComponent(currentDocFile)}&tanggal=${encodeURIComponent(tanggalFormatted)}`;
+        const url = `${GAS_URL}?action=${action}&id=${encodeURIComponent(currentUser.ID)}&file=${encodeURIComponent(currentDocFile)}&tanggal=${encodeURIComponent(tanggalFormatted)}&ta=${encodeURIComponent(currentTA)}`;
         const res = await fetch(url);
         const data = await res.json();
         if (!data.success) throw new Error(data.error || 'Gagal memproses');
