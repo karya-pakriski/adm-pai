@@ -274,11 +274,7 @@
   .total-icon{ font-size:36px; }
   .total-info h2{ font-family:var(--font-display); font-size:38px; font-weight:600; line-height:1; }
   .total-info p{ font-size:12.5px; color:rgba(255,255,255,.75); }
-  .total-breakdown{ display:flex; gap:8px; flex-wrap:wrap; position:relative; z-index:1; max-width:420px; }
-  .total-pill{
-    background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2);
-    padding:6px 13px; border-radius:999px; font-size:12px; font-weight:600; white-space:nowrap;
-  }
+  .total-subtitle{ font-size:12.5px; color:rgba(255,255,255,.6) !important; margin-top:4px; }
 
   .content-wrap{ max-width:960px; }
 
@@ -682,9 +678,12 @@
           <div id="total-card" class="total-card motif-dark hidden">
             <div class="total-card-main">
               <div class="total-icon">📚</div>
-              <div class="total-info"><h2 id="stat-total">0</h2><p>Total Dokumen</p></div>
+              <div class="total-info">
+                <h2 id="stat-total">0</h2>
+                <p>Total Dokumen</p>
+                <p class="total-subtitle" id="total-subtitle"></p>
+              </div>
             </div>
-            <div class="total-breakdown" id="total-breakdown"></div>
           </div>
           <div id="stats-container" class="stats-grid hidden">
             <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-info"><h4 id="stat-cp">0</h4><p>CP</p></div></div>
@@ -869,18 +868,20 @@
       // kategorinya tidak cocok CP/ATP/RPP/Prota/Promes (idealnya jarang/0)
       qs('#card-lainnya')?.classList.toggle('hidden', counts.LAINNYA === 0);
 
-      // Ringkasan kategori sebagai pill di sisi kanan banner Total Dokumen
-      const breakdownEl = qs('#total-breakdown');
-      if (breakdownEl){
-        const parts = [
-          counts.CP    ? `${counts.CP} CP`       : null,
-          counts.ATP   ? `${counts.ATP} ATP`     : null,
-          counts.RPP   ? `${counts.RPP} RPP`     : null,
-          counts.PROTA ? `${counts.PROTA} Prota` : null,
-          counts.PROMES? `${counts.PROMES} Promes`: null,
-          counts.LAINNYA? `${counts.LAINNYA} Lainnya`: null,
-        ].filter(Boolean);
-        breakdownEl.innerHTML = parts.map(p => `<span class="total-pill">${p}</span>`).join('');
+      // Subtitle banner sengaja TIDAK mengulang angka per kategori (itu sudah
+      // ada di kartu grid di bawah) - cukup info ringkas yang berbeda: rentang
+      // kelas yang tersedia + jumlah kategori aktif.
+      const subtitleEl = qs('#total-subtitle');
+      if (subtitleEl){
+        const kelasNums = [...new Set(templates.map(t => t.KELAS).filter(Boolean))]
+          .map(Number).filter(n => !isNaN(n));
+        const kelasRange = kelasNums.length
+          ? (Math.min(...kelasNums) === Math.max(...kelasNums)
+              ? `Kelas ${Math.min(...kelasNums)}`
+              : `Kelas ${Math.min(...kelasNums)}–${Math.max(...kelasNums)}`)
+          : null;
+        const kategoriAktif = Object.values(counts).filter(c => c > 0).length;
+        subtitleEl.textContent = [kelasRange, `${kategoriAktif} kategori dokumen`].filter(Boolean).join(' · ');
       }
     }
 
