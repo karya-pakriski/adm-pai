@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATP PAI SD Kelas 2</title>
+    <style>
+        /* --- PRINT & LAYOUT --- */
+        @page {
+            size: A4 landscape;
+            margin: 0.5in;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 11pt;
+            background: #fff;
+            color: #000;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 11pt;
+        }
+
+        td,
+        th {
+            border: 1px solid #000;
+            padding: 5px 6px;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f2f2f2;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .no {
+            text-align: center;
+        }
+        .waktu {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* --- PAGE BREAK --- */
+        tr {
+            page-break-inside: avoid;
+        }
+        .page-keep {
+            page-break-inside: avoid;
+        }
+
+        /* --- IDENTITAS --- */
+        .identitas-table {
+            border: none;
+            width: 100%;
+            font-size: 11pt;
+            margin-bottom: 12px;
+        }
+        .identitas-table td {
+            border: none;
+            padding: 2px 5px;
+            vertical-align: baseline;
+        }
+        .identitas-table .label {
+            width: 25%;
+        }
+        .identitas-table .colon {
+            width: 3%;
+            text-align: center;
+        }
+        .identitas-table .value {
+            width: 72%;
+            text-align: left;
+        }
+
+        .judul-utama {
+            font-size: 16pt;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 10px 0;
+        }
+
+        /* --- TANDA TANGAN --- */
+        .signature-wrapper {
+            page-break-inside: avoid;
+            margin-top: 30px;
+        }
+        .signature-wrapper table,
+        .signature-wrapper table td,
+        .signature-wrapper table tr {
+            border: none !important;
+        }
+        .signature-wrapper table {
+            font-size: 11pt;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media screen and (max-width: 700px) {
+            .identitas-table .label {
+                width: 35%;
+            }
+            .identitas-table .colon {
+                width: 5%;
+            }
+            .identitas-table .value {
+                width: 60%;
+            }
+            td,
+            th {
+                padding: 3px 4px;
+                font-size: 9pt;
+            }
+            .judul-utama {
+                font-size: 13pt;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+            }
+            .table-wrapper {
+                overflow: visible;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- SEMESTER I (GANJIL)                                            -->
+    <!-- ============================================================ -->
+    <div class="page-keep">
+
+        <div class="judul-utama">ALUR TUJUAN PEMBELAJARAN</div>
+
+        <!-- IDENTITAS SEMESTER I -->
+        <table class="identitas-table">
+            <tr>
+                <td class="label">Satuan Pendidikan</td>
+                <td class="colon">:</td>
+                <td class="value">{{NAMA_SEKOLAH}}</td>
+            </tr>
+            <tr>
+                <td class="label">Mata Pelajaran</td>
+                <td class="colon">:</td>
+                <td class="value">Pendidikan Agama Islam dan Budi Pekerti</td>
+            </tr>
+            <tr>
+                <td class="label">Kelas / Fase</td>
+                <td class="colon">:</td>
+                <td class="value">II (Dua) / A</td>
+            </tr>
+            <tr>
+                <td class="label">Tahun Ajaran</td>
+                <td class="colon">:</td>
+                <td class="value">{{TA}}</td>
+            </tr>
+            <tr>
+                <td class="label">Semester</td>
+                <td class="colon">:</td>
+                <td class="value">I / Ganjil</td>
+            </tr>
+        </table>
+
+        <!-- TABEL SEMESTER I -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:5%;">No</th>
+                        <th style="width:12%;">Tujuan Pembelajaran</th>
+                        <th style="width:11%;">Materi Pokok</th>
+                        <th style="width:22%;">Langkah Pembelajaran</th>
+                        <th style="width:14%;">DPL &amp; KBC</th>
+                        <th style="width:14%;">Asesmen</th>
+                        <th style="width:14%;">Sumber dan Media Belajar</th>
+                        <th style="width:8%;">Alokasi Waktu</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- ===== TP 2.1 ===== -->
+                    <tr>
+                        <td class="no"><strong>2.1</strong></td>
+                        <td>Membaca dan membedakan huruf hijaiah bersambung, serta menghafal Surah An-Nas.</td>
+                        <td>
+                            1. Bentuk Huruf Hijaiah Bersambung<br />
+                            2. Membaca Kata Bersambung<br />
+                            3. Membaca Surah An-Nas<br />
+                            4. Menghafal Surah An-Nas
+                        </td>
+                        <td>
+                            <div><strong>Pertemuan 1: Bentuk Huruf Hijaiah Bersambung</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mengamati perubahan bentuk huruf di awal, tengah, dan akhir dari kartu huruf cetak atau tayangan animasi di layar proyektor.</div>
+                            <div>2. Murid menyimak daftar huruf yang tidak bisa disambung melalui poster dinding atau infografis di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menebalkan bentuk huruf bersambung menggunakan pensil di buku atau aplikasi kanvas tablet.</div>
+                            <div>4. Kelompok murid menjodohkan bentuk huruf lepas menggunakan garis di lembar kertas atau kuis interaktif di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meneguhkan niat untuk lebih teliti saat mengamati perubahan bentuk huruf Al-Qur'an.</div>
+                        </td>
+                        <td>
+                            <strong>DPL:</strong><br />
+                            - Keimanan dan ketakwaan terhadap Tuhan yang Maha Esa<br />
+                            - Kemandirian<br /><br />
+                            <strong>KBC:</strong><br />
+                            - Cinta Allah dan Rasul-Nya<br />
+                            - Cinta ilmu
+                        </td>
+                        <td>
+                            <strong>Formatif:</strong><br />
+                            - Observasi sikap (ketekunan dan semangat membaca)<br />
+                            - Unjuk kerja lisan kelancaran melafalkan kata bersambung<br /><br />
+                            <strong>Sumatif:</strong><br />
+                            - Praktik setoran hafalan Surah An-Nas<br />
+                            - Tes Tertulis (Pilihan Ganda, Isian Singkat, Uraian)
+                        </td>
+                        <td>
+                            <strong>Sumber Utama:</strong><br />
+                            Buku Siswa PAI SD Kelas 2<br /><br />
+                            <strong>Alat Pembelajaran:</strong><br />
+                            Alat tulis, papan tulis, proyektor, speaker, laptop, smartphone, tablet<br /><br />
+                            <strong>Media Kontekstual:</strong><br />
+                            Kartu huruf cetak, potongan karton ayat, poster dinding, aplikasi puzzle teks, aplikasi kanvas digital
+                        </td>
+                        <td class="waktu">4 Pertemuan</td>
+                    </tr>
+
+                    <!-- Pertemuan 2 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 2: Membaca Kata Bersambung</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mendengarkan cara mengeja kata pendek bersambung dari alat peraga manual atau rekaman suara di speaker.</div>
+                            <div>2. Murid melihat contoh kata bersambung sederhana yang ditulis dengan spidol di papan tulis atau ditampilkan lewat slide interaktif proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid melafalkan kata bersambung secara bergantian membaca buku teks atau mengikuti lirik berjalan di layar laptop.</div>
+                            <div>4. Kelompok murid memisahkan kata bersambung menjadi huruf lepas menggunakan potongan kertas atau papan sortir digital di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid mengungkapkan rasa gembira karena mulai bisa membaca tulisan Arab dengan lancar.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 3 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 3: Membaca Surah An-Nas</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid menyimak bacaan Surah An-Nas ayat demi ayat dari panduan lisan di kelas atau rekaman audio dari laptop.</div>
+                            <div>2. Murid melihat teks ayat dari lembar cetak ukuran besar atau teks berjalan pada layar proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menirukan bacaan surah secara klasikal menggunakan buku siswa atau melihat teks di layar tablet.</div>
+                            <div>4. Kelompok murid mengurutkan ayat satu sampai enam menggunakan potongan karton ayat atau aplikasi puzzle teks di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berjanji untuk membaca Surah An-Nas sebelum tidur agar selalu dilindungi oleh Allah.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 4 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 4: Menghafal Surah An-Nas</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid memperhatikan trik mudah menghafal ayat dari bagan panduan kertas atau video singkat di proyektor.</div>
+                            <div>2. Murid mendengarkan pengulangan ayat secara beruntun dari teman sebangku atau tayangan slide di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyetorkan hafalan secara lisan di depan kelas atau merekam suara hafalan menggunakan aplikasi perekam di tablet.</div>
+                            <div>4. Kelompok murid melengkapi ayat rumpang dengan menyebutkannya setelah melihat kartu petunjuk cetak atau memilih jawaban pada kuis digital smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meyakini dalam hati bahwa Allah adalah satu-satunya pelindung dari segala macam kejahatan.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- ===== TP 2.2 ===== -->
+                    <tr>
+                        <td class="no"><strong>2.2</strong></td>
+                        <td>Menjelaskan dan meyakini asmaulhusna Al-Malik, Al-Quddus, As-Salam, dan Al-Mukmin.</td>
+                        <td>
+                            1. Makna Al-Malik dan Al-Quddus<br />
+                            2. Makna As-Salam dan Al-Mukmin<br />
+                            3. Meneladani Asmaulhusna dalam Keseharian
+                        </td>
+                        <td>
+                            <div><strong>Pertemuan 1: Makna Al-Malik dan Al-Quddus</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid membaca arti Al-Malik dan Al-Quddus dari poster kelas atau tayangan teks di layar laptop.</div>
+                            <div>2. Murid menyimak contoh kekuasaan dan kesucian Allah dari buku cerita bergambar atau animasi pendek di proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan arti kedua asmaulhusna secara bergantian lisan di tempat duduk atau mengetiknya di aplikasi notes tablet.</div>
+                            <div>4. Kelompok murid menjodohkan lafal Arab dengan artinya menggunakan kartu pasangan kertas atau menarik garis pada aplikasi di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meyakini bahwa hanya Allah penguasa alam semesta yang paling suci dari segala kekurangan.</div>
+                        </td>
+                        <td>
+                            <strong>DPL:</strong><br />
+                            - Keimanan dan ketakwaan terhadap Tuhan yang Maha Esa<br />
+                            - Kolaborasi<br /><br />
+                            <strong>KBC:</strong><br />
+                            - Cinta Allah dan Rasul-Nya<br />
+                            - Cinta diri dan sesama manusia
+                        </td>
+                        <td>
+                            <strong>Formatif:</strong><br />
+                            - Observasi sikap (keyakinan dan empati kepada teman)<br />
+                            - Tanya jawab lisan arti 4 asmaulhusna<br /><br />
+                            <strong>Sumatif:</strong><br />
+                            - Unjuk kerja menyebutkan contoh perilaku teladan dari asmaulhusna<br />
+                            - Tes Tertulis (Pilihan Ganda, Isian Singkat, Uraian)
+                        </td>
+                        <td>
+                            <strong>Sumber Utama:</strong><br />
+                            Buku Siswa PAI SD Kelas 2<br /><br />
+                            <strong>Alat Pembelajaran:</strong><br />
+                            Alat tulis, proyektor, speaker, laptop, tablet, smartphone<br /><br />
+                            <strong>Media Kontekstual:</strong><br />
+                            Poster kelas, buku cerita bergambar, komik cetak, keranjang fisik, kotak sortir digital, papan kolaborasi digital
+                        </td>
+                        <td class="waktu">3 Pertemuan</td>
+                    </tr>
+
+                    <!-- Pertemuan 2 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 2: Makna As-Salam dan Al-Mukmin</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mendengarkan makna As-Salam dan Al-Mukmin dari lembar bacaan tercetak atau rekaman penjelasan di speaker.</div>
+                            <div>2. Murid memperhatikan ilustrasi rasa aman dan damai melalui majalah dinding atau galeri gambar pada slide proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menceritakan pengalaman saat merasa aman secara lisan atau merekamnya menjadi pesan suara di laptop.</div>
+                            <div>4. Kelompok murid memisahkan gambar situasi yang damai dan berbahaya menggunakan dua keranjang fisik atau kotak sortir digital di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid menyatakan janji untuk selalu memohon keselamatan dan perlindungan hanya kepada Allah.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 3 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 3: Meneladani Asmaulhusna dalam Keseharian</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mengamati contoh perilaku menjaga kebersihan dan kedamaian dari komik cetak atau gambar seri di layar laptop.</div>
+                            <div>2. Murid membaca cerita singkat tentang memberi rasa aman kepada adik dari kertas cerita atau dokumen teks di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menuliskan satu perbuatan baik di sekolah pada buku tulis atau mengetiknya di papan kolaborasi digital laptop.</div>
+                            <div>4. Kelompok murid memilih perbuatan terpuji dengan memberi tanda centang di lembar kerja kertas atau mengetuk pilihan benar pada kuis layar sentuh tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berniat untuk selalu menjaga perdamaian dan kerukunan dengan teman-teman di dalam kelas.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- ===== TP 2.3 ===== -->
+                    <tr>
+                        <td class="no"><strong>2.3</strong></td>
+                        <td>Menerapkan akhlak terhadap Allah Swt. dengan menyucikan-Nya melalui pelafalan Subhanallah dan MasyaAllah.</td>
+                        <td>
+                            1. Lafal dan Makna Subhanallah<br />
+                            2. Lafal dan Makna MasyaAllah<br />
+                            3. Penerapan Kalimat Thayyibah Sehari-hari
+                        </td>
+                        <td>
+                            <div><strong>Pertemuan 1: Lafal dan Makna Subhanallah</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid menyimak pelafalan kalimat Subhanallah yang benar dari panduan guru secara langsung atau rekaman audio di laptop.</div>
+                            <div>2. Murid melihat contoh kejadian menakjubkan ciptaan Allah dari foto cetak atau tayangan video alam di proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid melafalkan kalimat Subhanallah secara lantang bersama-sama atau merekam suara melalui aplikasi perekam di tablet.</div>
+                            <div>4. Kelompok murid menyusun kata-kata acak menjadi arti kalimat tasbih menggunakan karton kata atau menggeser blok teks pada puzzle digital di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid mengucapkan tasbih di dalam hati dengan sungguh-sungguh saat melihat kebesaran ciptaan Allah.</div>
+                        </td>
+                        <td>
+                            <strong>DPL:</strong><br />
+                            - Keimanan dan ketakwaan terhadap Tuhan yang Maha Esa<br />
+                            - Komunikasi<br /><br />
+                            <strong>KBC:</strong><br />
+                            - Cinta Allah dan Rasul-Nya<br />
+                            - Cinta lingkungan
+                        </td>
+                        <td>
+                            <strong>Formatif:</strong><br />
+                            - Observasi sikap (ketaatan dan kesopanan bertutur kata)<br />
+                            - Unjuk kerja lisan ketepatan melafalkan kalimat pujian<br /><br />
+                            <strong>Sumatif:</strong><br />
+                            - Praktik demonstrasi bermain peran (roleplay) penggunaan kalimat thayyibah<br />
+                            - Tes Tertulis (Pilihan Ganda, Isian Singkat, Uraian)
+                        </td>
+                        <td>
+                            <strong>Sumber Utama:</strong><br />
+                            Buku Siswa PAI SD Kelas 2<br /><br />
+                            <strong>Alat Pembelajaran:</strong><br />
+                            Alat tulis, proyektor, speaker, laptop, tablet, smartphone<br /><br />
+                            <strong>Media Kontekstual:</strong><br />
+                            Foto cetak alam, poster dinding, kartu gambar manual, naskah dialog kertas, aplikasi rekaman video, puzzle teks digital
+                        </td>
+                        <td class="waktu">3 Pertemuan</td>
+                    </tr>
+
+                    <!-- Pertemuan 2 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 2: Lafal dan Makna MasyaAllah</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mendengarkan penjelasan waktu membaca MasyaAllah dari buku cerita kertas atau rekaman di speaker.</div>
+                            <div>2. Murid memperhatikan perbedaan penggunaan Subhanallah dan MasyaAllah dari poster dinding atau bagan pada slide interaktif.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan contoh kejadian untuk mengucapkan MasyaAllah secara lisan atau mengetiknya di papan kuis laptop.</div>
+                            <div>4. Kelompok murid melengkapi teks dialog sederhana yang rumpang menggunakan pensil di kertas atau mengisi kolom teks interaktif di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berjanji untuk memuji Allah ketika melihat teman yang pintar atau benda yang sangat bagus.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 3 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 3: Penerapan Kalimat Thayyibah Sehari-hari</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid membaca teks percakapan sehari-hari yang berisi kalimat pujian dari komik anak atau teks berjalan di proyektor.</div>
+                            <div>2. Murid mengamati gambar situasi terkejut dan situasi kagum dari kartu gambar manual atau galeri digital di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid memilih kalimat pujian yang paling tepat untuk sebuah gambar menggunakan lembar kerja atau melalui aplikasi notes laptop.</div>
+                            <div>4. Kelompok murid memperagakan dialog singkat kekaguman menggunakan naskah kertas atau merekam peragaan mereka dalam bentuk video menggunakan tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berniat untuk terus membiasakan lisan dengan kata-kata pujian yang baik setiap hari.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- ===== TP 2.4 ===== -->
+                    <tr>
+                        <td class="no"><strong>2.4</strong></td>
+                        <td>Menerapkan tata cara salat fardu secara tertib.</td>
+                        <td>
+                            1. Syarat Wajib dan Sah Salat<br />
+                            2. Gerakan Awal Salat (Takbir-Rukuk)<br />
+                            3. Gerakan Pertengahan (Iktidal-Sujud)<br />
+                            4. Gerakan Akhir (Tasyahud-Salam) dan Tertib
+                        </td>
+                        <td>
+                            <div><strong>Pertemuan 1: Syarat Wajib dan Sah Salat</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid menyimak penjelasan syarat salat suci dari najis melalui bagan cetak atau tayangan slide di proyektor.</div>
+                            <div>2. Murid membaca jadwal lima waktu salat fardu dari kalender dinding atau infografis pada layar laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan nama-nama waktu salat secara bergantian lisan atau mengetik pada kuis digital di smartphone.</div>
+                            <div>4. Kelompok murid memisahkan gambar orang yang siap salat dan belum siap menggunakan kotak fisik atau papan sortir pada tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meyakini bahwa salat lima waktu adalah kewajiban utama yang harus selalu dijaga.</div>
+                        </td>
+                        <td>
+                            <strong>DPL:</strong><br />
+                            - Keimanan dan ketakwaan terhadap Tuhan yang Maha Esa<br />
+                            - Kemandirian<br /><br />
+                            <strong>KBC:</strong><br />
+                            - Cinta Allah dan Rasul-Nya<br />
+                            - Cinta diri dan sesama manusia
+                        </td>
+                        <td>
+                            <strong>Formatif:</strong><br />
+                            - Observasi sikap (ketertiban dan keseriusan saat praktik)<br />
+                            - Unjuk kerja proses menyusun urutan gerakan salat<br /><br />
+                            <strong>Sumatif:</strong><br />
+                            - Praktik demonstrasi gerakan salat secara tertib dari awal hingga salam<br />
+                            - Tes Tertulis (Pilihan Ganda, Isian Singkat, Uraian)
+                        </td>
+                        <td>
+                            <strong>Sumber Utama:</strong><br />
+                            Buku Siswa PAI SD Kelas 2<br /><br />
+                            <strong>Alat Pembelajaran:</strong><br />
+                            Alat tulis, karpet/sajadah kelas, proyektor, speaker, laptop, smartphone, tablet<br /><br />
+                            <strong>Media Kontekstual:</strong><br />
+                            Bagan cetak, poster gerakan salat, potongan karton gerakan, gambar tempel, aplikasi puzzle interaktif, papan sortir digital
+                        </td>
+                        <td class="waktu">4 Pertemuan</td>
+                    </tr>
+
+                    <!-- Pertemuan 2 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 2: Gerakan Awal Salat (Takbir-Rukuk)</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid memperhatikan contoh gerakan takbiratul ihram sampai rukuk dari peragaan langsung di kelas atau video tutorial di laptop.</div>
+                            <div>2. Murid mendengarkan bacaan pendek saat rukuk dari lembar panduan kertas atau rekaman audio di speaker.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menirukan gerakan takbir sampai rukuk di tempat berdirinya atau merekam praktik tersebut menggunakan kamera tablet.</div>
+                            <div>4. Kelompok murid mengurutkan gambar tiga gerakan awal menggunakan potongan karton atau menyusun urutan pada aplikasi di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meneguhkan hati untuk bersikap tenang dan tidak terburu-buru saat memulai ibadah salat.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 3 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 3: Gerakan Pertengahan (Iktidal-Sujud)</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mengamati posisi punggung saat iktidal dan dahi saat sujud dari poster kelas atau slide gambar di proyektor.</div>
+                            <div>2. Murid menyimak bacaan pendek saat sujud dari buku panduan salat atau pemutaran suara di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid mempraktikkan cara turun dari iktidal ke sujud di atas karpet kelas atau menonton simulasi di tablet lalu menirukannya.</div>
+                            <div>4. Kelompok murid menjodohkan nama gerakan dengan gambar postur tubuh menggunakan garis di kertas atau kuis layar sentuh.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid menyatakan janji untuk tidak bercanda dengan teman saat sedang dalam posisi sujud.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 4 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 4: Gerakan Akhir (Tasyahud-Salam) dan Tertib</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mencermati posisi duduk tasyahud dan arah menoleh salam dari demonstrasi fisik atau galeri digital di proyektor.</div>
+                            <div>2. Murid membaca arti kata tertib secara berurutan dari tulisan spidol di papan tulis atau teks berjalan di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid memperagakan posisi duduk tasyahud dan gerakan salam secara fisik atau merekam peragaan mandiri di laptop.</div>
+                            <div>4. Kelompok murid menyusun seluruh rangkaian gambar gerakan salat secara utuh menggunakan gambar tempel atau aplikasi puzzle interaktif di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berniat untuk melaksanakan salat tepat waktu dengan urutan gerakan yang sempurna.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- ===== TP 2.5 ===== -->
+                    <tr>
+                        <td class="no"><strong>2.5</strong></td>
+                        <td>Menceritakan kisah keteladanan Nabi Ibrahim a.s. dan Nabi Ismail a.s.</td>
+                        <td>
+                            1. Masa Kecil Nabi Ismail di Mekah<br />
+                            2. Pembangunan Kakbah<br />
+                            3. Ujian Perintah Kurban<br />
+                            4. Keteladanan Sifat Patuh dan Sabar
+                        </td>
+                        <td>
+                            <div><strong>Pertemuan 1: Masa Kecil Nabi Ismail di Mekah</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mendengarkan kisah Siti Hajar mencari air Zamzam dari pembacaan buku cerita atau video animasi sejarah di proyektor.</div>
+                            <div>2. Murid mengamati gambar gurun pasir tandus dari foto cetak atau tayangan pemandangan di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan nama sumber air yang ditemukan secara lisan atau mengetiknya di kuis digital smartphone.</div>
+                            <div>4. Kelompok murid mengurutkan kejadian lari antara bukit Safa dan Marwa menggunakan kartu cerita bergambar atau aplikasi susun kronologi di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meyakini bahwa Allah selalu memberikan rezeki jika manusia mau berusaha keras dan berdoa.</div>
+                        </td>
+                        <td>
+                            <strong>DPL:</strong><br />
+                            - Keimanan dan ketakwaan terhadap Tuhan yang Maha Esa<br />
+                            - Berkebinekaan global<br /><br />
+                            <strong>KBC:</strong><br />
+                            - Cinta Allah dan Rasul-Nya<br />
+                            - Cinta diri dan sesama manusia
+                        </td>
+                        <td>
+                            <strong>Formatif:</strong><br />
+                            - Observasi sikap (kepatuhan dan kesabaran saat belajar)<br />
+                            - Unjuk kerja proses bermain peran patuh pada orang tua<br /><br />
+                            <strong>Sumatif:</strong><br />
+                            - Unjuk kerja menceritakan ulang (storytelling) kisah teladan dengan bahasa sederhana<br />
+                            - Tes Tertulis (Pilihan Ganda, Isian Singkat, Uraian)
+                        </td>
+                        <td>
+                            <strong>Sumber Utama:</strong><br />
+                            Buku Siswa PAI SD Kelas 2<br /><br />
+                            <strong>Alat Pembelajaran:</strong><br />
+                            Alat tulis, miniatur kubus Kakbah, proyektor, speaker, laptop, smartphone, tablet<br /><br />
+                            <strong>Media Kontekstual:</strong><br />
+                            Buku cerita bergambar, kartu cerita kronologis, puzzle karton Kakbah, keranjang fisik, aplikasi susun kronologi digital, kotak sortir digital
+                        </td>
+                        <td class="waktu">4 Pertemuan</td>
+                    </tr>
+
+                    <!-- Pertemuan 2 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 2: Pembangunan Kakbah</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid menyimak kisah Nabi Ibrahim dan Ismail membangun Kakbah dari komik sejarah atau tayangan interaktif di laptop.</div>
+                            <div>2. Murid melihat bentuk Kakbah dari miniatur bangunan kubus buatan atau gambar 3D pada layar proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menceritakan ulang siapa yang membangun Kakbah dengan bahasa sendiri di depan kelas atau merekam suara di tablet.</div>
+                            <div>4. Kelompok murid menyatukan potongan gambar Kakbah menjadi utuh menggunakan puzzle karton fisik atau aplikasi puzzle digital di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid mengungkapkan rasa kagum dan harapan bisa berkunjung ke Baitullah bersama keluarga di masa depan.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 3 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 3: Ujian Perintah Kurban</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid memperhatikan kisah mimpi Nabi Ibrahim untuk menyembelih putranya dari lembar cerita atau video pendek di proyektor.</div>
+                            <div>2. Murid mendengarkan peristiwa ajaib penggantian Nabi Ismail dengan domba dari rekaman audio di speaker atau penjelasan lisan guru.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menjawab pertanyaan singkat tentang kisah kurban dengan menuliskannya di buku catatan atau mengetik di kuis laptop.</div>
+                            <div>4. Kelompok murid memisahkan gambar hewan yang boleh dikurbankan menggunakan keranjang fisik atau kotak sortir digital di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid menyatakan kekaguman yang mendalam atas ketaatan Nabi Ismail kepada perintah Allah.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 4 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 4: Keteladanan Sifat Patuh dan Sabar</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid membaca ringkasan sifat sabar kedua nabi dari poster kelas atau teks berjalan di layar smartphone.</div>
+                            <div>2. Murid mengamati contoh perbuatan patuh anak kepada orang tua dari foto cetak atau galeri digital di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan satu cara mematuhi perintah ibu di rumah secara lisan atau menuliskannya di aplikasi notes tablet.</div>
+                            <div>4. Kelompok murid bermain peran cara menerima perintah orang tua dengan sopan atau merekam adegan tersebut menggunakan kamera smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berjanji untuk selalu patuh dan tidak marah jika disuruh melakukan kebaikan oleh ayah dan ibu.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END SEMESTER I -->
+
+
+    <!-- ============================================================ -->
+    <!-- SEMESTER II (GENAP)                                           -->
+    <!-- ============================================================ -->
+    <div class="page-keep" style="margin-top:30px;">
+
+        <div class="judul-utama">ALUR TUJUAN PEMBELAJARAN</div>
+
+        <!-- IDENTITAS SEMESTER II -->
+        <table class="identitas-table">
+            <tr>
+                <td class="label">Satuan Pendidikan</td>
+                <td class="colon">:</td>
+                <td class="value">{{NAMA_SEKOLAH}}</td>
+            </tr>
+            <tr>
+                <td class="label">Mata Pelajaran</td>
+                <td class="colon">:</td>
+                <td class="value">Pendidikan Agama Islam dan Budi Pekerti</td>
+            </tr>
+            <tr>
+                <td class="label">Kelas / Fase</td>
+                <td class="colon">:</td>
+                <td class="value">II (Dua) / A</td>
+            </tr>
+            <tr>
+                <td class="label">Tahun Ajaran</td>
+                <td class="colon">:</td>
+                <td class="value">{{TA}}</td>
+            </tr>
+            <tr>
+                <td class="label">Semester</td>
+                <td class="colon">:</td>
+                <td class="value">II / Genap</td>
+            </tr>
+        </table>
+
+        <!-- TABEL SEMESTER II -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:5%;">No</th>
+                        <th style="width:12%;">Tujuan Pembelajaran</th>
+                        <th style="width:11%;">Materi Pokok</th>
+                        <th style="width:22%;">Langkah Pembelajaran</th>
+                        <th style="width:14%;">DPL &amp; KBC</th>
+                        <th style="width:14%;">Asesmen</th>
+                        <th style="width:14%;">Sumber dan Media Belajar</th>
+                        <th style="width:8%;">Alokasi Waktu</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- ===== TP 2.6 ===== -->
+                    <tr>
+                        <td class="no"><strong>2.6</strong></td>
+                        <td>Menghafal Surah Al-Falaq serta Hadis Riwayat Muslim nomor 223 tentang kebersihan.</td>
+                        <td>
+                            1. Membaca Surah Al-Falaq<br />
+                            2. Menghafal Surah Al-Falaq<br />
+                            3. Membaca Hadis Kebersihan<br />
+                            4. Menghafal Hadis Kebersihan
+                        </td>
+                        <td>
+                            <div><strong>Pertemuan 1: Membaca Surah Al-Falaq</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid menyimak bacaan Surah Al-Falaq dari poster dinding atau tayangan video di proyektor.</div>
+                            <div>2. Murid melihat bentuk tulisan ayat dari lembar cetak ukuran besar atau teks berjalan di layar laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menirukan pelafalan ayat secara klasikal menggunakan buku siswa atau membaca teks di layar interaktif.</div>
+                            <div>4. Kelompok murid menyusun potongan ayat menggunakan karton tebal atau aplikasi puzzle teks di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meyakini dalam hati bahwa membaca ayat suci Al-Qur'an akan mendapatkan pahala dari Allah.</div>
+                        </td>
+                        <td>
+                            <strong>DPL:</strong><br />
+                            - Keimanan dan ketakwaan terhadap Tuhan yang Maha Esa<br />
+                            - Kesehatan<br /><br />
+                            <strong>KBC:</strong><br />
+                            - Cinta Allah dan Rasul-Nya<br />
+                            - Cinta ilmu
+                        </td>
+                        <td>
+                            <strong>Formatif:</strong><br />
+                            - Observasi sikap (ketekunan dan kepedulian kebersihan)<br />
+                            - Unjuk kerja lisan kelancaran melafalkan ayat dan hadis<br /><br />
+                            <strong>Sumatif:</strong><br />
+                            - Praktik setoran hafalan Surah Al-Falaq dan Hadis Kebersihan<br />
+                            - Tes Tertulis (Pilihan Ganda, Isian Singkat, Uraian)
+                        </td>
+                        <td>
+                            <strong>Sumber Utama:</strong><br />
+                            Buku Siswa PAI SD Kelas 2<br /><br />
+                            <strong>Alat Pembelajaran:</strong><br />
+                            Alat tulis, papan tulis, proyektor, speaker, laptop, smartphone, tablet<br /><br />
+                            <strong>Media Kontekstual:</strong><br />
+                            Poster dinding, karton tebal, flashcard kertas, aplikasi puzzle teks, aplikasi kuis interaktif, rekaman audio
+                        </td>
+                        <td class="waktu">4 Pertemuan</td>
+                    </tr>
+
+                    <!-- Pertemuan 2 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 2: Menghafal Surah Al-Falaq</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mendengarkan pengulangan ayat demi ayat dari panduan kertas atau rekaman audio di speaker.</div>
+                            <div>2. Murid mengamati trik menghafal urutan ayat dari bagan tercetak atau infografis pada layar smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyetorkan hafalan secara lisan di depan kelas atau merekam suara hafalan menggunakan aplikasi laptop.</div>
+                            <div>4. Kelompok murid melengkapi ayat yang rumpang dengan meletakkan kartu kata fisik atau memilih jawaban pada kuis digital di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berjanji untuk rajin membaca Surah Al-Falaq saat salat agar terlindung dari niat jahat.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 3 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 3: Membaca Hadis Kebersihan</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid menyimak pelafalan hadis tentang kebersihan dari alat peraga manual atau rekaman suara di proyektor.</div>
+                            <div>2. Murid membaca terjemahan hadis dari tulisan spidol di papan tulis atau slide presentasi di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid melafalkan bacaan hadis secara bergantian menggunakan buku catatan atau mengikuti lirik berjalan di layar smartphone.</div>
+                            <div>4. Kelompok murid menjodohkan lafal hadis dengan artinya menggunakan garis pada lembar kerja atau menarik garis pada kuis interaktif di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berniat untuk selalu merawat kebersihan badan dan lingkungan di manapun berada.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 4 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 4: Menghafal Hadis Kebersihan</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid memperhatikan potongan-potongan kata hadis dari flashcard kertas atau tayangan animasi di laptop.</div>
+                            <div>2. Murid mendengarkan cara melancarkan hafalan dari catatan panduan di buku atau tayangan video singkat di proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid mengucapkan hafalan hadis secara utuh dengan suara lantang atau merekam video hafalan menggunakan tablet.</div>
+                            <div>4. Kelompok murid menyusun acakan kata menjadi hadis yang benar menggunakan potongan kertas atau menggeser blok teks pada aplikasi di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meneguhkan hati bahwa kebiasaan hidup bersih adalah bukti keimanan yang nyata.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- ===== TP 2.7 ===== -->
+                    <tr>
+                        <td class="no"><strong>2.7</strong></td>
+                        <td>Menjelaskan dan meyakini iman kepada malaikat-malaikat Allah Swt. beserta tugasnya.</td>
+                        <td>
+                            1. Pengertian Iman kepada Malaikat<br />
+                            2. Nama Malaikat (Jibril-Munkar) dan Tugasnya<br />
+                            3. Nama Malaikat (Nakir-Ridwan) dan Tugasnya
+                        </td>
+                        <td>
+                            <div><strong>Pertemuan 1: Pengertian Iman kepada Malaikat</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid membaca pengertian malaikat sebagai makhluk dari cahaya melalui buku siswa atau tayangan teks di layar laptop.</div>
+                            <div>2. Murid menyimak sifat-sifat malaikat yang selalu patuh kepada Allah melalui poster dinding atau video animasi di proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan asal penciptaan malaikat secara lisan di tempat duduk atau mengetiknya di papan kuis smartphone.</div>
+                            <div>4. Kelompok murid memisahkan sifat malaikat dan sifat manusia menggunakan keranjang fisik atau kotak sortir digital di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meyakini bahwa malaikat adalah utusan Allah yang senantiasa mengawasi segala perbuatan manusia.</div>
+                        </td>
+                        <td>
+                            <strong>DPL:</strong><br />
+                            - Keimanan dan ketakwaan terhadap Tuhan yang Maha Esa<br />
+                            - Penalaran kritis<br /><br />
+                            <strong>KBC:</strong><br />
+                            - Cinta Allah dan Rasul-Nya<br />
+                            - Cinta ilmu
+                        </td>
+                        <td>
+                            <strong>Formatif:</strong><br />
+                            - Observasi sikap (keyakinan dan semangat menghafal)<br />
+                            - Tanya jawab lisan nama dan tugas malaikat<br /><br />
+                            <strong>Sumatif:</strong><br />
+                            - Unjuk kerja menjodohkan 10 nama malaikat dengan tugas utamanya<br />
+                            - Tes Tertulis (Pilihan Ganda, Isian Singkat, Uraian)
+                        </td>
+                        <td>
+                            <strong>Sumber Utama:</strong><br />
+                            Buku Siswa PAI SD Kelas 2<br /><br />
+                            <strong>Alat Pembelajaran:</strong><br />
+                            Alat tulis, proyektor, speaker, laptop, tablet, smartphone<br /><br />
+                            <strong>Media Kontekstual:</strong><br />
+                            Poster dinding, bagan kertas, komik cetak, keranjang fisik, kotak sortir digital, aplikasi kuis mencocokkan
+                        </td>
+                        <td class="waktu">3 Pertemuan</td>
+                    </tr>
+
+                    <!-- Pertemuan 2 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 2: Nama Malaikat (Jibril-Munkar) dan Tugasnya</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mendengarkan daftar nama lima malaikat pertama beserta tugasnya dari bagan kertas atau rekaman suara di speaker.</div>
+                            <div>2. Murid memperhatikan tugas mulia dari menyampaikan wahyu hingga menanyai di alam kubur melalui lembar kerja atau infografis di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menirukan nama lima malaikat secara bersama-sama membaca poster kelas atau melihat lirik berjalan di layar interaktif.</div>
+                            <div>4. Kelompok murid menjodohkan nama malaikat dan tugasnya menggunakan kartu pasangan kertas atau aplikasi kuis mencocokkan di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berniat untuk terus berbuat kebaikan karena menyadari ada malaikat pencatat amal di sisinya.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 3 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 3: Nama Malaikat (Nakir-Ridwan) dan Tugasnya</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mengamati tugas lima malaikat berikutnya seperti meniup sangkakala dan menjaga surga dari komik cetak atau gambar seri digital di proyektor.</div>
+                            <div>2. Murid menyimak lagu urutan sepuluh malaikat dari lirik tercetak di buku atau video musik anak di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyanyikan sepuluh nama malaikat secara serentak di kelas atau merekam nyanyian hafalan di smartphone.</div>
+                            <div>4. Kelompok murid mengurutkan sepuluh nama malaikat tersebut menggunakan kertas tempel dinding atau menggeser blok nama pada aplikasi di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid menyatakan rasa kagum dan syukur atas keteraturan alam semesta yang dijaga oleh malaikat-malaikat Allah.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- ===== TP 2.8 ===== -->
+                    <tr>
+                        <td class="no"><strong>2.8</strong></td>
+                        <td>Menerapkan akhlak terhadap diri sendiri melalui pembiasaan sikap jujur dan disiplin.</td>
+                        <td>
+                            1. Makna dan Contoh Perilaku Jujur<br />
+                            2. Keuntungan Bersikap Jujur<br />
+                            3. Makna dan Contoh Perilaku Disiplin<br />
+                            4. Manfaat Bersikap Disiplin
+                        </td>
+                        <td>
+                            <div><strong>Pertemuan 1: Makna dan Contoh Perilaku Jujur</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid menyimak cerita bergambar tentang anak yang berkata apa adanya dari buku bacaan atau video animasi pendek di proyektor.</div>
+                            <div>2. Murid membaca pengertian jujur yang sebenarnya dari tulisan spidol di papan tulis atau dokumen teks di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan satu contoh perbuatan jujur di sekolah secara lisan atau mengetiknya di aplikasi notes tablet.</div>
+                            <div>4. Kelompok murid memilih gambar yang menunjukkan sikap berkata jujur menggunakan lembar centang fisik atau kuis pilihan ganda di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meyakini bahwa Allah sangat menyayangi hamba-Nya yang selalu berkata jujur setiap saat.</div>
+                        </td>
+                        <td>
+                            <strong>DPL:</strong><br />
+                            - Kemandirian<br />
+                            - Kewargaan<br /><br />
+                            <strong>KBC:</strong><br />
+                            - Cinta diri dan sesama manusia<br />
+                            - Cinta ilmu
+                        </td>
+                        <td>
+                            <strong>Formatif:</strong><br />
+                            - Observasi sikap (kejujuran dan kedisiplinan dalam kelas)<br />
+                            - Unjuk kerja proses praktik merapikan tas sekolah<br /><br />
+                            <strong>Sumatif:</strong><br />
+                            - Praktik demonstrasi bermain peran (roleplay) bersikap jujur dan disiplin<br />
+                            - Tes Tertulis (Pilihan Ganda, Isian Singkat, Uraian)
+                        </td>
+                        <td>
+                            <strong>Sumber Utama:</strong><br />
+                            Buku Siswa PAI SD Kelas 2<br /><br />
+                            <strong>Alat Pembelajaran:</strong><br />
+                            Alat tulis, tas sekolah, sepatu, proyektor, speaker, laptop, smartphone, tablet<br /><br />
+                            <strong>Media Kontekstual:</strong><br />
+                            Brosur cetak, karton jadwal, kotak fisik, lembar centang fisik, aplikasi notes, papan sortir digital
+                        </td>
+                        <td class="waktu">4 Pertemuan</td>
+                    </tr>
+
+                    <!-- Pertemuan 2 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 2: Keuntungan Bersikap Jujur</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mendengarkan kisah Nabi Muhammad yang digelari Al-Amin karena kejujurannya dari brosur cetak atau rekaman audio di speaker.</div>
+                            <div>2. Murid memperhatikan akibat berbohong dan keuntungan berbuat jujur melalui poster kelas atau tayangan slide interaktif di proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid melengkapi kalimat kosong tentang kejujuran menggunakan pensil di kertas kerja atau mengetik pada kuis digital di laptop.</div>
+                            <div>4. Kelompok murid memperagakan cara mengembalikan uang yang ditemukan kepada guru menggunakan naskah kertas atau merekam simulasi menggunakan kamera tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berjanji untuk tidak pernah mengambil barang milik orang lain walau tidak ada yang melihat.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 3 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 3: Makna dan Contoh Perilaku Disiplin</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mengamati contoh jadwal kegiatan harian anak sekolah dari kertas karton besar atau tabel digital di layar laptop.</div>
+                            <div>2. Murid membaca makna disiplin sebagai sikap tepat waktu dan taat aturan dari lembar ringkasan atau teks berjalan di proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menuliskan jam bangun tidurnya di buku catatan atau mengetik di papan kolaborasi smartphone.</div>
+                            <div>4. Kelompok murid memisahkan gambar tindakan disiplin dan malas menggunakan dua kotak fisik atau papan sortir digital di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meneguhkan hati untuk berangkat ke sekolah lebih awal agar tidak pernah terlambat masuk kelas.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 4 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 4: Manfaat Bersikap Disiplin</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid memperhatikan manfaat tertib meletakkan sepatu dari foto cetak atau galeri gambar di proyektor.</div>
+                            <div>2. Murid menyimak cerita anak yang selalu kehilangan barang akibat malas merapikan alat tulis dari buku bergambar atau video cerita di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan satu manfaat patuh pada aturan kebersihan kelas secara lisan atau merekam suara di aplikasi tablet.</div>
+                            <div>4. Kelompok murid mendemonstrasikan cara menyusun buku pelajaran ke dalam tas dengan rapi menggunakan benda sungguhan atau menonton panduan video di smartphone lalu menirunya.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berniat untuk disiplin menata tempat tidur dan meja belajarnya sendiri tanpa disuruh orang tua.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- ===== TP 2.9 ===== -->
+                    <tr>
+                        <td class="no"><strong>2.9</strong></td>
+                        <td>Menerapkan zikir dan berdoa setelah melaksanakan salat fardu.</td>
+                        <td>
+                            1. Makna dan Adab Berzikir<br />
+                            2. Lafal Bacaan Zikir<br />
+                            3. Makna dan Adab Berdoa<br />
+                            4. Praktik Berdoa Setelah Salat
+                        </td>
+                        <td>
+                            <div><strong>Pertemuan 1: Makna dan Adab Berzikir</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mendengarkan pengertian zikir untuk mengingat Allah setelah beribadah dari buku paket atau rekaman suara di speaker.</div>
+                            <div>2. Murid mengamati adab duduk tenang dan menghadap kiblat saat berzikir dari poster dinding atau tayangan video pendek di proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan postur tubuh yang sopan saat berzikir secara lisan di kelas atau mengetiknya di kuis digital laptop.</div>
+                            <div>4. Kelompok murid membedakan gambar adab berzikir yang benar dan salah menggunakan kartu ceklis kertas atau aplikasi layar sentuh di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meyakini bahwa berzikir dengan sungguh-sungguh akan membuat hati menjadi lebih tenang.</div>
+                        </td>
+                        <td>
+                            <strong>DPL:</strong><br />
+                            - Keimanan dan ketakwaan terhadap Tuhan yang Maha Esa<br />
+                            - Kemandirian<br /><br />
+                            <strong>KBC:</strong><br />
+                            - Cinta Allah dan Rasul-Nya<br />
+                            - Cinta diri dan sesama manusia
+                        </td>
+                        <td>
+                            <strong>Formatif:</strong><br />
+                            - Observasi sikap (ketenangan dan kekhusyukan)<br />
+                            - Unjuk kerja lisan kelancaran melafalkan zikir<br /><br />
+                            <strong>Sumatif:</strong><br />
+                            - Praktik demonstrasi rangkaian zikir dan doa setelah salat fardu<br />
+                            - Tes Tertulis (Pilihan Ganda, Isian Singkat, Uraian)
+                        </td>
+                        <td>
+                            <strong>Sumber Utama:</strong><br />
+                            Buku Siswa PAI SD Kelas 2<br /><br />
+                            <strong>Alat Pembelajaran:</strong><br />
+                            Alat tulis, tasbih fisik, karpet kelas, proyektor, speaker, laptop, smartphone, tablet<br /><br />
+                            <strong>Media Kontekstual:</strong><br />
+                            Poster dinding, karton kata fisik, buku saku doa, aplikasi layar sentuh, kuis interaktif, aplikasi puzzle teks
+                        </td>
+                        <td class="waktu">4 Pertemuan</td>
+                    </tr>
+
+                    <!-- Pertemuan 2 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 2: Lafal Bacaan Zikir</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid membaca urutan lafal Istigfar, Tasbih, Tahmid, dan Takbir dari lembar panduan cetak atau teks di layar laptop.</div>
+                            <div>2. Murid menyimak jumlah bacaan masing-masing zikir sebanyak 33 kali melalui alat peraga tasbih asli atau infografis animasi di proyektor.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid melafalkan kalimat istigfar berulang-ulang secara bersama dipandu buku siswa atau lirik berjalan di tablet.</div>
+                            <div>4. Kelompok murid menjodohkan lafal Arab zikir dengan arti bahasa Indonesianya menggunakan garis di lembar kerja atau kuis interaktif di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berjanji untuk tidak langsung pergi bermain setelah mengucapkan salam di akhir salat.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 3 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 3: Makna dan Adab Berdoa</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid memperhatikan sikap tangan diangkat saat memohon sesuatu kepada Allah dari peragaan langsung guru atau gambar slide di proyektor.</div>
+                            <div>2. Murid membaca arti doa memohon ampunan untuk diri dan orang tua dari tulisan spidol di papan tulis atau dokumen teks di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid mempraktikkan cara mengangkat tangan yang benar di tempat duduk atau merekam pose berdoanya dengan kamera tablet.</div>
+                            <div>4. Kelompok murid menyusun potongan kata penyusun doa harian menggunakan karton kata fisik atau menggeser blok teks pada aplikasi puzzle di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meneguhkan hati untuk tidak pernah lupa mendoakan kebaikan bagi ayah dan ibu setiap hari.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 4 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 4: Praktik Berdoa Setelah Salat</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid menyimak contoh rangkaian utuh berzikir kemudian dilanjutkan doa keselamatan dari buku saku doa atau video panduan di proyektor.</div>
+                            <div>2. Murid mendengarkan cara mengaminkan doa di akhir sesi dari pembacaan langsung di kelas atau rekaman audio di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid melafalkan doa keselamatan dunia dan akhirat secara lisan bergantian atau merekam suara mereka di aplikasi perekam tablet.</div>
+                            <div>4. Kelompok murid mendemonstrasikan simulasi urutan berzikir hingga doa penutup menggunakan naskah kertas panduan atau menonton urutan pada layar smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid menyatakan rasa syukur karena meyakini Allah selalu mendengar setiap doa anak yang saleh.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- ===== TP 2.10 ===== -->
+                    <tr>
+                        <td class="no"><strong>2.10</strong></td>
+                        <td>Menceritakan kisah keteladanan Nabi Musa a.s. dan Nabi Isa a.s.</td>
+                        <td>
+                            1. Masa Kecil Nabi Musa<br />
+                            2. Mukjizat dan Dakwah Nabi Musa<br />
+                            3. Kelahiran Nabi Isa<br />
+                            4. Mukjizat dan Keteladanan Nabi Isa
+                        </td>
+                        <td>
+                            <div><strong>Pertemuan 1: Masa Kecil Nabi Musa</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mendengarkan kisah bayi Musa yang dihanyutkan di sungai untuk diselamatkan dari buku cerita bergambar atau video animasi di proyektor.</div>
+                            <div>2. Murid mengamati gambar ilustrasi istana Firaun yang menemukan peti bayi tersebut melalui poster sejarah atau galeri digital di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menceritakan ulang nama ibu angkat Nabi Musa secara lisan di depan kelas atau mengetik jawabannya di aplikasi notes smartphone.</div>
+                            <div>4. Kelompok murid mengurutkan peristiwa penyelamatan bayi Musa menggunakan kartu cerita fisik atau aplikasi susun kronologi di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meyakini bahwa Allah Mahakuasa melindungi siapa saja yang selalu berbuat kebaikan.</div>
+                        </td>
+                        <td>
+                            <strong>DPL:</strong><br />
+                            - Keimanan dan ketakwaan terhadap Tuhan yang Maha Esa<br />
+                            - Berkebinekaan global<br /><br />
+                            <strong>KBC:</strong><br />
+                            - Cinta Allah dan Rasul-Nya<br />
+                            - Cinta diri dan sesama manusia
+                        </td>
+                        <td>
+                            <strong>Formatif:</strong><br />
+                            - Observasi sikap (keberanian dan kasih sayang)<br />
+                            - Tanya jawab lisan seputar mukjizat nabi<br /><br />
+                            <strong>Sumatif:</strong><br />
+                            - Unjuk kerja menceritakan ulang (storytelling) kisah teladan nabi dengan bahasa sendiri<br />
+                            - Tes Tertulis (Pilihan Ganda, Isian Singkat, Uraian)
+                        </td>
+                        <td>
+                            <strong>Sumber Utama:</strong><br />
+                            Buku Siswa PAI SD Kelas 2<br /><br />
+                            <strong>Alat Pembelajaran:</strong><br />
+                            Alat tulis, papan tulis, proyektor, speaker, laptop, smartphone, tablet<br /><br />
+                            <strong>Media Kontekstual:</strong><br />
+                            Buku cerita bergambar, kartu cerita kronologis, keranjang fisik, kartu pasangan, aplikasi susun kronologi digital, kotak sortir digital
+                        </td>
+                        <td class="waktu">4 Pertemuan</td>
+                    </tr>
+
+                    <!-- Pertemuan 2 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 2: Mukjizat dan Dakwah Nabi Musa</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid menyimak kisah menakjubkan tongkat berubah menjadi ular besar dari komik cetak atau tayangan slide interaktif di proyektor.</div>
+                            <div>2. Murid membaca peristiwa terbelahnya laut merah saat Nabi Musa dikejar dari lembar ringkasan atau teks berjalan di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan nama raja zalim pada masa Nabi Musa dengan menuliskannya di buku tulis atau papan kuis digital di tablet.</div>
+                            <div>4. Kelompok murid memisahkan gambar peristiwa mukjizat dan kejadian biasa menggunakan dua keranjang nyata atau kotak sortir digital di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berjanji untuk memiliki sikap berani dalam membela kebenaran meskipun terasa sulit.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 3 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 3: Kelahiran Nabi Isa</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid memperhatikan kisah ajaib lahirnya Nabi Isa tanpa seorang ayah dari buku teladan atau video pendek di proyektor.</div>
+                            <div>2. Murid mendengarkan penjelasan bahwa bayi Isa dapat berbicara untuk membela ibunya dari rekaman suara di speaker atau penjelasan teks di laptop.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menyebutkan nama ibu Nabi Isa secara lisan dengan suara lantang atau merekam pesan suara di smartphone.</div>
+                            <div>4. Kelompok murid melengkapi kalimat cerita tentang lahirnya Nabi Isa menggunakan pensil di lembar kerja kertas atau mengetik pada kuis interaktif di tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid meneguhkan hati untuk selalu menghormati, mematuhi, dan menyayangi sosok ibu mereka.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                    <!-- Pertemuan 4 -->
+                    <tr>
+                        <td class="no">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div><strong>Pertemuan 4: Mukjizat dan Keteladanan Nabi Isa</strong></div>
+                            <div style="margin-top:4px;"><strong>Memahami</strong></div>
+                            <div>1. Murid mengamati cerita tentang Nabi Isa yang dapat menyembuhkan orang sakit atas izin Allah dari poster dinding atau tayangan di laptop.</div>
+                            <div>2. Murid membaca pesan tentang menyayangi sesama melalui brosur cerita atau dokumen di smartphone.</div>
+                            <div style="margin-top:4px;"><strong>Mengaplikasi</strong></div>
+                            <div>3. Murid menuliskan satu contoh mukjizat Nabi Isa di kertas notes manual atau mengetiknya di IFP.</div>
+                            <div>4. Kelompok murid menjodohkan nama nabi dengan jenis mukjizatnya menggunakan kartu atau kuis layar sentuh tablet.</div>
+                            <div style="margin-top:4px;"><strong>Merefleksi</strong></div>
+                            <div>5. Murid berniat untuk selalu menolong teman yang sedang kesusahan.</div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="waktu">&nbsp;</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END SEMESTER II -->
+
+
+    <!-- ============================================================ -->
+    <!-- TANDA TANGAN                                                  -->
+    <!-- ============================================================ -->
+    <div class="signature-wrapper">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: none;">
+            <tr>
+                <td style="width:33%; text-align:left; vertical-align:top; border: none;">
+                    Mengetahui,<br />
+                    Kepala Sekolah<br /><br /><br /><br />
+                    <u>{{NAMA_KEPALA_SEKOLAH}}</u><br />
+                    NIP {{NIP_KEPALA_SEKOLAH}}
+                </td>
+                <td style="width:34%; border: none;">&nbsp;</td>
+                <td style="width:33%; text-align:left; vertical-align:top; border: none;">
+                    {{KOTA}}, {{TANGGAL}}<br />
+                    Guru<br /><br /><br /><br />
+                    <u>{{NAMA_GURU}}</u><br />
+                    NIP {{NIP_GURU}}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
