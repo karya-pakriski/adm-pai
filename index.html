@@ -117,6 +117,8 @@
   .btn-primary{ background:var(--primary); width:100%; padding:12px; }
   .btn-danger{ background:var(--danger); }
   .btn-info{ background:var(--info); }
+  .btn-outline{ background:var(--surface); color:var(--primary); border:1.5px solid var(--primary); }
+  .btn-outline:hover{ background:var(--primary-soft); filter:none; }
   .btn-close{ background:var(--surface-alt); color:var(--ink-soft); border:1.5px solid var(--border); }
   .btn-close:hover{ filter:none; background:var(--border-soft); }
 
@@ -411,8 +413,13 @@
 
   <div id="toast-container"></div>
 
+  <!-- html-docx-js: konversi HTML -> DOCX 100% di browser, tanpa server -->
+  <script src="https://unpkg.com/html-docx-js/dist/html-docx.js"></script>
+
   <script>
     // ================== KONFIGURASI ==================
+    // GAS sekarang MURNI API data (login, daftar user, daftar template) -
+    // tidak lagi dipakai untuk generate PDF/DOCX. Lihat catatan di kode.gs.
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwuTUbmIfn--kitwVwnjcDtIYeSppW7JPMFHHdWaerO1wAc64t5kTF6Alp8qygMIo2r8Q/exec';
     const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/karya-pakriski/adm-pai/main/template/';
     const BULAN_ID = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
@@ -485,6 +492,7 @@
 
     // ================== LOADER HELPERS ==================
     function setButtonLoading(btn, isLoading, loadingText = 'Memproses...'){
+      if (!btn) return;
       if (isLoading){
         btn.dataset.originalText = btn.innerHTML;
         btn.innerHTML = `<span class="spinner-btn"></span> ${loadingText}`;
@@ -933,8 +941,9 @@
               🗓️ <input type="text" id="ta-input" value="${currentTA}" placeholder="2026/2027"
                      size="9" oninput="onTAChange(this.value)">
             </label>
-            <button class="btn btn-danger" onclick="downloadPDF()">Unduh PDF</button>
-            <button class="btn btn-info" onclick="downloadDOCX()">Unduh DOCX</button>
+            <button class="btn btn-outline" onclick="downloadHTML(this)">Unduh HTML</button>
+            <button class="btn btn-danger" onclick="downloadPDF(this)">Unduh PDF</button>
+            <button class="btn btn-info" onclick="downloadDOCX(this)">Unduh DOCX</button>
             <button class="btn btn-close" onclick="goBackFromPreview()">Kembali</button>
           </div>
         </div>
@@ -964,40 +973,80 @@
       renderKelasContent();
     }
 
-    // ================== DOWNLOAD ==================
-    async function downloadFromGAS(action){
-      if (!currentUser || !currentDocFile) return;
-      const btn = event.target;
+    // ================== DOWNLOAD (100% client-side, TANPA panggilan ke GAS) ==================
+    // - HTML : Blob langsung dari string HTML -> selalu sempurna, jaminan fallback utama.
+    // - PDF  : window.print() di jendela baru = mesin render CSS PENUH browser,
+    //          setara aksi manual "Print > Save as PDF" (bukan rasterisasi seperti html2pdf.js,
+    //          dan bukan konverter Google Docs yang terbukti merusak tabel).
+    // - DOCX : html-docx-js (client-side) - satu-satunya jalur yang masih agak lossy
+    //          karena keterbatasan HTML-importer Word, tapi tidak butuh server sama sekali.
+
+    function fileBaseName(){
+      return (currentDocFile || 'dokumen').replace(/\//g, '_').replace(/\.html$/i, '');
+    }
+
+    function triggerBlobDownload(blob, filename){
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
+
+    function downloadHTML(btn){
+      const filledHtml = buildFilledHtml();
+      const blob = new Blob([filledHtml], { type: 'text/html' });
+      triggerBlobDownload(blob, fileBaseName() + '.html');
+      showToast('HTML diunduh', 'success');
+    }
+
+    function downloadPDF(btn){
+      setButtonLoading(btn, true, 'Membuka...');
+      const filledHtml = buildFilledHtml();
+      const win = window.open('', '_blank');
+      if (!win){
+        setButtonLoading(btn, false);
+        showToast('Popup diblokir browser. Izinkan popup untuk situs ini lalu coba lagi.', 'error');
+        return;
+      }
+      win.document.open();
+      win.document.write(filledHtml);
+      win.document.close();
+
+      const triggerPrint = () => {
+        win.focus();
+        win.print();
+        setButtonLoading(btn, false);
+      };
+      // Tunggu font (mis. Amiri/Scheherazade untuk teks Arab) selesai dimuat
+      // sebelum print, supaya tidak ada kedipan font fallback di hasil PDF.
+      if (win.document.fonts && win.document.fonts.ready){
+        win.document.fonts.ready.then(triggerPrint).catch(triggerPrint);
+      } else {
+        setTimeout(triggerPrint, 500);
+      }
+    }
+
+    function downloadDOCX(btn){
+      if (typeof htmlDocx === 'undefined'){
+        showToast('Library DOCX belum termuat. Periksa koneksi internet lalu muat ulang halaman.', 'error');
+        return;
+      }
       setButtonLoading(btn, true, 'Memproses...');
       try {
-        const tanggalFormatted = formatTanggalIndonesia(currentTanggal);
-        const url = `${GAS_URL}?action=${action}&id=${encodeURIComponent(currentUser.ID)}&file=${encodeURIComponent(currentDocFile)}&tanggal=${encodeURIComponent(tanggalFormatted)}&ta=${encodeURIComponent(currentTA)}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (!data.success) throw new Error(data.error || 'Gagal memproses');
-
-        const byteString = atob(data.base64);
-        const uintArray = new Uint8Array(byteString.length);
-        for (let i = 0; i < byteString.length; i++) uintArray[i] = byteString.charCodeAt(i);
-        const blob = new Blob([uintArray], { type: data.mimeType });
-
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = data.fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(a.href);
-        showToast('Unduhan dimulai', 'success');
+        const filledHtml = buildFilledHtml();
+        const blob = htmlDocx.asBlob(filledHtml);
+        triggerBlobDownload(blob, fileBaseName() + '.docx');
+        showToast('DOCX diunduh', 'success');
       } catch (err) {
         console.error(err);
-        showToast(err.message, 'error');
+        showToast('Gagal membuat DOCX: ' + err.message, 'error');
       } finally {
         setButtonLoading(btn, false);
       }
     }
-    function downloadPDF(){ downloadFromGAS('generatePdf'); }
-    function downloadDOCX(){ downloadFromGAS('generateDocx'); }
 
     // ================== LOGOUT ==================
     function logout(){
