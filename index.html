@@ -727,29 +727,36 @@
     }
 
     // ================== LOGIN ==================
-    qs('#login-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const id = qs('#login-id').value.trim();
-      const pin = qs('#login-pin').value.trim();
-      if (!id || !pin) return showToast('Isi ID dan PIN', 'error');
+  qs('#login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = qs('#login-id').value.trim();
+  const pin = qs('#login-pin').value.trim();
+  if (!id || !pin) return showToast('Isi ID dan PIN', 'error');
 
-      const btn = e.target.querySelector('button[type="submit"]');
-      setButtonLoading(btn, true, 'Masuk...');
-      try {
-        const res = await fetch(`${GAS_URL}?action=login&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin)}`);
-        const data = await res.json();
-        if (!data.success) throw new Error(data.error || 'Login gagal');
-        currentUser = data.user;
-        sessionStorage.setItem('user', JSON.stringify(currentUser));
-        showDashboard();
-        showToast('Login berhasil', 'success');
-      } catch (err) {
-        console.error(err);
-        showToast(err.message, 'error');
-      } finally {
-        setButtonLoading(btn, false);
-      }
+  const btn = e.target.querySelector('button[type="submit"]');
+  setButtonLoading(btn, true, 'Masuk...');
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      // Content-Type text/plain sengaja dipakai (bukan application/json) supaya
+      // browser tidak mengirim CORS preflight (OPTIONS) - Apps Script Web App
+      // tidak menangani OPTIONS secara default, jadi preflight akan gagal.
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'login', id, pin })
     });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error || 'Login gagal');
+    currentUser = data.user;
+    sessionStorage.setItem('user', JSON.stringify(currentUser));
+    showDashboard();
+    showToast('Login berhasil', 'success');
+  } catch (err) {
+    console.error(err);
+    showToast(err.message, 'error');
+  } finally {
+    setButtonLoading(btn, false);
+  }
+});
 
     // ================== LOAD TEMPLATE LIST ==================
     async function loadTemplates(){
