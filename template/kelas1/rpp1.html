@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<style>
+  :root {
+    --warna-header: #2ACCEB;
+    --warna-teks-header: #000000;
+    --warna-footer: #555555;
+    --warna-border: #A6A6A6;
+    --warna-bg-body: #FFFFFF;
+  }
+  @page { size: A4; margin: 2cm; }
+  body { font-family: Arial, sans-serif; font-size: 11pt; color: #000000; line-height: 1.4; margin: 0; padding: 0; background-color: var(--warna-bg-body); }
+  
+  /* PAGE BREAK CERDAS */
+  h1, h2, h3, h4, h5, h6 { page-break-after: avoid; break-after: avoid; }
+  .komponen, .subkomponen, .judul-bagian, .kategori-soal, .lekat-bawah { page-break-after: avoid; break-after: avoid; }
+  li { page-break-inside: avoid; break-inside: avoid; }
+  tr { page-break-inside: avoid; break-inside: avoid; page-break-after: auto; }
+  .bungkus-rapat { page-break-inside: avoid; break-inside: avoid; }
+  
+  table { box-sizing: border-box; max-width: 100%; word-wrap: break-word; table-layout: fixed; }
+  th, td { box-sizing: border-box; word-wrap: break-word; overflow-wrap: break-word; word-break: break-word; }
+  table.tabel-1 { width: 95%; margin-left: 25px; }
+  table.tabel-2 { width: 90%; margin-left: 45px; }
+  table.tabel-3 { width: 85%; margin-left: 65px; }
+  
+  th { background-color: var(--warna-header); border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; color: var(--warna-teks-header); }
+  td { border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; }
+  td p, th p { margin-left: 0; margin-bottom: 5pt; }
+  
+  .judul-bagian { background-color: #F2F4F8; border: 1px solid var(--warna-border); border-bottom: none; font-weight: bold; padding: 10px; margin-bottom: 0; margin-top: 20pt; }
+  .baris-sintaks td { background-color: #E8F4F8; border-top: 2px solid var(--warna-border); border-bottom: 2px solid var(--warna-border); }
+  .sub-tahap { font-weight: bold; color: #333; background-color: #FAFAFA; }
+  .italic { font-style: italic; }
+  .italic-bold { font-style: italic; font-weight: bold; }
+  .tengah { text-align: center; vertical-align: middle; }
+  .arab { font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 18pt; text-align: right; direction: rtl; line-height: 1.8; }
+  .footer { font-size: 9pt; text-align: left; margin-top: 10pt; margin-bottom: 5pt; color: var(--warna-footer); }
+</style>
+</head>
+<body>
+
+<h1 style="font-size: 16pt; font-weight: bold; text-align: center; margin-bottom: 5pt;">RENCANA PELAKSANAAN PEMBELAJARAN</h1>
+<h2 style="font-size: 11pt; font-weight: normal; text-align: center; margin-top: 0; margin-bottom: 20pt;">(Berdasarkan CP BKPDM Nomor 020 Tahun 2026)</h2>
+
+<!-- ========================================== -->
+<!-- A. IDENTITAS MODUL -->
+<!-- ========================================== -->
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h3 style="font-size: 14pt; font-weight: bold; color: #2848A1; margin-top: 20pt; margin-bottom: 10pt; margin-left: 0px;">A. IDENTITAS MODUL</h3>
+
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">1. Informasi Umum</h4>
+<table border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 95%; margin-left: 25px; margin-bottom: 10pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 35%;">Komponen</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Keterangan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Nama Penyusun</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">{{NAMA_GURU}}</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Satuan Pendidikan</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">{{NAMA_SEKOLAH}}</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Mata Pelajaran</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Pendidikan Agama Islam dan Budi Pekerti</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Kode ATP</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1.1</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Fase / Kelas</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">A / I (Satu)</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Semester / Tahun Ajaran</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Ganjil / 2026/2027</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Elemen Capaian Pembelajaran</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Al-Qur'an Hadis</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Materi Pokok / Bab</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Huruf Hijaiah Berharakat dan Surah al-Fatihah</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Alokasi Waktu</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">4 Pertemuan (12 JP / 420 Menit)</td></tr>
+  </tbody>
+</table>
+
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">2. Jadwal Pelaksanaan</h4>
+<table border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 95%; margin-left: 25px; margin-bottom: 10pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 15%;">Pertemuan</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 55%;">Hari/Tanggal</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 30%;">Alokasi Waktu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">1</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">...............................................</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">3 JP (105 Menit)</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">2</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">...............................................</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">3 JP (105 Menit)</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">3</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">...............................................</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">3 JP (105 Menit)</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">4</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">...............................................</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">3 JP (105 Menit)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ========================================== -->
+<!-- B. IDENTIFIKASI -->
+<!-- ========================================== -->
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h3 style="font-size: 14pt; font-weight: bold; color: #2848A1; margin-top: 20pt; margin-bottom: 10pt; margin-left: 0px;">B. IDENTIFIKASI</h3>
+<table border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 95%; margin-left: 25px; margin-bottom: 10pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 35%;">Aspek</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Deskripsi Analisis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Karakteristik/Kondisi Kelas</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Kelas I semester ganjil dengan 20-25 murid. Sebagian besar murid baru pertama kali belajar membaca huruf hijaiyah secara sistematis. Ada beberapa murid yang sudah mengenal beberapa huruf dari lingkungan keluarga atau TPA, namun masih perlu bimbingan dalam pengucapan makharijul huruf dan pemahaman tanda baca.</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Identifikasi Murid</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Kemampuan awal murid bervariasi: 3-5 murid sudah lancar membaca huruf hijaiyah berharakat, 10-12 murid sudah hafal beberapa huruf namun belum lancar membedakan harakat, dan sisanya masih perlu pengenalan huruf dasar. Terdapat 2 murid yang memerlukan pendampingan khusus dalam hal konsentrasi.</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Asesmen Awal Pembelajaran</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Guru melakukan tanya jawab lisan untuk memetakan huruf hijaiyah yang sudah dikenal murid. Guru juga menunjukkan beberapa huruf di papan tulis dan meminta murid menyebutkan nama huruf serta harakatnya. Hasil pemetaan digunakan sebagai dasar penentuan kelompok belajar dan penyesuaian kecepatan pembelajaran.</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Dimensi Profil Lulusan</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Keimanan dan ketakwaan terhadap Tuhan yang Maha Esa; Kemandirian</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Penguatan Karakter (Panca Cinta / KBC)</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Cinta Allah dan Rasul-Nya; Cinta ilmu</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ========================================== -->
+<!-- C. DESAIN PEMBELAJARAN -->
+<!-- ========================================== -->
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h3 style="font-size: 14pt; font-weight: bold; color: #2848A1; margin-top: 20pt; margin-bottom: 10pt; margin-left: 0px;">C. DESAIN PEMBELAJARAN</h3>
+<table border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 95%; margin-left: 25px; margin-bottom: 10pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 35%;">Komponen</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Keterangan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Capaian Pembelajaran (CP)</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Membaca dan membedakan huruf hijaiah berharakat, huruf hijaiah bersambung; menghafal Surah al-Fatihah, beberapa surah pendek Al-Qur'an, dan hadis tentang kebersihan.</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Tujuan Pembelajaran (TP)</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Membaca huruf hijaiah berharakat fathah, kasroh dan dammah dengan benar, serta menghafalkan Surah al-Fatihah.</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Praktik Pedagogis</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Model pembelajaran kooperatif (kelompok kecil untuk menjodohkan kartu dan menyusun puzzle), pendekatan kontekstual (mengaitkan tanda baca Al-Qur'an dengan kehidupan sehari-hari), dan pembelajaran berbasis proyek (menyusun urutan ayat).</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Kemitraan Pembelajaran</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Kolaborasi dengan orang tua untuk mendampingi murid mengulangi hafalan dan bacaan di rumah melalui buku komunikasi/rencana belajar mingguan.</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Lingkungan Pembelajaran</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Ruang kelas yang nyaman dengan poster huruf hijaiyah dan harakat di dinding. Tata letak meja kelompok memungkinkan kerja sama dan diskusi. Tersedia sudut baca Al-Qur'an.</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Pemanfaatan Digital</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Proyektor/layar interaktif digunakan untuk menampilkan video pelafalan huruf, animasi makharijul huruf, dan teks berjalan ayat-ayat surah. Laptop/tablet/smartphone digunakan untuk akses aplikasi puzzle interaktif dan kuis digital.</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Sarana dan Prasarana</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Alat tulis, papan tulis, spidol, poster dinding, kartu huruf hijaiyah berharakat, kartu kata, keranjang fisik, potongan karton, aplikasi puzzle di tablet, speaker, dan buku siswa PAI SD Kelas 1.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ========================================== -->
+<!-- D. MATERI PEMBELAJARAN -->
+<!-- ========================================== -->
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h3 style="font-size: 14pt; font-weight: bold; color: #2848A1; margin-top: 20pt; margin-bottom: 10pt; margin-left: 0px;">D. MATERI PEMBELAJARAN</h3>
+
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">1. Dimensi Fakta dan Konsep</h4>
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; margin-left: 45px; font-size: 11pt; line-height: 1.4;">Huruf hijaiyah adalah huruf-huruf yang digunakan dalam penulisan Al-Qur'an. Jumlah huruf hijaiyah ada 29 huruf. Agar dapat membaca Al-Qur'an dengan benar, kita harus belajar mengenali huruf hijaiyah beserta tanda baca atau harakatnya. Harakat adalah tanda baca yang menunjukkan bunyi huruf saat dibaca. Ada tiga harakat utama yang akan kita pelajari, yaitu fathah (َ), kasrah (ِ), dan dammah (ُ).</p>
+<p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; margin-left: 45px; font-size: 11pt; line-height: 1.4;">Fathah adalah tanda baca yang berbentuk garis miring kecil di atas huruf, dibaca dengan bunyi 'a' (contoh: بَ dibaca ba). Kasrah adalah tanda baca yang berbentuk garis miring kecil di bawah huruf, dibaca dengan bunyi 'i' (contoh: بِ dibaca bi). Dammah adalah tanda baca yang berbentuk huruf wau kecil di atas huruf, dibaca dengan bunyi 'u' (contoh: بُ dibaca bu).</p>
+</div>
+</div>
+
+<!-- TABEL AYAT SURAH AL-FATIHAH -->
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">Surah al-Fatihah (Pembukaan)</h4>
+<p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; margin-left: 45px; font-size: 11pt; line-height: 1.4;">Surah al-Fatihah adalah surah pertama dalam Al-Qur'an yang terdiri dari 7 ayat. Surah ini disebut juga sebagai Ummul Kitab (induk Al-Qur'an). Surah al-Fatihah wajib dibaca dalam setiap rakaat salat. Oleh karena itu, setiap muslim harus menghafal dan memahami bacaannya dengan baik.</p>
+<table class="tabel-2" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 90%; margin-left: 45px; margin-bottom: 10pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 10%;">No. Ayat</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 40%;">Teks Arab</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Transliterasi dan Terjemahan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">1</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 18pt; text-align: right; direction: rtl; line-height: 1.8;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Transliterasi:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Bismillāhirraḥmānirraḥīm</p>
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Terjemahan:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang.</p>
+      </td>
+    </tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">2</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 18pt; text-align: right; direction: rtl; line-height: 1.8;">الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Transliterasi:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Alḥamdulillāhi rabbil-'ālamīn</p>
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Terjemahan:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Segala puji bagi Allah, Tuhan seluruh alam.</p>
+      </td>
+    </tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">3</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 18pt; text-align: right; direction: rtl; line-height: 1.8;">الرَّحْمَٰنِ الرَّحِيمِ</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Transliterasi:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Arraḥmānirraḥīm</p>
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Terjemahan:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Yang Maha Pengasih lagi Maha Penyayang.</p>
+      </td>
+    </tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">4</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 18pt; text-align: right; direction: rtl; line-height: 1.8;">مَالِكِ يَوْمِ الدِّينِ</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Transliterasi:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Māliki yaumiddīn</p>
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Terjemahan:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Yang menguasai hari pembalasan.</p>
+      </td>
+    </tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">5</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 18pt; text-align: right; direction: rtl; line-height: 1.8;">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Transliterasi:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Iyyāka na'budu wa iyyāka nasta'īn</p>
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Terjemahan:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Hanya kepada Engkaulah kami menyembah, dan hanya kepada Engkaulah kami memohon pertolongan.</p>
+      </td>
+    </tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">6</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 18pt; text-align: right; direction: rtl; line-height: 1.8;">اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Transliterasi:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Ihdinaṣṣirāṭal-mustaqīm</p>
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Terjemahan:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Tunjukilah kami jalan yang lurus.</p>
+      </td>
+    </tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; text-align: center;">7</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top; font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 18pt; text-align: right; direction: rtl; line-height: 1.8;">صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Transliterasi:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">Ṣirāṭallażīna an'amta 'alaihim, gairil-maġḍūbi 'alaihim wa laḍ-ḍāllīn</p>
+        <p style="margin-top: 0; margin-bottom: 5pt; font-style: italic; font-weight: bold; text-align: justify;">Terjemahan:</p>
+        <p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; font-size: 11pt; line-height: 1.4;">(yaitu) jalan orang-orang yang telah Engkau beri nikmat kepada mereka, bukan (jalan) mereka yang dimurkai dan bukan (pula jalan) mereka yang sesat.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p style="margin-top: -5pt; margin-bottom: 10pt; text-align: justify; margin-left: 45px; font-size: 9pt; font-style: italic; line-height: 1.2;">Sumber: Qur'an Kemenag (https://quran.kemenag.go.id/)</p>
+</div>
+
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">2. Dimensi Prosedur</h4>
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; margin-left: 45px; font-size: 11pt; line-height: 1.4;">Cara membaca huruf hijaiyah berharakat dimulai dengan mengenali bentuk huruf terlebih dahulu, lalu melihat tanda baca di atas atau di bawah huruf. Jika tanda baca adalah fathah (garis miring di atas), maka huruf dibaca dengan bunyi 'a'. Jika tanda baca adalah kasrah (garis miring di bawah), maka huruf dibaca dengan bunyi 'i'. Jika tanda baca adalah dammah (huruf wau kecil di atas), maka huruf dibaca dengan bunyi 'u'. Untuk membaca surah al-Fatihah dengan benar, murid harus dapat menggabungkan pelafalan huruf-huruf yang sudah dipelajari secara berurutan sesuai ayat. Latihan membaca surah al-Fatihah dapat dilakukan dengan menirukan bacaan guru, mendengarkan rekaman, atau mengikuti teks yang ditampilkan di layar. Hafalan surah al-Fatihah dapat dilakukan dengan mengulang-ulang bacaan ayat per ayat, menghubungkan dengan gerakan tangan, atau menggunakan bantuan bagan alur sederhana.</p>
+</div>
+</div>
+
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">3. Teks Bacaan Siap Pakai</h4>
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; margin-left: 45px; font-size: 11pt; line-height: 1.4;">Huruf hijaiyah adalah huruf-huruf yang digunakan dalam Al-Qur'an. Jumlahnya ada 29 huruf. Agar bisa membaca Al-Qur'an dengan baik, kita harus belajar mengenali bentuk huruf dan tanda baca atau harakatnya. Ada tiga harakat utama yang harus kita ketahui, yaitu fathah, kasrah, dan dammah. Fathah (َ) dibaca 'a', kasrah (ِ) dibaca 'i', dan dammah (ُ) dibaca 'u'.</p>
+<p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; margin-left: 45px; font-size: 11pt; line-height: 1.4;">Surah al-Fatihah adalah surah pertama dalam Al-Qur'an. Surah ini terdiri dari 7 ayat. Surah al-Fatihah selalu kita baca dalam setiap salat. Oleh karena itu, menghafal surah al-Fatihah sangat penting bagi setiap muslim. Di dalam surah al-Fatihah, kita memuji Allah dan memohon pertolongan-Nya.</p>
+</div>
+</div>
+</div>
+
+<!-- ========================================== -->
+<!-- E. PENGALAMAN BELAJAR (TANPA TABEL) -->
+<!-- ========================================== -->
+<h3 style="font-size: 14pt; font-weight: bold; color: #2848A1; margin-top: 20pt; margin-bottom: 10pt; margin-left: 0px;">E. PENGALAMAN BELAJAR</h3>
+
+<!-- PERTEMUAN 1 -->
+<div class="pertemuan" style="page-break-inside: avoid; break-inside: avoid; margin-bottom: 0;">
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">Pertemuan 1</h4>
+<p style="font-style: italic; margin-left: 25px; font-size: 11pt; margin-bottom: 10pt; text-align: left;">Alokasi Waktu: 3 JP (105 Menit) — Huruf Hijaiah Berharakat Fathah</p>
+
+<!-- 1. KEGIATAN PENDAHULUAN -->
+<div class="lekat-bawah" style="page-break-after: avoid; break-after: avoid;">
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">1. KEGIATAN PENDAHULUAN</h5>
+<p style="font-weight: bold; margin-left: 45px; font-size: 11pt; margin-bottom: 3pt; text-align: left;">Orientasi &amp; Apersepsi (15 Menit)</p>
+<ol type="1" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menjawab salam pembuka dari guru dan berdoa bersama.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid merespons presensi dan menyiapkan alat tulis serta buku siswa.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid merespons pertanyaan pemantik dari guru: "Siapa yang sudah bisa membaca huruf hijaiyah? Siapa yang sudah tahu tanda baca untuk huruf hijaiyah?"</li>
+</ol>
+</div>
+</div>
+
+<!-- 2. KEGIATAN INTI -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<div>
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">2. KEGIATAN INTI</h5>
+
+<!-- BLOK A: MEMAHAMI -->
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">A. Memahami — 20 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Joyful, Meaningful</p>
+<ol type="1" start="4" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menyimak pelafalan huruf berharakat fathah dari poster dinding dan tayangan video pendek pelafalan huruf hijaiyah di proyektor. </li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mengamati bentuk dan letak harakat fathah di atas huruf melalui kartu cetak dan ilustrasi di laptop.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menirukan pelafalan huruf hijaiyah berharakat fathah secara klasikal bersama guru sambil memperhatikan teks di buku siswa.</li>
+</ol>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-top: 0; margin-bottom: 8pt; text-align: justify;">Catatan Diferensiasi: Murid yang masih kesulitan diberikan pendampingan dengan kartu huruf bergambar dan pengucapan perlahan. Murid yang sudah lancar diminta membantu teman sebangkunya.</p>
+</div>
+
+<!-- BLOK B: MENGAplikasi -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">B. Mengaplikasi — 40 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Mindful, Meaningful</p>
+<ol type="1" start="7" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid secara bergantian melafalkan huruf hijaiyah berharakat fathah secara lisan dengan panduan buku teks atau teks berjalan di layar tablet.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid dalam kelompok kecil menjodohkan kartu huruf dengan bunyi pelafalannya menggunakan kartu kertas.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menyebutkan huruf hijaiyah berharakat fathah yang diacak oleh guru melalui kartu atau tayangan.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menyelesaikan kuis interaktif di layar dengan menarik garis dari huruf ke bunyi pelafalannya yang benar.</li>
+</ol>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-top: 0; margin-bottom: 8pt; text-align: justify;">Catatan Diferensiasi: Bagi murid yang kesulitan, guru menyediakan kartu huruf berwarna dan mengurangi jumlah huruf yang harus dijodohkan. Bagi murid mahir, diberikan tantangan membaca rangkaian huruf dan menulisnya di papan tulis.</p>
+</div>
+
+<!-- BLOK C: MEREFLEKSI -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">C. Merefleksi — 15 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Mindful</p>
+<ol type="1" start="11" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menyatakan niat untuk rajin belajar mengaji setiap hari sebagai wujud cinta kepada Al-Qur'an.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menceritakan kembali pelafalan huruf berharakat fathah yang paling mudah dan paling sulit diingat.</li>
+</ol>
+</div>
+</div>
+
+<!-- 3. KEGIATAN PENUTUP -->
+<div class="lekat-bawah" style="page-break-after: avoid; break-after: avoid;">
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">3. KEGIATAN PENUTUP</h5>
+<p style="font-weight: bold; margin-left: 45px; font-size: 11pt; margin-bottom: 3pt; text-align: left;">Evaluasi &amp; Tindak Lanjut (15 Menit)</p>
+<ol type="1" start="13" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menuliskan 3 huruf berharakat fathah yang sudah dipelajari di buku catatan.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid melakukan refleksi singkat dengan menjawab pertanyaan: "Apa yang membuatmu senang belajar huruf hijaiyah hari ini?"</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mendengarkan arahan untuk pertemuan berikutnya (huruf berharakat kasrah dan dammah) dan berdoa bersama.</li>
+</ol>
+</div>
+</div>
+
+<!-- PERTEMUAN 2 -->
+<div class="pertemuan" style="page-break-inside: avoid; break-inside: avoid; margin-bottom: 0;">
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">Pertemuan 2</h4>
+<p style="font-style: italic; margin-left: 25px; font-size: 11pt; margin-bottom: 10pt; text-align: left;">Alokasi Waktu: 3 JP (105 Menit) — Huruf Hijaiah Berharakat Kasrah dan Dammah</p>
+
+<!-- 1. KEGIATAN PENDAHULUAN -->
+<div class="lekat-bawah" style="page-break-after: avoid; break-after: avoid;">
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">1. KEGIATAN PENDAHULUAN</h5>
+<p style="font-weight: bold; margin-left: 45px; font-size: 11pt; margin-bottom: 3pt; text-align: left;">Orientasi &amp; Apersepsi (15 Menit)</p>
+<ol type="1" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menjawab salam pembuka dari guru dan berdoa bersama.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid merespons presensi dan menyiapkan alat tulis.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mengulang pelafalan huruf berharakat fathah dan menjawab pertanyaan guru tentang perbedaan bunyi harakat.</li>
+</ol>
+</div>
+</div>
+
+<!-- 2. KEGIATAN INTI -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<div>
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">2. KEGIATAN INTI</h5>
+
+<!-- BLOK A: MEMAHAMI -->
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">A. Memahami — 20 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Joyful, Meaningful</p>
+<ol type="1" start="4" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid memperhatikan perbedaan bunyi kasrah dan dammah dari alat peraga manual dan rekaman suara di speaker.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mencermati letak harakat kasrah di bawah dan dammah di atas dari tulisan di papan tulis dan slide presentasi.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menirukan pelafalan huruf berharakat kasrah dan dammah secara klasikal dan berkelompok.</li>
+</ol>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-top: 0; margin-bottom: 8pt; text-align: justify;">Catatan Diferensiasi: Murid yang kesulitan membedakan bunyi kasrah dan dammah diberikan latihan dengan media audio visual yang diulang. Murid mahir diminta menuliskan huruf berharakat kasrah dan dammah di papan tulis.</p>
+</div>
+
+<!-- BLOK B: MENGAplikasi -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">B. Mengaplikasi — 40 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Mindful, Joyful</p>
+<ol type="1" start="7" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menyebutkan bunyi huruf berharakat kasrah dan dammah secara mandiri dari potongan kertas atau mengetik jawabannya di aplikasi kuis smartphone.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid dalam kelompok memisahkan huruf berharakat kasrah dan dammah ke dalam dua keranjang fisik (kotak sortir).</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid melafalkan huruf yang diacak guru dari kedua jenis harakat secara bergantian.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menyelesaikan kuis digital menjodohkan huruf dengan harakat yang tepat.</li>
+</ol>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-top: 0; margin-bottom: 8pt; text-align: justify;">Catatan Diferensiasi: Kelompok yang lebih cepat menyelesaikan tugas diberikan tantangan membaca rangkaian huruf campuran. Kelompok yang perlu bimbingan mendapat kartu huruf yang lebih sedikit dan bantuan dari guru.</p>
+</div>
+
+<!-- BLOK C: MEREFLEKSI -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">C. Merefleksi — 15 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Mindful</p>
+<ol type="1" start="11" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mengungkapkan rasa gembira karena bisa mengenali tanda baca Al-Qur'an dengan benar.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menuliskan satu kesan belajar harakat kasrah dan dammah di buku catatan.</li>
+</ol>
+</div>
+</div>
+
+<!-- 3. KEGIATAN PENUTUP -->
+<div class="lekat-bawah" style="page-break-after: avoid; break-after: avoid;">
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">3. KEGIATAN PENUTUP</h5>
+<p style="font-weight: bold; margin-left: 45px; font-size: 11pt; margin-bottom: 3pt; text-align: left;">Evaluasi &amp; Tindak Lanjut (15 Menit)</p>
+<ol type="1" start="13" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menyebutkan 2 huruf berharakat kasrah dan 2 huruf berharakat dammah secara lisan.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid melakukan refleksi singkat: "Apa yang paling menyenangkan dari kegiatan memisahkan huruf tadi?"</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mendengarkan arahan untuk pertemuan berikutnya (membaca surah al-Fatihah) dan berdoa bersama.</li>
+</ol>
+</div>
+</div>
+
+<!-- PERTEMUAN 3 -->
+<div class="pertemuan" style="page-break-inside: avoid; break-inside: avoid; margin-bottom: 0;">
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">Pertemuan 3</h4>
+<p style="font-style: italic; margin-left: 25px; font-size: 11pt; margin-bottom: 10pt; text-align: left;">Alokasi Waktu: 3 JP (105 Menit) — Membaca Surah al-Fatihah</p>
+
+<!-- 1. KEGIATAN PENDAHULUAN -->
+<div class="lekat-bawah" style="page-break-after: avoid; break-after: avoid;">
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">1. KEGIATAN PENDAHULUAN</h5>
+<p style="font-weight: bold; margin-left: 45px; font-size: 11pt; margin-bottom: 3pt; text-align: left;">Orientasi &amp; Apersepsi (15 Menit)</p>
+<ol type="1" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menjawab salam pembuka dari guru dan berdoa bersama.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid merespons presensi dan menyiapkan buku siswa atau lembar teks surah al-Fatihah.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mendengarkan pengantar tentang pentingnya membaca surah al-Fatihah dalam salat.</li>
+</ol>
+</div>
+</div>
+
+<!-- 2. KEGIATAN INTI -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<div>
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">2. KEGIATAN INTI</h5>
+
+<!-- BLOK A: MEMAHAMI -->
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">A. Memahami — 20 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Mindful, Meaningful</p>
+<ol type="1" start="4" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mendengarkan bacaan Surah al-Fatihah ayat demi ayat dari panduan teman (tutor sebaya) atau rekaman audio di laptop.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid melihat teks ayat Surah al-Fatihah melalui lembar cetak besar atau teks pada layar proyektor.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mengikuti bacaan guru sambil menunjuk teks ayat yang dibaca.</li>
+</ol>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-top: 0; margin-bottom: 8pt; text-align: justify;">Catatan Diferensiasi: Murid yang sudah bisa membaca diberikan kesempatan untuk memimpin bacaan ayat. Murid yang perlu latihan dibimbing per kelompok kecil.</p>
+</div>
+
+<!-- BLOK B: MENGAplikasi -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">B. Mengaplikasi — 40 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Mindful, Joyful</p>
+<ol type="1" start="7" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menirukan bacaan surah secara klasikal menggunakan buku siswa atau lirik berjalan di layar interaktif.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid dalam kelompok menyusun urutan ayat satu sampai tiga menggunakan potongan karton atau menggeser blok teks pada aplikasi puzzle di tablet.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid membaca surah al-Fatihah secara berpasangan, saling menyimak dan mengoreksi.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menuliskan ulang satu ayat yang paling mudah diingat di buku tulis.</li>
+</ol>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-top: 0; margin-bottom: 8pt; text-align: justify;">Catatan Diferensiasi: Kelompok yang cepat menyelesaikan puzzle diberikan tantangan menyusun seluruh ayat. Kelompok yang lambat difasilitasi dengan potongan ayat yang lebih besar dan panduan.</p>
+</div>
+
+<!-- BLOK C: MEREFLEKSI -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">C. Merefleksi — 15 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Mindful, Meaningful</p>
+<ol type="1" start="11" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid berjanji untuk memperhatikan bacaan salat yang wajib menggunakan Surah al-Fatihah.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menceritakan pengalaman pertama kali membaca surah al-Fatihah dengan baik.</li>
+</ol>
+</div>
+</div>
+
+<!-- 3. KEGIATAN PENUTUP -->
+<div class="lekat-bawah" style="page-break-after: avoid; break-after: avoid;">
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">3. KEGIATAN PENUTUP</h5>
+<p style="font-weight: bold; margin-left: 45px; font-size: 11pt; margin-bottom: 3pt; text-align: left;">Evaluasi &amp; Tindak Lanjut (15 Menit)</p>
+<ol type="1" start="13" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menyebutkan jumlah ayat dalam surah al-Fatihah secara lisan.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid melakukan refleksi: "Apa yang membuatmu rajin belajar membaca Al-Qur'an?"</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mendengarkan arahan untuk pertemuan berikutnya (menghafal surah al-Fatihah) dan berdoa bersama.</li>
+</ol>
+</div>
+</div>
+
+<!-- PERTEMUAN 4 -->
+<div class="pertemuan" style="page-break-inside: avoid; break-inside: avoid; margin-bottom: 0;">
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">Pertemuan 4</h4>
+<p style="font-style: italic; margin-left: 25px; font-size: 11pt; margin-bottom: 10pt; text-align: left;">Alokasi Waktu: 3 JP (105 Menit) — Menghafal Surah al-Fatihah</p>
+
+<!-- 1. KEGIATAN PENDAHULUAN -->
+<div class="lekat-bawah" style="page-break-after: avoid; break-after: avoid;">
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">1. KEGIATAN PENDAHULUAN</h5>
+<p style="font-weight: bold; margin-left: 45px; font-size: 11pt; margin-bottom: 3pt; text-align: left;">Orientasi &amp; Apersepsi (15 Menit)</p>
+<ol type="1" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menjawab salam pembuka dari guru dan berdoa bersama.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid merespons presensi dan menyiapkan buku hafalan atau media pendukung hafalan.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mengingat kembali bacaan surah al-Fatihah dengan melafalkan secara bersama-sama.</li>
+</ol>
+</div>
+</div>
+
+<!-- 2. KEGIATAN INTI -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<div>
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">2. KEGIATAN INTI</h5>
+
+<!-- BLOK A: MEMAHAMI -->
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">A. Memahami — 20 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Mindful, Meaningful</p>
+<ol type="1" start="4" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menyimak trik mengingat ayat pendek dari bagan alur kertas atau infografis sederhana di smartphone.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mendengarkan pengulangan ayat secara beruntun dari pembacaan langsung di kelas atau video hafalan di proyektor.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid membaca ayat secara berulang dengan intonasi yang benar bersama guru.</li>
+</ol>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-top: 0; margin-bottom: 8pt; text-align: justify;">Catatan Diferensiasi: Murid yang cepat menghafal diberikan target 2-3 ayat, murid yang lambat fokus pada 1-2 ayat dengan bantuan gambar.</p>
+</div>
+
+<!-- BLOK B: MENGAplikasi -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">B. Mengaplikasi — 40 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Joyful, Meaningful</p>
+<ol type="1" start="7" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menyetorkan hafalan secara lisan di depan kelas atau merekam suara hafalan menggunakan aplikasi di laptop.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid dalam kelompok melengkapi ayat yang rumpang secara lisan dengan bantuan kartu petunjuk atau memilih jawaban pada kuis pilihan ganda di tablet.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid saling mendengarkan hafalan teman sebangku dan memberikan semangat.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menuliskan surah al-Fatihah secara lengkap di buku tulis untuk memperkuat hafalan.</li>
+</ol>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-top: 0; margin-bottom: 8pt; text-align: justify;">Catatan Diferensiasi: Murid yang sudah lancar hafal diberi tantangan mengucapkan tanpa melihat teks. Murid yang perlu bimbingan mendapat kartu petunjuk dan pendampingan.</p>
+</div>
+
+<!-- BLOK C: MEREFLEKSI -->
+<div style="page-break-inside: avoid; break-inside: avoid;">
+<p style="font-weight: bold; font-style: italic; margin-left: 45px; font-size: 11pt; margin-top: 8pt; margin-bottom: 3pt; background-color: #E8F4F8; padding: 4px 8px; text-align: left;">C. Merefleksi — 15 Menit</p>
+<p style="margin-left: 45px; font-size: 10pt; font-style: italic; margin-bottom: 3pt; text-align: left;">Fokus Prinsip: Mindful, Meaningful</p>
+<ol type="1" start="11" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid meneguhkan hati untuk membaca Surah al-Fatihah sebelum mulai belajar di rumah.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid menuliskan rasa syukur karena telah berhasil menghafal surah al-Fatihah.</li>
+</ol>
+</div>
+</div>
+
+<!-- 3. KEGIATAN PENUTUP -->
+<div class="lekat-bawah" style="page-break-after: avoid; break-after: avoid;">
+<h5 style="font-size: 11pt; font-weight: bold; margin-top: 10pt; margin-bottom: 3pt; margin-left: 25px; background-color: #F2F4F8; padding: 6px 10px;">3. KEGIATAN PENUTUP</h5>
+<p style="font-weight: bold; margin-left: 45px; font-size: 11pt; margin-bottom: 3pt; text-align: left;">Evaluasi &amp; Tindak Lanjut (15 Menit)</p>
+<ol type="1" start="13" style="margin-top: 0; margin-bottom: 5pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid membaca surah al-Fatihah secara bergiliran di hadapan guru sebagai setoran hafalan akhir.</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid melakukan refleksi: "Apa yang kamu rasakan setelah bisa menghafal surah al-Fatihah?"</li>
+  <li style="margin-bottom: 2pt; text-align: justify;">Murid mendengarkan penguatan dan motivasi dari guru untuk terus menjaga hafalan, dilanjutkan doa bersama.</li>
+</ol>
+</div>
+</div>
+
+<!-- ========================================== -->
+<!-- F. ASESMEN PEMBELAJARAN -->
+<!-- ========================================== -->
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h3 style="font-size: 14pt; font-weight: bold; color: #2848A1; margin-top: 20pt; margin-bottom: 10pt; margin-left: 0px;">F. ASESMEN PEMBELAJARAN</h3>
+
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">1. Teknik dan Instrumen</h4>
+<ol type="a" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">Asesmen Formatif (Proses):</i> Observasi sikap (ketekunan, semangat belajar, dan kemandirian) serta unjuk kerja lisan kelancaran melafalkan huruf dan surah.</li>
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">Asesmen sebagai Pembelajaran:</i> Tanya jawab lisan dan penilaian diri melalui refleksi tertulis di buku catatan.</li>
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">Asesmen Sumatif (Akhir):</i> Praktik setoran hafalan Surah al-Fatihah dan tes tertulis (pilihan ganda, isian singkat, uraian).</li>
+</ol>
+
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">2. Tabel Kriteria Ketercapaian Tujuan Pembelajaran (KKTP)</h4>
+<table class="tabel-2" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 90%; margin-left: 45px; margin-bottom: 10pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Kriteria</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Perlu Bimbingan</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Cukup</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Baik</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Sangat Baik</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Membaca huruf hijaiyah berharakat</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Masih keliru dalam membedakan harakat dan perlu bimbingan intensif.</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Mampu membaca beberapa huruf dengan harakat, masih ada kesalahan.</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Membaca huruf dengan ketiga harakat dengan benar dan lancar.</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Membaca dengan fasih, makhraj tepat, dan mampu mengajarkan teman.</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Menghafal Surah al-Fatihah</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Hanya hafal 1-2 ayat dengan bantuan.</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Hafal 3-4 ayat, masih terbata-bata.</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Hafal 7 ayat dengan lancar dan tajwid sederhana.</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Hafal dengan sangat lancar, fasih, dan dapat memimpin bacaan.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ========================================== -->
+<!-- G. PENGAYAAN DAN REMEDIAL -->
+<!-- ========================================== -->
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h3 style="font-size: 14pt; font-weight: bold; color: #2848A1; margin-top: 20pt; margin-bottom: 10pt; margin-left: 0px;">G. PENGAYAAN DAN REMEDIAL</h3>
+<ol type="1" style="margin-top: 0; margin-bottom: 10pt; margin-left: 25px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">Pengayaan:</i> Murid yang sudah sangat baik diberi tantangan membaca huruf hijaiyah bersambung dan menghafal surah pendek lainnya (misal al-Ikhlas). Mereka juga dapat menjadi tutor bagi teman yang masih kesulitan.</li>
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">Remedial:</i> Murid yang belum mencapai kriteria "Baik" diberikan bimbingan tambahan secara individual atau kelompok kecil setelah jam pelajaran, dengan menggunakan kartu huruf, media audio, dan latihan berulang. Guru berkoordinasi dengan orang tua untuk pengulangan di rumah.</li>
+</ol>
+</div>
+
+<!-- ========================================== -->
+<!-- H. REFLEKSI -->
+<!-- ========================================== -->
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h3 style="font-size: 14pt; font-weight: bold; color: #2848A1; margin-top: 20pt; margin-bottom: 10pt; margin-left: 0px;">H. REFLEKSI</h3>
+
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">1. Refleksi Murid</h4>
+<ol type="a" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;">Apakah aku sudah bisa membedakan harakat fathah, kasrah, dan dammah dengan benar?</li>
+  <li style="margin-bottom: 5pt; text-align: justify;">Apakah aku sudah hafal surah al-Fatihah dengan lancar?</li>
+  <li style="margin-bottom: 5pt; text-align: justify;">Apa yang aku lakukan agar bacaanku semakin baik?</li>
+</ol>
+
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">2. Refleksi Guru</h4>
+<ol type="a" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;">Apakah metode dan media yang digunakan sudah efektif untuk semua murid?</li>
+  <li style="margin-bottom: 5pt; text-align: justify;">Apakah ada murid yang memerlukan pendekatan khusus untuk meningkatkan kemampuan membacanya?</li>
+  <li style="margin-bottom: 5pt; text-align: justify;">Apa yang perlu diperbaiki dalam perencanaan pembelajaran selanjutnya?</li>
+</ol>
+</div>
+
+<!-- ========================================== -->
+<!-- I. SUMBER BELAJAR -->
+<!-- ========================================== -->
+<div style="page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;">
+<h3 style="font-size: 14pt; font-weight: bold; color: #2848A1; margin-top: 20pt; margin-bottom: 10pt; margin-left: 0px;">I. SUMBER BELAJAR</h3>
+<ol type="1" style="margin-top: 0; margin-bottom: 10pt; margin-left: 25px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;">Kementerian Agama Republik Indonesia. 2021. <i>Buku Siswa Pendidikan Agama Islam dan Budi Pekerti Kelas I SD</i>. Jakarta: Kementerian Agama.</li>
+  <li style="margin-bottom: 5pt; text-align: justify;">Poster dinding huruf hijaiyah berharakat, kartu cetak huruf dan harakat, serta media interaktif (aplikasi puzzle, kuis digital).</li>
+  <li style="margin-bottom: 5pt; text-align: justify;">Video dan rekaman audio pelafalan huruf hijaiyah serta murottal surah al-Fatihah dari sumber terpercaya.</li>
+  <li style="margin-bottom: 5pt; text-align: justify;">Qur'an Kemenag (https://quran.kemenag.go.id/) sebagai sumber rujukan teks Arab, transliterasi, dan terjemahan.</li>
+</ol>
+</div>
+
+<!-- ========================================== -->
+<!-- TANDA TANGAN (3 KOLOM - RATA KIRI SEMUA) -->
+<!-- ========================================== -->
+<table border="0" cellpadding="2" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 100%; margin-left: 0; margin-top: 25pt; margin-bottom: 10pt; page-break-inside: avoid; break-inside: avoid;">
+  <tr>
+    <td style="border: none; padding: 2px; vertical-align: top; text-align: left; width: 1%; white-space: nowrap;">Mengetahui,<br>Kepala {{NAMA_SEKOLAH}}</td>
+    <td style="border: none; padding: 2px; vertical-align: top; text-align: left; width: 98%;"></td>
+    <td style="border: none; padding: 2px; vertical-align: top; text-align: left; width: 1%; white-space: nowrap;">{{KOTA}}, {{TANGGAL}}<br>Guru PAI</td>
+  </tr>
+  <tr>
+    <td style="border: none; padding: 2px; vertical-align: top; height: 60px;"></td>
+    <td style="border: none; padding: 2px; vertical-align: top; height: 60px;"></td>
+    <td style="border: none; padding: 2px; vertical-align: top; height: 60px;"></td>
+  </tr>
+  <tr>
+    <td style="border: none; padding: 2px; vertical-align: top; text-align: left; width: 1%; white-space: nowrap;"><strong>{{NAMA_KEPALA_SEKOLAH}}</strong><br>NIP. {{NIP_KEPALA_SEKOLAH}}</td>
+    <td style="border: none; padding: 2px; vertical-align: top; text-align: left; width: 98%;"></td>
+    <td style="border: none; padding: 2px; vertical-align: top; text-align: left; width: 1%; white-space: nowrap;"><strong>{{NAMA_GURU}}</strong><br>NIP. {{NIP_GURU}}</td>
+  </tr>
+</table>
+
+<!-- ========================================== -->
+<!-- FOOTER DOKUMEN -->
+<!-- ========================================== -->
+<p class="footer">Disusun berdasarkan SK Kakanwil Nomor 522 Tahun 2026 oleh {{NAMA_GURU}}</p>
+
+<!-- ========================================== -->
+<!-- LAMPIRAN -->
+<!-- ========================================== -->
+<div style="page-break-before: always; clear: both;"></div>
+<h1 style="font-size: 16pt; font-weight: bold; text-align: center; margin-top: 40pt; margin-bottom: 20pt;">LAMPIRAN</h1>
+
+<!-- 1. LEMBAR KERJA PESERTA DIDIK -->
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">1. Lembar Kerja Peserta Didik (LKPD)</h4>
+<p style="margin-top: 0; margin-bottom: 8pt; text-align: justify; margin-left: 45px; font-size: 11pt; line-height: 1.4;">LKPD disusun secara spesifik dan komprehensif untuk mengukur ketercapaian kompetensi murid:</p>
+
+<!-- LKPD PERTEMUAN 1 -->
+<ol type="a" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">LKPD Pertemuan 1: Mengenal dan Melafalkan Huruf Hijaiah Berharakat Fathah</i></li>
+</ol>
+<table class="tabel-3" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 85%; margin-left: 65px; margin-bottom: 15pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 5%;">No</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 50%;">Tugas / Aktivitas / Pertanyaan</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Ruang Jawaban / Hasil Karya</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Tuliskan 5 huruf hijaiyah berharakat fathah yang kamu lihat di poster dinding!</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"><br><br><br></td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">2</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Bacalah huruf-huruf berikut dengan benar: بَ, جَ, دَ, هَ, زَ. Tuliskan bunyi masing-masing!</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"><br><br><br></td></tr>
+  </tbody>
+</table>
+
+<!-- LKPD PERTEMUAN 2 -->
+<ol type="a" start="2" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">LKPD Pertemuan 2: Membedakan Huruf Berharakat Kasrah dan Dammah</i></li>
+</ol>
+<table class="tabel-3" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 85%; margin-left: 65px; margin-bottom: 15pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 5%;">No</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 50%;">Tugas / Aktivitas / Pertanyaan</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Ruang Jawaban / Hasil Karya</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Kelompokkan huruf-huruf berikut ke dalam dua keranjang: (Kasrah) dan (Dammah). Tuliskan hasilnya di sini!<br>Huruf: رِ, دُ, حِ, نُ, مِ</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"><br><br><br></td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">2</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Bacalah dengan benar: كِ, سُ, لِ, فُ, قِ. Beri tanda (✓) jika sudah bisa!</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"><br><br><br></td></tr>
+  </tbody>
+</table>
+
+<!-- LKPD PERTEMUAN 3 -->
+<ol type="a" start="3" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">LKPD Pertemuan 3: Membaca Surah al-Fatihah</i></li>
+</ol>
+<table class="tabel-3" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 85%; margin-left: 65px; margin-bottom: 15pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 5%;">No</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 50%;">Tugas / Aktivitas / Pertanyaan</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Ruang Jawaban / Hasil Karya</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Susunlah potongan ayat surah al-Fatihah berikut menjadi urutan yang benar! (Gunakan potongan karton yang diberikan)</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"><br><br><br></td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">2</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Tuliskan kembali ayat ke-4 dari surah al-Fatihah dengan benar!</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"><br><br><br></td></tr>
+  </tbody>
+</table>
+
+<!-- LKPD PERTEMUAN 4 -->
+<ol type="a" start="4" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">LKPD Pertemuan 4: Menghafal Surah al-Fatihah</i></li>
+</ol>
+<table class="tabel-3" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 85%; margin-left: 65px; margin-bottom: 15pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 5%;">No</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 50%;">Tugas / Aktivitas / Pertanyaan</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Ruang Jawaban / Hasil Karya</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Lengkapi ayat rumpang berikut: "Alhamdulillahi rabbil ..." (sebutkan kelanjutannya!)</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"><br><br><br></td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">2</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Tuliskan seluruh ayat surah al-Fatihah dengan rapi untuk memantapkan hafalanmu!</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"><br><br><br><br><br><br></td></tr>
+  </tbody>
+</table>
+
+
+<!-- 2. INSTRUMEN ASESMEN -->
+<h4 style="font-size: 12pt; font-weight: bold; margin-top: 15pt; margin-bottom: 5pt; margin-left: 25px;">2. Instrumen Asesmen</h4>
+
+<!-- RUBRIK OBSERVASI SIKAP -->
+<ol type="a" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">Rubrik &amp; Lembar Penilaian Observasi Sikap:</i></li>
+</ol>
+<table class="tabel-3" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 85%; margin-left: 65px; margin-bottom: 15pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 5%;">No</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 25%;">Indikator Sikap</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 23%;">Mulai Berkembang (Skor 1)</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 23%;">Berkembang (Skor 2)</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 24%;">Membudaya (Skor 3)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Ketekunan belajar mengaji</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Sering terlihat malas dan tidak fokus saat belajar.</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Mengikuti kegiatan dengan cukup tekun, kadang terganggu.</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Sangat tekun dan bersemangat, aktif dalam kegiatan.</td>
+    </tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">2</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Semangat belajar membaca Al-Qur'an</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Tidak menunjukkan minat dan sering menolak aktivitas.</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Menunjukkan minat, namun perlu dorongan.</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Antusias dan selalu bersemangat mengikuti seluruh aktivitas.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="margin-top: 5pt; margin-bottom: 5pt; text-align: justify; margin-left: 65px; font-size: 11pt; line-height: 1.4; font-style: italic;">Format Lembar Penilaian Observasi Sikap:</p>
+<table class="tabel-3" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 85%; margin-left: 65px; margin-bottom: 15pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 5%;">No</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 40%;">Nama Siswa</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 20%;">Skor Ketekunan</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 20%;">Skor Semangat</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 15%;">Nilai Akhir</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">...................................................</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">2</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">...................................................</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td></tr>
+  </tbody>
+</table>
+
+<!-- RUBRIK UNJUK KERJA -->
+<ol type="a" start="2" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">Rubrik &amp; Lembar Penilaian Unjuk Kerja / Praktik:</i></li>
+</ol>
+<table class="tabel-3" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 85%; margin-left: 65px; margin-bottom: 15pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 5%;">No</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 25%;">Aspek Penilaian</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 17%;">Skor 1 (Kurang)</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 17%;">Skor 2 (Cukup)</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 18%;">Skor 3 (Baik)</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 18%;">Skor 4 (Sangat Baik)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Pelafalan huruf hijaiyah berharakat</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Banyak kesalahan, tidak sesuai makhraj.</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Beberapa kesalahan, masih terbata.</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Lancar dan benar, makhraj tepat.</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Sangat fasih, makhraj sempurna, intonasi baik.</td>
+    </tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">2</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Kelancaran menghafal surah al-Fatihah</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Hanya hafal 1-2 ayat, sering lupa.</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Hafal 3-4 ayat, masih terbata.</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Hafal 7 ayat, lancar, tajwid cukup.</td>
+      <td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Hafal sangat lancar, fasih, dan tartil.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="margin-top: 5pt; margin-bottom: 5pt; text-align: justify; margin-left: 65px; font-size: 11pt; line-height: 1.4; font-style: italic;">Format Lembar Penilaian Unjuk Kerja:</p>
+<table class="tabel-3" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 85%; margin-left: 65px; margin-bottom: 15pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 5%;">No</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 40%;">Nama Siswa</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 20%;">Skor Pelafalan</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 20%;">Skor Hafalan</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle; width: 15%;">Nilai Akhir</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">...................................................</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">2</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">...................................................</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;"></td></tr>
+  </tbody>
+</table>
+
+<!-- KISI-KISI SOAL -->
+<ol type="a" start="3" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">Tes Tertulis (Kisi-Kisi Soal):</i></li>
+</ol>
+<table class="tabel-3" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 85%; margin-left: 65px; margin-bottom: 15pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">No</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Indikator Soal</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Bentuk Soal</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Nomor Soal</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Tingkat Kesulitan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Mengenal harakat dan bunyinya</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">PG</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1-3</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">LOTS</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">2</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Membaca huruf berharakat</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">PG</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">4-7</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">LOTS/MOTS</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">3</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Menghafal isi surah al-Fatihah</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">PG</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">8-10</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">LOTS</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">4</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Menulis dan melengkapi harakat/ayat</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Isian</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">11-20</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">LOTS</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">5</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Mengidentifikasi dan menulis bacaan</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Uraian</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">21-25</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">MOTS</td></tr>
+  </tbody>
+</table>
+
+<!-- DAFTAR SOAL -->
+<p style="margin-top: 20pt; margin-bottom: 8pt; text-align: left; margin-left: 25px; font-size: 11pt; line-height: 1.4; font-style: italic; font-weight: bold;">Daftar Soal Tes Tertulis:</p>
+
+<p style="font-style: italic; font-weight: bold; margin-left: 25px; margin-top: 15pt; margin-bottom: 5pt; text-align: left;">A. Pilihan Ganda (10 Soal)</p>
+<ol type="1" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px; text-indent: 0;">
+  <li style="margin-bottom: 12pt; text-align: left;">Perhatikan huruf berikut: <span style="font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 16pt;">بَ</span>. Huruf ini dibaca ....<br>A. ba<br>B. bi<br>C. bu</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Tanda baca <span style="font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 16pt;">ِ</span> (garis miring di bawah huruf) disebut ....<br>A. fathah<br>B. kasrah<br>C. dammah</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Huruf berharakat dammah dibaca dengan bunyi ....<br>A. a<br>B. i<br>C. u</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Perhatikan huruf berikut: <span style="font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 16pt;">سُ</span>. Cara membaca yang benar adalah ....<br>A. sa<br>B. si<br>C. su</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Bacaan yang tepat untuk huruf <span style="font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 16pt;">كِ</span> adalah ....<br>A. ka<br>B. ki<br>C. ku</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Ahmad melihat huruf <span style="font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 16pt;">حَ</span>. Bacaan yang benar adalah ....<br>A. ha<br>B. hi<br>C. hu</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Lina menulis huruf <span style="font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 16pt;">دُ</span>. Bunyi bacaan yang tepat adalah ....<br>A. da<br>B. di<br>C. du</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Surah al-Fatihah adalah surah yang berjumlah ....<br>A. 5 ayat<br>B. 6 ayat<br>C. 7 ayat</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Setiap hari Salman selalu membaca surah al-Fatihah dalam salat. Surah al-Fatihah disebut juga ....<br>A. Ummul Kitab<br>B. Surat Pendek<br>C. Surat Terakhir</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Setelah basmalah, ayat kedua surah al-Fatihah berbunyi ....<br>A. Alhamdulillahi rabbil 'alamin<br>B. Arrahmanirrahim<br>C. Maliki yaumiddin</li>
+</ol>
+
+<p style="font-style: italic; font-weight: bold; margin-left: 25px; margin-top: 15pt; margin-bottom: 5pt; text-align: left;">B. Isian Singkat (10 Soal)</p>
+<ol type="1" start="11" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px; text-indent: 0;">
+  <li style="margin-bottom: 12pt; text-align: left;">Huruf hijaiyah berharakat fathah dibaca dengan bunyi ....</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Tanda baca kasrah letaknya di .... huruf.</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Huruf berharakat dammah berbunyi ....</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Jumlah ayat dalam surah al-Fatihah adalah ....</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Surah al-Fatihah wajib dibaca dalam ....</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Basmalah terdapat pada ayat .... surah al-Fatihah.</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Allah disebut sebagai Rabbil 'alamin artinya Tuhan seluruh ....</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Pada surat al-Fatihah, kita memohon pertolongan hanya kepada ....</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Surah al-Fatihah diawali dengan lafal ....</li>
+  <li style="margin-bottom: 12pt; text-align: left;">Setelah membaca surah al-Fatihah, kita membaca ....</li>
+</ol>
+
+<p style="font-style: italic; font-weight: bold; margin-left: 25px; margin-top: 15pt; margin-bottom: 5pt; text-align: left;">C. Uraian (5 Soal)</p>
+<ol type="1" start="21" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px; text-indent: 0;">
+  <li style="margin-bottom: 12pt; text-align: justify;">Sebutkan tiga harakat yang sudah kamu pelajari beserta bunyinya!</li>
+  <li style="margin-bottom: 12pt; text-align: justify;">Tuliskan bunyi bacaan untuk huruf berikut: <span style="font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 16pt;">فَ</span>, <span style="font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 16pt;">مِ</span>, <span style="font-family: 'LPMQ Isep Misbah', 'Traditional Arabic', serif; font-size: 16pt;">نُ</span>.</li>
+  <li style="margin-bottom: 12pt; text-align: justify;">Apa yang kamu rasakan setelah bisa menghafal surah al-Fatihah?</li>
+  <li style="margin-bottom: 12pt; text-align: justify;">Sebutkan satu manfaat membaca surah al-Fatihah setiap hari!</li>
+  <li style="margin-bottom: 12pt; text-align: justify;">Tuliskan ayat pertama surah al-Fatihah dengan benar (dalam tulisan Arab atau Latin)!</li>
+</ol>
+
+<!-- KUNCI JAWABAN -->
+<ol type="a" start="4" style="margin-top: 0; margin-bottom: 10pt; margin-left: 45px; padding-left: 35px;">
+  <li style="margin-bottom: 5pt; text-align: justify;"><i style="font-style: italic;">Kunci Jawaban &amp; Penskoran:</i></li>
+</ol>
+<table class="tabel-3" border="1" cellpadding="8" cellspacing="0" style="box-sizing: border-box; border-collapse: collapse; width: 85%; margin-left: 65px; margin-bottom: 15pt; table-layout: fixed;">
+  <thead>
+    <tr style="page-break-inside: avoid; break-inside: avoid;">
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">No</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Kunci Jawaban</th>
+      <th style="border: 1px solid var(--warna-border); padding: 8px; font-weight: bold; text-align: center; vertical-align: middle;">Skor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1-10</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">1. A, 2. B, 3. C, 4. C, 5. B, 6. A, 7. C, 8. C, 9. A, 10. A</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Masing-masing 2 poin (total 20)</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">11-20</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">11. a / ah, 12. bawah, 13. u / uh, 14. 7 / tujuh, 15. salat, 16. pertama / 1, 17. alam, 18. Allah, 19. basmalah / bismillah, 20. surat/amin</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Masing-masing 2 poin (total 20)</td></tr>
+    <tr style="page-break-inside: avoid; break-inside: avoid;"><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">21-25</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">21. Fathah (a), Kasrah (i), Dammah (u). 22. fa, mi, nu. 23. Jawaban beragam: senang, bangga, dll. 24. Mendapat pahala, menjadi lebih dekat dengan Allah, dll. 25. Bismillahirrahmanirrahim / بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</td><td style="border: 1px solid var(--warna-border); padding: 8px; vertical-align: top;">Masing-masing 5 poin (total 25)</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>
